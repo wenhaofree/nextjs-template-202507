@@ -1,7 +1,7 @@
 import { defineDocs } from 'fumadocs-mdx/config';
 import { defineConfig } from 'fumadocs-mdx/config';
 
-// Define the docs collection
+// Define the docs collection with i18n support
 export const { docs, meta } = defineDocs({
   dir: 'content/docs',
 });

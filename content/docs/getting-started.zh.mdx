@@ -1,0 +1,81 @@
+---
+title: 开始使用
+description: 学习如何开始使用我们的文档系统
+---
+
+## 欢迎使用我们的文档
+
+这是一个全面的指南，帮助您开始使用我们基于 Fumadocs 的 Next.js 模板和文档系统。
+
+### 功能特性
+
+我们的文档系统包括：
+
+- **现代化 UI**: 使用 Fumadocs UI 构建的美观、响应式设计
+- **MDX 支持**: 在 MDX 中编写内容并使用 React 组件
+- **代码高亮**: 支持多种语言的语法高亮
+- **搜索**: 内置搜索功能
+- **深色模式**: 自动深色/浅色模式支持
+- **国际化**: 支持多语言切换
+
+### 安装
+
+开始使用前，请安装依赖：
+
+```bash
+pnpm install
+# 或者
+npm install
+# 或者
+yarn install
+```
+
+### 开发
+
+启动开发服务器：
+
+```bash
+pnpm dev
+# 或者
+npm run dev
+# 或者
+yarn dev
+```
+
+### 代码示例
+
+这是一个简单的 React 组件示例：
+
+```tsx
+import React from 'react';
+
+const HelloWorld = () => {
+  return (
+    <div className="p-4 bg-blue-100 rounded-lg">
+      <h1 className="text-2xl font-bold text-blue-800">
+        你好，世界！
+      </h1>
+      <p className="text-blue-600">
+        欢迎使用我们的文档系统。
+      </p>
+    </div>
+  );
+};
+
+export default HelloWorld;
+```
+
+### 国际化
+
+本文档系统支持多种语言：
+
+- 访问英文文档: `/en/docs`
+- 访问中文文档: `/zh/docs`
+
+导航栏中的语言切换器允许用户无缝切换语言。
+
+### 下一步
+
+- 探索 [组件库](/zh/docs/components) 部分
+- 了解 [配置](/zh/docs/configuration)
+- 查看 [示例](/zh/docs/examples)

@@ -7,12 +7,16 @@ import {
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/mdx-components';
+import { i18n } from '@/lib/i18n';
 
 export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ locale: string; slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+
+  // 使用正确的 i18n API 获取页面
+  const page = source.getPage(params.slug, params.locale);
+
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -33,10 +37,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ locale: string; slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = source.getPage(params.slug, params.locale);
+
   if (!page) notFound();
 
   return {
