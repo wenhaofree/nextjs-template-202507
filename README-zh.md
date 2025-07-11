@@ -202,11 +202,11 @@ const buttonVariants = cva(
 
 ## 功能记录：
 1. 核心依赖：
-	- next.js：v15.3.5
-	- tailwindcss：v4
-	- react：19
+	- next.js：v15.3.5 ✅
+	- tailwindcss：v4 ✅
+	- react：19 ✅
 2. 落地页：
-	- hero
+	- hero ✅
 	- head
 	- techstack
 	- features
@@ -218,9 +218,11 @@ const buttonVariants = cva(
 	- showcase
 	- Newsletter
 	- footer
-3. 组件依赖：
+3. 功能组件依赖：
+	- next-theme
 	- auth（betterauth， next-auth）
 	- orm （drizzleorm， prisma）
+	- postgreSQL
 	- stripe
 	- shadcnui
 	- resend
