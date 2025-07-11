@@ -224,14 +224,14 @@ const buttonVariants = cva(
 3. 功能组件依赖：
 	- next-theme
 	- auth（betterauth， next-auth）
-		- next-auth
-		- google
+		- next-auth ✅
+		- google 
 		- GitHub
-		- email/password
+		- email/password ✅
 	- orm （drizzleorm， prisma） 传统模式选择（Prisma+next-auth）， web3 模式选择（drizzleorm+betterauth）
-		- prisma
+		- prisma ✅
 	- postgreSQL（neon，supabase）
-		- neon
+		- neon ✅
 	- stripe
 	- shadcnui ✅
 	- resend
