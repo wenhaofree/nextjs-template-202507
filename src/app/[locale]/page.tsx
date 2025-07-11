@@ -1,10 +1,16 @@
 "use client"
 
 import { HeroSection } from "@/components/blocks/hero-section"
+import { SiteHeader } from "@/components/sections/site-header"
 import { Icons } from "@/components/ui/icons"
 
 export default function LocaleHomePage() {
   return (
+    <>
+
+    <SiteHeader />
+    
+
     <HeroSection
       badge={{
         text: "Introducing our new components",
@@ -34,5 +40,6 @@ export default function LocaleHomePage() {
         alt: "UI Components Preview",
       }}
     />
+    </>
   )
 }

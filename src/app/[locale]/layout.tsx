@@ -2,18 +2,6 @@ import type { ReactNode } from 'react';
 import { i18n } from '@/lib/i18n';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Translations } from 'fumadocs-ui/i18n';
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 // 中文翻译
 const zh: Partial<Translations> = {
@@ -49,22 +37,15 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <RootProvider
-          i18n={{
-            locale,
-            locales,
-            translations: { zh }[locale],
-          }}
-        >
-          {children}
-        </RootProvider>
-      </body>
-    </html>
+    <RootProvider
+      i18n={{
+        locale,
+        locales,
+        translations: { zh }[locale],
+      }}
+    >
+      {children}
+    </RootProvider>
   );
 }
 
