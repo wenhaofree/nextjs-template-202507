@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { i18n } from '@/lib/i18n';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Translations } from 'fumadocs-ui/i18n';
+import { Providers } from '@/components/providers';
 
 // 中文翻译
 const zh: Partial<Translations> = {
@@ -37,15 +38,17 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   return (
-    <RootProvider
-      i18n={{
-        locale,
-        locales,
-        translations: { zh }[locale],
-      }}
-    >
-      {children}
-    </RootProvider>
+    <Providers>
+      <RootProvider
+        i18n={{
+          locale,
+          locales,
+          translations: { zh }[locale],
+        }}
+      >
+        {children}
+      </RootProvider>
+    </Providers>
   );
 }
 

@@ -8,8 +8,9 @@ export const config = {
   matcher: [
     // Match all pathnames except for
     // - static files (public folder)
-    // - api routes
+    // - api routes (including auth)
+    // - auth pages (signin, signup, etc.)
     // - next.js internals
-    '/((?!_next|api|favicon.ico|.*\\.).*)',
+    '/((?!_next|api|auth|favicon.ico|.*\\.).*)',
   ],
 };

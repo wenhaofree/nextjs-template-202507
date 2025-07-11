@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu } from "lucide-react";
+import { AuthStatus } from "@/components/auth/auth-status";
 
 import {
   Accordion,
@@ -97,12 +98,7 @@ const NavigationBar = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.text}</a>
-            </Button>
-            <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.text}</a>
-            </Button>
+            <AuthStatus />
           </div>
         </nav>
         <div className="block lg:hidden">
@@ -150,12 +146,7 @@ const NavigationBar = ({
                     </div>
                   </div>
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.text}</a>
-                    </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.text}</a>
-                    </Button>
+                    <AuthStatus />
                   </div>
                 </div>
               </SheetContent>
