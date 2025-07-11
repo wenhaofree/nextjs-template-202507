@@ -205,6 +205,9 @@ const buttonVariants = cva(
 	- next.js：v15.3.5 ✅
 	- tailwindcss：v4 ✅
 	- react：19 ✅
+	- TypeScript:5 ✅
+	- Turbopack	✅
+
 2. 落地页：
 	- hero ✅
 	- head

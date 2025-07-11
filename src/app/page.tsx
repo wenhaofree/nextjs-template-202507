@@ -25,7 +25,7 @@ export default function Home() {
         {
           text: "GitHub",
           href: "https://github.com/your-repo",
-          variant: "glow",
+          variant: "link",
           icon: <Icons.gitHub className="h-5 w-5" />,
         },
       ]}

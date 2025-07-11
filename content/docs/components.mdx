@@ -1,0 +1,107 @@
+---
+title: Components
+description: Explore the available UI components in our system
+---
+
+## UI Components
+
+Our template includes a comprehensive set of UI components built with React, TypeScript, and Tailwind CSS.
+
+### Button Component
+
+The Button component supports multiple variants and sizes:
+
+```tsx
+import { Button } from '@/components/ui/button';
+
+// Default button
+<Button>Click me</Button>
+
+// Variant examples
+<Button variant="destructive">Delete</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="glow">Glow Effect</Button>
+
+// Size examples
+<Button size="sm">Small</Button>
+<Button size="lg">Large</Button>
+```
+
+### Badge Component
+
+Display status and notification badges:
+
+```tsx
+import { Badge } from '@/components/ui/badge';
+
+<Badge>Default</Badge>
+<Badge variant="secondary">Secondary</Badge>
+<Badge variant="destructive">Error</Badge>
+<Badge variant="outline">Outline</Badge>
+```
+
+### Card Component
+
+Create beautiful card layouts:
+
+```tsx
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description goes here</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card content...</p>
+  </CardContent>
+</Card>
+```
+
+### Tabs Component
+
+Create tabbed interfaces:
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+
+<Tabs items={['React', 'Vue', 'Angular']}>
+  <Tab value="React">
+    React is a JavaScript library for building user interfaces.
+  </Tab>
+  <Tab value="Vue">
+    Vue.js is a progressive framework for building user interfaces.
+  </Tab>
+  <Tab value="Angular">
+    Angular is a platform for building mobile and desktop web applications.
+  </Tab>
+</Tabs>
+
+### Code Block
+
+Display code with syntax highlighting:
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+greet('World');
+```
+
+```python
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("World")
+```
+
+### Installation Commands
+
+Package installation with multiple package managers:
+
+```package-install
+react react-dom
+```
+
+This will automatically generate tabs for npm, yarn, and pnpm.
