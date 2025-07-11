@@ -10,6 +10,6 @@ export const config = {
     // - static files (public folder)
     // - api routes
     // - next.js internals
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next|api|favicon.ico|.*\\.).*)',
   ],
 };

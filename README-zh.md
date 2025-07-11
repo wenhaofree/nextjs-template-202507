@@ -210,7 +210,7 @@ const buttonVariants = cva(
 
 2. 落地页：
 	- hero ✅
-	- head
+	- head ✅
 	- techstack
 	- features
 	- pricing
