@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRightIcon } from "lucide-react";
 import { Mockup, MockupFrame } from "@/components/ui/mockup";
 import { Glow } from "@/components/ui/glow";
+import { BorderBeam, Meteors } from "@/components/magicui";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -47,11 +48,14 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        "bg-background text-foreground",
+        "bg-background text-foreground relative",
         "py-12 sm:py-24 md:py-32 px-4",
         "fade-bottom overflow-hidden pb-0"
       )}
     >
+      {/* Background Effects */}
+      <Meteors number={20} />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/50" />
       <div className="mx-auto flex max-w-container flex-col gap-12 pt-16 sm:gap-24">
         <div className="flex flex-col items-center gap-6 text-center sm:gap-12">
           {/* Badge */}
@@ -92,7 +96,7 @@ export function HeroSection({
           {/* Image with Glow */}
           <div className="relative pt-12">
             <MockupFrame
-              className="animate-appear opacity-0 delay-700"
+              className="animate-appear opacity-0 delay-700 relative"
               size="small"
             >
               <Mockup type="responsive">
@@ -104,6 +108,7 @@ export function HeroSection({
                   priority
                 />
               </Mockup>
+              <BorderBeam size={250} duration={12} delay={9} />
             </MockupFrame>
             <Glow
               variant="top"

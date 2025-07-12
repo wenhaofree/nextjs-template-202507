@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { Marquee } from "@/components/magicui";
 
 // Tech stack data based on the image and project requirements
 const techStackData = [
@@ -150,6 +151,20 @@ export function TechStack() {
           </p>
         </motion.div>
 
+        {/* Tech Stack Marquee */}
+        <div className="mb-16">
+          <Marquee pauseOnHover className="[--duration:30s]">
+            {techStackData.slice(0, 6).map((tech) => (
+              <TechBadge key={tech.name} tech={tech} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:25s] mt-4">
+            {techStackData.slice(6).map((tech) => (
+              <TechBadge key={tech.name} tech={tech} />
+            ))}
+          </Marquee>
+        </div>
+
         {/* Tech Stack Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
           {techStackData.map((tech, index) => (
@@ -226,5 +241,23 @@ const TechCard = ({ tech, index }: TechCardProps) => {
         </div>
       </div>
     </motion.div>
+  );
+};
+
+const TechBadge = ({ tech }: { tech: typeof techStackData[0] }) => {
+  return (
+    <div className="flex items-center gap-3 px-6 py-3 mx-2 rounded-full bg-background border border-border shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 min-w-fit">
+      <div className={cn(
+        "w-8 h-8 rounded-lg border border-border bg-gradient-to-br flex items-center justify-center text-sm font-bold",
+        tech.color,
+        tech.textColor
+      )}>
+        {tech.icon}
+      </div>
+      <span className="font-medium text-foreground whitespace-nowrap">{tech.name}</span>
+      <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground border border-border whitespace-nowrap">
+        {tech.category}
+      </span>
+    </div>
   );
 };
