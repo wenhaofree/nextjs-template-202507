@@ -85,6 +85,10 @@ const SiteHeader = () => {
         title: t('menu.blog'),
         url: "/blog",
       },
+      {
+        title: t('menu.dashboard'),
+        url: "/dashboard",
+      },
     ],
     mobileExtraLinks: [
       { name: t('mobileExtraLinks.press'), url: "/press" },

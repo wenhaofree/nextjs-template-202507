@@ -28,6 +28,9 @@ export * from "./animate-ui"
 // Tailark Components
 export * from "./tailark"
 
+// Dashboard Components
+export * from "./dashboard"
+
 // Auth Components
 export { default as AuthCheck } from "./auth/auth-check"
 export { AuthStatus } from "./auth/auth-status"

@@ -39,6 +39,7 @@
       "resources": "资源",
       "pricing": "定价",
       "blog": "博客",
+      "dashboard": "仪表板",
       "company": "公司",
       "careers": "招聘",
       "support": "支持",
@@ -89,6 +90,74 @@
     "lightMode": "浅色模式",
     "darkMode": "深色模式",
     "systemMode": "系统模式"
+  },
+  "Dashboard": {
+    "title": "仪表板",
+    "subtitle": "概览和分析",
+    "welcome": "欢迎回来",
+    "navigation": {
+      "dashboard": "仪表板",
+      "profile": "个人资料",
+      "billing": "账单",
+      "security": "安全",
+      "notifications": "通知",
+      "settings": "设置"
+    },
+    "profile": {
+      "title": "个人资料",
+      "subtitle": "管理您的账户信息",
+      "avatar": {
+        "title": "头像",
+        "description": "点击上传按钮上传自定义头像",
+        "upload": "上传头像",
+        "recommendation": "头像是可选的，但强烈建议设置"
+      },
+      "name": {
+        "title": "姓名",
+        "description": "请输入您的显示名称",
+        "placeholder": "输入您的姓名",
+        "validation": "请使用3-30个字符作为您的姓名"
+      },
+      "account": {
+        "title": "账户信息",
+        "description": "您的账户详情和设置",
+        "email": "邮箱地址",
+        "emailNote": "邮箱地址无法更改",
+        "userId": "用户ID",
+        "userIdNote": "您的唯一用户标识符"
+      }
+    },
+    "billing": {
+      "title": "账单",
+      "subtitle": "管理账单和订阅",
+      "currentPlan": "当前计划",
+      "paymentMethod": "支付方式",
+      "billingHistory": "账单历史",
+      "usageAlerts": "使用警告"
+    },
+    "security": {
+      "title": "安全",
+      "subtitle": "安全设置和身份验证",
+      "password": "密码和身份验证",
+      "settings": "安全设置",
+      "sessions": "活动会话",
+      "recommendations": "安全建议"
+    },
+    "notifications": {
+      "title": "通知",
+      "subtitle": "通知偏好设置",
+      "email": "邮件通知",
+      "push": "推送通知",
+      "categories": "通知类别"
+    },
+    "settings": {
+      "title": "设置",
+      "subtitle": "常规应用程序设置",
+      "appearance": "外观",
+      "language": "语言和地区",
+      "performance": "性能",
+      "privacy": "数据和隐私"
+    }
   },
   "Footer": {
     "description": "使用我们的高级组件构建您的下一个项目。",

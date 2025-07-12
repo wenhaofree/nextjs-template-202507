@@ -39,6 +39,7 @@
       "resources": "Resources",
       "pricing": "Pricing",
       "blog": "Blog",
+      "dashboard": "Dashboard",
       "company": "Company",
       "careers": "Careers",
       "support": "Support",
@@ -89,6 +90,74 @@
     "lightMode": "Light Mode",
     "darkMode": "Dark Mode",
     "systemMode": "System Mode"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview and analytics",
+    "welcome": "Welcome back",
+    "navigation": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "billing": "Billing",
+      "security": "Security",
+      "notifications": "Notifications",
+      "settings": "Settings"
+    },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Manage your account information",
+      "avatar": {
+        "title": "Avatar",
+        "description": "Click upload button to upload a custom one",
+        "upload": "Upload Avatar",
+        "recommendation": "An avatar is optional but strongly recommended"
+      },
+      "name": {
+        "title": "Name",
+        "description": "Please enter your display name",
+        "placeholder": "Enter your name",
+        "validation": "Please use 3-30 characters for your name"
+      },
+      "account": {
+        "title": "Account Information",
+        "description": "Your account details and settings",
+        "email": "Email Address",
+        "emailNote": "Email address cannot be changed",
+        "userId": "User ID",
+        "userIdNote": "Your unique user identifier"
+      }
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Manage billing and subscriptions",
+      "currentPlan": "Current Plan",
+      "paymentMethod": "Payment Method",
+      "billingHistory": "Billing History",
+      "usageAlerts": "Usage Alerts"
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Security settings and authentication",
+      "password": "Password & Authentication",
+      "settings": "Security Settings",
+      "sessions": "Active Sessions",
+      "recommendations": "Security Recommendations"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Notification preferences",
+      "email": "Email Notifications",
+      "push": "Push Notifications",
+      "categories": "Notification Categories"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "General application settings",
+      "appearance": "Appearance",
+      "language": "Language & Region",
+      "performance": "Performance",
+      "privacy": "Data & Privacy"
+    }
   },
   "Footer": {
     "description": "Build your next project with our premium components.",

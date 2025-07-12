@@ -222,6 +222,7 @@ const buttonVariants = cva(
 	- Newsletter
 	- footer ✅
 	- dashboard 
+	- demo页面
 3. 功能组件依赖：
 	- next-theme
 	- auth（betterauth， next-auth）
