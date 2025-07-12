@@ -232,7 +232,7 @@ const buttonVariants = cva(
 		- prisma ✅
 	- postgreSQL（neon，supabase）
 		- neon ✅
-	- stripe
+	- stripe ✅
 	- shadcnui ✅
 	- resend ✅
 	- fumadocs ✅

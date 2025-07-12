@@ -6,6 +6,8 @@ import { TechStack } from "@/components/sections/TechStack"
 import { Icons } from "@/components/ui/icons"
 import { CreativePricingDemo } from "@/components/sections/CreativePricingDemo"
 import { Footer } from "@/components/sections/Footer"
+import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
+import { DemoOne } from "@/components/sections/DemoOne";
 
 export default function LocaleHomePage() {
   return (
@@ -45,6 +47,8 @@ export default function LocaleHomePage() {
     />
 
     <TechStack />
+    <DemoOne />
+    {/* <DisplayCardsDemo /> */}
     <CreativePricingDemo />
     <Footer />
     </>
