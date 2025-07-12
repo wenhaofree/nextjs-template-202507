@@ -27,25 +27,25 @@ export * from "./tailark"
 
 // Auth Components
 export { default as AuthCheck } from "./auth/auth-check"
-export { default as AuthStatus } from "./auth/auth-status"
-export { default as SessionProvider } from "./auth/session-provider"
-export { default as SignInButton } from "./auth/sign-in-button"
-export { default as SignInForm } from "./auth/sign-in-form"
-export { default as UserAvatar } from "./auth/user-avatar"
+export { AuthStatus } from "./auth/auth-status"
+export { SessionProvider } from "./auth/session-provider"
+export { SignInButton } from "./auth/sign-in-button"
+export { SignInForm } from "./auth/sign-in-form"
+export { UserAvatar } from "./auth/user-avatar"
 
 // Block Components
-export { default as HeroSectionBlock } from "./blocks/hero-section"
-export { default as NavigationBar } from "./blocks/navigation-bar"
-export { default as PricingSectionBlock } from "./blocks/pricing-section"
+export { HeroSection as HeroSectionBlock } from "./blocks/hero-section"
+export { NavigationBar } from "./blocks/navigation-bar"
+export { PricingSection as PricingSectionBlock } from "./blocks/pricing-section"
 
 // Section Components
-export { default as CreativePricingDemo } from "./sections/CreativePricingDemo"
-export { default as DemoOne } from "./sections/DemoOne"
-export { default as DisplayCardsDemo } from "./sections/DisplayCardsDemo"
-export { default as Footer } from "./sections/Footer"
-export { default as Pricing } from "./sections/Pricing"
-export { default as TechStack } from "./sections/TechStack"
-export { default as SiteHeader } from "./sections/site-header"
+export { CreativePricingDemo } from "./sections/CreativePricingDemo"
+export { DemoOne } from "./sections/DemoOne"
+export { DisplayCardsDemo } from "./sections/DisplayCardsDemo"
+export { Footer } from "./sections/Footer"
+export { Pricing } from "./sections/Pricing"
+export { TechStack } from "./sections/TechStack"
+export { SiteHeader } from "./sections/site-header"
 
 // Providers
-export { default as Providers } from "./providers"
+export { Providers } from "./providers"
