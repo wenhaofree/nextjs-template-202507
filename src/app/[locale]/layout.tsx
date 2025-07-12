@@ -3,6 +3,10 @@ import { i18n } from '@/lib/i18n';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Translations } from 'fumadocs-ui/i18n';
 import { Providers } from '@/components/providers';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+import { setRequestLocale } from 'next-intl/server';
 
 // 中文翻译
 const zh: Partial<Translations> = {
@@ -14,6 +18,18 @@ const zh: Partial<Translations> = {
   nextPage: '下一页',
   previousPage: '上一页',
   chooseTheme: '选择主题',
+};
+
+// 英文翻译
+const en: Partial<Translations> = {
+  search: 'Search',
+  searchNoResult: 'No results found',
+  toc: 'Table of Contents',
+  lastUpdate: 'Last updated',
+  chooseLanguage: 'Choose language',
+  nextPage: 'Next page',
+  previousPage: 'Previous page',
+  chooseTheme: 'Choose theme',
 };
 
 // 可用语言列表
@@ -36,22 +52,32 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-
+        <RootProvider
+          i18n={{
+            locale,
+            locales,
+            translations: { en, zh }[locale],
+          }}
+        >
+          {children}
+        </RootProvider>
   return (
     <Providers>
-      <RootProvider
-        i18n={{
-          locale,
-          locales,
-          translations: { zh }[locale],
-        }}
-      >
-        {children}
-      </RootProvider>
+      <NextIntlClientProvider>
+        <RootProvider
+          i18n={{
+            locale,
+            locales,
+            translations: { zh }[locale],
+          }}
+        >
+          {children}
+        </RootProvider>
+      </NextIntlClientProvider>
     </Providers>
   );
 }
 
 export function generateStaticParams() {
-  return i18n.languages.map((locale) => ({ locale }));
+  return routing.locales.map((locale) => ({ locale }));
 }

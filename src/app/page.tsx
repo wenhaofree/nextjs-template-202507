@@ -1,7 +1,8 @@
 
 import { redirect } from 'next/navigation';
-import { i18n } from '@/lib/i18n';
 
 export default function HomePage() {
-  redirect(`/${i18n.defaultLanguage}`);
+  // Since we're using 'as-needed' localePrefix,
+  // the default locale (en) should redirect to root path
+  redirect('/');
 }

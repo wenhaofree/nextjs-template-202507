@@ -1,0 +1,63 @@
+{
+  "HomePage": {
+    "badge": {
+      "text": "Introducing our new components",
+      "action": "Learn more"
+    },
+    "title": "Build faster with beautiful components",
+    "description": "Premium UI components built with React and Tailwind CSS. Save time and ship your next project faster with our ready-to-use components.",
+    "actions": {
+      "getStarted": "Get Started",
+      "github": "GitHub"
+    },
+    "image": {
+      "alt": "UI Components Preview"
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "docs": "Documentation",
+    "components": "Components",
+    "examples": "Examples",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "language": "Language",
+    "theme": "Theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "systemMode": "System Mode"
+  },
+  "Footer": {
+    "description": "Build your next project with our premium components.",
+    "links": {
+      "product": "Product",
+      "company": "Company",
+      "resources": "Resources",
+      "legal": "Legal"
+    },
+    "copyright": "© 2025 Next.js Template. All rights reserved."
+  }
+}

@@ -212,7 +212,7 @@ const buttonVariants = cva(
 	- hero ✅
 	- head ✅
 	- techstack ✅
-	- features
+	- features ✅
 	- pricing ✅
 	- faq
 	- Testimonials
@@ -236,7 +236,7 @@ const buttonVariants = cva(
 	- shadcnui ✅
 	- resend ✅
 	- fumadocs ✅
-	- next-init
+	- next-init ✅
 	- magicui
 	- tailark
 	- vercel ai sdk

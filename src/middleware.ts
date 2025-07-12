@@ -1,7 +1,7 @@
-import { createI18nMiddleware } from 'fumadocs-core/i18n';
-import { i18n } from '@/lib/i18n';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from '@/i18n/routing';
 
-export default createI18nMiddleware(i18n);
+export default createMiddleware(routing);
 
 export const config = {
   // Match only internationalized pathnames

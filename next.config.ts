@@ -1,10 +1,13 @@
 import type { NextConfig } from "next";
 import { createMDX } from 'fumadocs-mdx/next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const withMDX = createMDX({
   configPath: './source.config.ts',
-  
+
 });
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -14,4 +17,4 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
-export default withMDX(nextConfig);
+export default withNextIntl(withMDX(nextConfig));

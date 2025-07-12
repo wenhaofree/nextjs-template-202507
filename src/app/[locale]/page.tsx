@@ -8,8 +8,10 @@ import { CreativePricingDemo } from "@/components/sections/CreativePricingDemo"
 import { Footer } from "@/components/sections/Footer"
 import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
 import { DemoOne } from "@/components/sections/DemoOne";
+import { useTranslations } from 'next-intl';
 
 export default function LocaleHomePage() {
+  const t = useTranslations('HomePage');
   return (
     <>
 
@@ -18,22 +20,22 @@ export default function LocaleHomePage() {
 
     <HeroSection
       badge={{
-        text: "Introducing our new components",
+        text: t('badge.text'),
         action: {
-          text: "Learn more",
+          text: t('badge.action'),
           href: "/docs",
         },
       }}
-      title="Build faster with beautiful components"
-      description="Premium UI components built with React and Tailwind CSS. Save time and ship your next project faster with our ready-to-use components."
+      title={t('title')}
+      description={t('description')}
       actions={[
         {
-          text: "Get Started",
+          text: t('actions.getStarted'),
           href: "/docs/getting-started",
           variant: "default",
         },
         {
-          text: "GitHub",
+          text: t('actions.github'),
           href: "https://github.com/your-repo",
           variant: "link",
           icon: <Icons.gitHub className="h-5 w-5" />,
@@ -42,7 +44,7 @@ export default function LocaleHomePage() {
       image={{
         light: "/app-light.png",
         dark: "/app-dark.png",
-        alt: "UI Components Preview",
+        alt: t('image.alt'),
       }}
     />
 
