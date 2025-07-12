@@ -234,7 +234,7 @@ const buttonVariants = cva(
 		- neon ✅
 	- stripe
 	- shadcnui ✅
-	- resend
+	- resend ✅
 	- fumadocs ✅
 	- next-init
 	- magicui

@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { signIn, getSession } from "next-auth/react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { signIn } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,7 +20,6 @@ export function SignInForm({
   title = "Welcome back",
   description = "Choose your preferred sign in method"
 }: SignInFormProps) {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState('')
   const [email, setEmail] = useState('')
@@ -28,6 +27,11 @@ export function SignInForm({
   const [error, setError] = useState('')
   const [isSignUp, setIsSignUp] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [isForgotPassword, setIsForgotPassword] = useState(false)
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false)
+  const [forgotPasswordMessage, setForgotPasswordMessage] = useState('')
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState(false)
 
   const callbackUrl = searchParams.get('callbackUrl') || '/'
   const errorParam = searchParams.get('error')
@@ -164,6 +168,148 @@ export function SignInForm({
     }
   }
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!forgotPasswordEmail) {
+      setError('Email is required')
+      return
+    }
+
+    try {
+      setForgotPasswordLoading(true)
+      setError('')
+      setForgotPasswordMessage('')
+
+      const response = await fetch('/api/password/forgot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: forgotPasswordEmail,
+          locale: 'en', // You can make this dynamic based on user's locale
+        }),
+      })
+
+      // 检查响应状态
+      if (!response.ok) {
+        // 如果响应不是2xx，尝试获取错误信息
+        let errorMessage = 'Failed to send reset link. Please try again.'
+        try {
+          const errorData = await response.json()
+          errorMessage = errorData.message || errorMessage
+        } catch (parseError) {
+          // 如果无法解析JSON，使用默认错误信息
+          console.error('Failed to parse error response:', parseError)
+          errorMessage = `Server error (${response.status}). Please try again.`
+        }
+        setError(errorMessage)
+        return
+      }
+
+      // 尝试解析成功响应
+      let data
+      try {
+        data = await response.json()
+      } catch (parseError) {
+        console.error('Failed to parse response JSON:', parseError)
+        setError('Invalid response from server. Please try again.')
+        return
+      }
+
+      if (data.success) {
+        setForgotPasswordSuccess(true)
+        setForgotPasswordMessage(data.message || 'If the email exists in our system, you will receive a password reset link shortly.')
+      } else {
+        setError(data.message || 'Failed to send reset link. Please try again.')
+      }
+    } catch (err) {
+      console.error('Forgot password error:', err)
+      setError('An error occurred. Please try again.')
+    } finally {
+      setForgotPasswordLoading(false)
+    }
+  }
+
+  const handleBackToSignIn = () => {
+    setIsForgotPassword(false)
+    setForgotPasswordEmail('')
+    setForgotPasswordMessage('')
+    setForgotPasswordSuccess(false)
+    setError('')
+  }
+
+  // If in forgot password mode, show forgot password form
+  if (isForgotPassword) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold">Forgot Password?</CardTitle>
+            <CardDescription>Enter your email address and we'll send you a link to reset your password.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {forgotPasswordSuccess ? (
+              <div className="space-y-4">
+                <Alert>
+                  <AlertDescription className="text-green-600">
+                    {forgotPasswordMessage}
+                  </AlertDescription>
+                </Alert>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleBackToSignIn}
+                  className="w-full"
+                >
+                  Back to Sign In
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleForgotPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="forgotEmail">Email</Label>
+                  <Input
+                    id="forgotEmail"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={forgotPasswordLoading}
+                >
+                  {forgotPasswordLoading ? 'Sending...' : 'Send Reset Link'}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="link"
+                  onClick={handleBackToSignIn}
+                  className="w-full"
+                >
+                  Back to Sign In
+                </Button>
+              </form>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
@@ -233,7 +379,19 @@ export function SignInForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                {!isSignUp && (
+                  <Button
+                    type="button"
+                    variant="link"
+                    onClick={() => setIsForgotPassword(true)}
+                    className="px-0 font-normal text-sm"
+                  >
+                    Forgot password?
+                  </Button>
+                )}
+              </div>
               <Input
                 id="password"
                 type="password"
