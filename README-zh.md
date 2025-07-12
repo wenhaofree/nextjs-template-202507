@@ -221,6 +221,7 @@ const buttonVariants = cva(
 	- showcase
 	- Newsletter
 	- footer ✅
+	- dashboard 
 3. 功能组件依赖：
 	- next-theme
 	- auth（betterauth， next-auth）
@@ -237,7 +238,7 @@ const buttonVariants = cva(
 	- resend ✅
 	- fumadocs ✅
 	- next-init ✅
-	- magicui
-	- tailark
+	- magicui ✅
+	- tailark ✅
 	- vercel ai sdk
 	- ChatGPT
