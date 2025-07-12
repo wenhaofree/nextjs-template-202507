@@ -28,6 +28,46 @@
     "settings": "设置",
     "logout": "退出"
   },
+  "SiteHeader": {
+    "logo": {
+      "title": "Shadcnblocks.com",
+      "alt": "shadcn/ui 组件库"
+    },
+    "menu": {
+      "home": "首页",
+      "products": "产品",
+      "resources": "资源",
+      "pricing": "定价",
+      "blog": "博客",
+      "company": "公司",
+      "careers": "招聘",
+      "support": "支持",
+      "helpCenter": "帮助中心",
+      "contactUs": "联系我们",
+      "status": "状态",
+      "termsOfService": "服务条款"
+    },
+    "menuDescriptions": {
+      "blog": "最新的行业新闻、更新和信息",
+      "company": "我们的使命是创新并赋能世界",
+      "careers": "浏览职位列表并了解我们的工作环境",
+      "support": "联系我们的支持团队或访问我们的社区论坛",
+      "helpCenter": "在这里获得您需要的所有答案",
+      "contactUs": "我们在这里帮助您解决任何问题",
+      "status": "检查我们服务和API的当前状态",
+      "termsOfService": "使用我们服务的条款和条件"
+    },
+    "mobileExtraLinks": {
+      "press": "新闻",
+      "contact": "联系",
+      "imprint": "版权信息",
+      "sitemap": "网站地图"
+    },
+    "auth": {
+      "login": "登录",
+      "signup": "注册"
+    }
+  },
   "Common": {
     "loading": "加载中...",
     "error": "错误",

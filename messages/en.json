@@ -28,6 +28,46 @@
     "settings": "Settings",
     "logout": "Logout"
   },
+  "SiteHeader": {
+    "logo": {
+      "title": "ShipSaaS.net",
+      "alt": "blocks for shadcn/ui"
+    },
+    "menu": {
+      "home": "Home",
+      "products": "Products",
+      "resources": "Resources",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "company": "Company",
+      "careers": "Careers",
+      "support": "Support",
+      "helpCenter": "Help Center",
+      "contactUs": "Contact Us",
+      "status": "Status",
+      "termsOfService": "Terms of Service"
+    },
+    "menuDescriptions": {
+      "blog": "The latest industry news, updates, and info",
+      "company": "Our mission is to innovate and empower the world",
+      "careers": "Browse job listing and discover our workspace",
+      "support": "Get in touch with our support team or visit our community forums",
+      "helpCenter": "Get all the answers you need right here",
+      "contactUs": "We are here to help you with any questions you have",
+      "status": "Check the current status of our services and APIs",
+      "termsOfService": "Our terms and conditions for using our services"
+    },
+    "mobileExtraLinks": {
+      "press": "Press",
+      "contact": "Contact",
+      "imprint": "Imprint",
+      "sitemap": "Sitemap"
+    },
+    "auth": {
+      "login": "Log in",
+      "signup": "Sign up"
+    }
+  },
   "Common": {
     "loading": "Loading...",
     "error": "Error",

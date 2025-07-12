@@ -240,6 +240,6 @@ const buttonVariants = cva(
 	- next-init ✅
 	- magicui ✅
 	- tailark ✅
-	- animate-ui
+	- animate-ui ✅
 	- vercel ai sdk
 	- ChatGPT
