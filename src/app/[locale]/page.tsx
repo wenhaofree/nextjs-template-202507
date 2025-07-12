@@ -2,6 +2,7 @@
 
 import { HeroSection } from "@/components/blocks/hero-section"
 import { SiteHeader } from "@/components/sections/site-header"
+import { TechStack } from "@/components/sections/TechStack"
 import { Icons } from "@/components/ui/icons"
 
 export default function LocaleHomePage() {
@@ -40,6 +41,10 @@ export default function LocaleHomePage() {
         alt: "UI Components Preview",
       }}
     />
+
+    <TechStack />
+
+
     </>
   )
 }
