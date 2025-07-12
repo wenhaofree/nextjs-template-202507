@@ -4,6 +4,8 @@ import { HeroSection } from "@/components/blocks/hero-section"
 import { SiteHeader } from "@/components/sections/site-header"
 import { TechStack } from "@/components/sections/TechStack"
 import { Icons } from "@/components/ui/icons"
+import { CreativePricingDemo } from "@/components/sections/CreativePricingDemo"
+import { Footer } from "@/components/sections/Footer"
 
 export default function LocaleHomePage() {
   return (
@@ -43,8 +45,8 @@ export default function LocaleHomePage() {
     />
 
     <TechStack />
-
-
+    <CreativePricingDemo />
+    <Footer />
     </>
   )
 }
