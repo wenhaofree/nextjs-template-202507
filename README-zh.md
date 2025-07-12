@@ -211,16 +211,16 @@ const buttonVariants = cva(
 2. 落地页：
 	- hero ✅
 	- head ✅
-	- techstack
+	- techstack ✅
 	- features
-	- pricing
+	- pricing ✅
 	- faq
 	- Testimonials
 	- cat
 	- stats
 	- showcase
 	- Newsletter
-	- footer
+	- footer ✅
 3. 功能组件依赖：
 	- next-theme
 	- auth（betterauth， next-auth）

@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Check, Pencil, Star, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 interface PricingTier {
     name: string;
@@ -23,6 +26,50 @@ function CreativePricing({
     description?: string;
     tiers: PricingTier[];
 }) {
+    const { data: session } = useSession();
+    const router = useRouter();
+    const pathname = usePathname();
+    const locale = pathname.split('/')[1] || "";
+
+    const handlePayment = async (tier: PricingTier) => {
+        // 检查登录状态
+        if (!session) {
+            toast.error(locale === "zh" ? "请先登录再进行购买" : "Please login before making a purchase");
+            router.push(`/auth/signin?callbackUrl=${encodeURIComponent(pathname)}`);
+            return;
+        }
+
+        try {
+            // 调用 Stripe API 创建支付会话
+            const response = await fetch("/api/stripe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    price: tier.price,
+                    email: session.user?.email,
+                    productName: `${tier.name} - Creative Plan`,
+                    successUrl: `${window.location.origin}/${locale}/orders?session_id={CHECKOUT_SESSION_ID}&amount=${tier.price}`,
+                    cancelUrl: `${window.location.origin}/${locale}/#pricing`,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || (locale === "zh" ? "支付请求失败" : "Payment request failed"));
+            }
+
+            const { url } = await response.json();
+            if (url) {
+                window.location.href = url;
+            } else {
+                throw new Error(locale === "zh" ? "未收到结账 URL" : "No checkout URL received");
+            }
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : (locale === "zh" ? "支付失败，请重试" : "Payment failed. Please try again."));
+        }
+    };
     return (
         <div className="w-full max-w-6xl mx-auto px-4">
             <div className="text-center space-y-6 mb-16">
@@ -132,6 +179,7 @@ function CreativePricing({
                             </div>
 
                             <Button
+                                onClick={() => handlePayment(tier)}
                                 className={cn(
                                     "w-full h-12 font-handwritten text-lg relative",
                                     "border-2 border-zinc-900 dark:border-white",
@@ -155,7 +203,7 @@ function CreativePricing({
                                           ]
                                 )}
                             >
-                                Get Started
+                                {!session ? "Sign in to Purchase" : "Get Started"}
                             </Button>
                         </div>
                     </div>
