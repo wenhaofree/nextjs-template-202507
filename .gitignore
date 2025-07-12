@@ -38,6 +38,7 @@ yarn-error.log*
 .claude/
 bun.lock
 pnpm-lock.yaml
+package-lock.json
 
 # vercel
 .vercel
