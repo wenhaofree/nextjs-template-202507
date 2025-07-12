@@ -22,6 +22,9 @@ export * from "./ui/sheet"
 // Magic UI Components
 export * from "./magicui"
 
+// Animate UI Components
+export * from "./animate-ui"
+
 // Tailark Components
 export * from "./tailark"
 
