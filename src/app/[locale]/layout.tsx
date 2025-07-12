@@ -52,15 +52,15 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-        <RootProvider
-          i18n={{
-            locale,
-            locales,
-            translations: { en, zh }[locale],
-          }}
-        >
-          {children}
-        </RootProvider>
+
+  // Validate locale
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  // Enable static rendering
+  setRequestLocale(locale);
+
   return (
     <Providers>
       <NextIntlClientProvider>
@@ -68,7 +68,7 @@ export default async function LocaleLayout({
           i18n={{
             locale,
             locales,
-            translations: { zh }[locale],
+            translations: { en, zh }[locale],
           }}
         >
           {children}

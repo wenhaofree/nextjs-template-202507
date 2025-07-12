@@ -2,6 +2,7 @@ import React from "react";
 import { Menu } from "lucide-react";
 import { AuthStatus } from "@/components/auth/auth-status";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 
 import {
   Accordion,
@@ -100,6 +101,7 @@ const NavigationBar = ({
           </div>
           <div className="flex gap-2">
             <LanguageSwitcher />
+            <ThemeSwitcher />
             <AuthStatus />
           </div>
         </nav>
@@ -151,6 +153,10 @@ const NavigationBar = ({
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">Language</span>
                       <LanguageSwitcher />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Theme</span>
+                      <ThemeSwitcher />
                     </div>
                     <AuthStatus />
                   </div>
