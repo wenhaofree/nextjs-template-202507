@@ -264,6 +264,7 @@ const buttonVariants = cva(
 - 拆分入门版，标准版，高级版代码仓库
 	- 优先拆分分支，实现不同仓库的功能以及官网页面；
 
+## 分支说明
 starter功能：
 - 入门基础功能
 
@@ -273,3 +274,6 @@ ToDo-standard功能：
 ToDo-Premium功能：
 - AI功能放在高级版本
 - vercel
+
+office-官网优化
+demo-标准版
