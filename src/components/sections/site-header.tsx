@@ -15,7 +15,7 @@ const SiteHeader = () => {
 
   const siteHeaderConfig: NavigationBarProps = {
     logo: {
-      url: "https://www.shipsaas.net",
+      url: "/",
       src: "/logo.png",
       alt: t('logo.alt'),
       title: t('logo.title'),
@@ -23,7 +23,7 @@ const SiteHeader = () => {
     menu: [
       {
         title: t('menu.home'),
-        url: "https://www.shipsaas.net",
+        url: "/",
       },
       {
         title: t('menu.products'),
