@@ -12,13 +12,15 @@ import {
   CreditCard,
   Download,
   Calendar,
-  DollarSign,
   AlertCircle,
   CheckCircle,
   Loader2,
-  Package
+  Package,
+  ExternalLink,
+  Play
 } from "lucide-react"
 import { format } from "date-fns"
+import { GitHubInviteModal } from "@/components/ui/github-invite-modal"
 
 interface Order {
   id: number
@@ -29,6 +31,7 @@ interface Order {
   productName: string
   currency: string
   paidAt: string | null
+  orderDetail?: string
 }
 
 function BillingContent() {
@@ -37,6 +40,9 @@ function BillingContent() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [activatingOrders, setActivatingOrders] = useState<Set<string>>(new Set())
+  const [githubModalOpen, setGithubModalOpen] = useState(false)
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
 
   // Check for payment success parameters
   const sessionId = searchParams.get('session_id')
@@ -76,6 +82,87 @@ function BillingContent() {
     }
   }, [session])
 
+  // Handle order activation
+  const handleActivateOrder = async (orderNo: string) => {
+    try {
+      setActivatingOrders(prev => new Set(prev).add(orderNo))
+
+      const response = await fetch("/api/orders/activate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ orderNo }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to activate order")
+      }
+
+      await response.json()
+
+      // Update the order status in the local state
+      setOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.orderNo === orderNo
+            ? { ...order, status: 'activated' }
+            : order
+        )
+      )
+
+      // Find the activated order and open GitHub invitation modal
+      const activatedOrder = orders.find(order => order.orderNo === orderNo)
+      if (activatedOrder) {
+        setSelectedOrder(activatedOrder)
+        setGithubModalOpen(true)
+      }
+
+    } catch (error) {
+      console.error("Error activating order:", error)
+      alert("Failed to activate order. Please try again.")
+    } finally {
+      setActivatingOrders(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(orderNo)
+        return newSet
+      })
+    }
+  }
+
+  const handleCloseGithubModal = () => {
+    setGithubModalOpen(false)
+    setSelectedOrder(null)
+  }
+
+  // Handle manual GitHub invitation for activated orders
+  const handleSendGithubInvitation = (order: Order) => {
+    setSelectedOrder(order)
+    setGithubModalOpen(true)
+  }
+
+  const canActivateOrder = (order: Order) => {
+    return order.status.toLowerCase() === 'paid' && order.paidAt
+  }
+
+  const isOrderActivating = (orderNo: string) => {
+    return activatingOrders.has(orderNo)
+  }
+
+  const getGitHubInfo = (order: Order) => {
+    if (!order.orderDetail) return null
+    try {
+      const detail = JSON.parse(order.orderDetail)
+      return {
+        githubUsername: detail.githubUsername,
+        repositoryName: detail.repositoryName,
+        invitationSentAt: detail.invitationSentAt
+      }
+    } catch {
+      return null
+    }
+  }
+
   if (status === "loading" || loading) {
     return (
       <div className="space-y-6">
@@ -104,6 +191,8 @@ function BillingContent() {
     switch (status) {
       case 'paid':
         return <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Paid</Badge>
+      case 'activated':
+        return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Activated</Badge>
       case 'pending':
         return <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pending</Badge>
       case 'failed':
@@ -152,21 +241,21 @@ function BillingContent() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-lg font-semibold">
-                    {orders.find(order => order.status === 'paid')?.productName || 'No Active Plan'}
+                    {orders.find(order => order.status === 'paid' || order.status === 'activated')?.productName || 'No Active Plan'}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {orders.find(order => order.status === 'paid')
-                      ? `Purchased • ${orders.filter(order => order.status === 'paid').length} order(s) completed`
+                    {orders.find(order => order.status === 'paid' || order.status === 'activated')
+                      ? `Purchased • ${orders.filter(order => order.status === 'paid' || order.status === 'activated').length} order(s) completed`
                       : 'No active subscription'
                     }
                   </p>
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold">
-                    ${orders.find(order => order.status === 'paid')?.amount || '0.00'}
+                    ${orders.find(order => order.status === 'paid' || order.status === 'activated')?.amount || '0.00'}
                   </div>
-                  <Badge variant={orders.find(order => order.status === 'paid') ? "default" : "secondary"}>
-                    {orders.find(order => order.status === 'paid') ? "Active" : "No Plan"}
+                  <Badge variant={orders.find(order => order.status === 'paid' || order.status === 'activated') ? "default" : "secondary"}>
+                    {orders.find(order => order.status === 'paid' || order.status === 'activated') ? "Active" : "No Plan"}
                   </Badge>
                 </div>
               </div>
@@ -175,11 +264,11 @@ function BillingContent() {
 
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{orders.filter(order => order.status === 'paid').length}</div>
-                  <p className="text-sm text-muted-foreground">Paid Orders</p>
+                  <div className="text-2xl font-bold">{orders.filter(order => order.status === 'paid' || order.status === 'activated').length}</div>
+                  <p className="text-sm text-muted-foreground">Active Orders</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">${orders.reduce((sum, order) => order.status === 'paid' ? sum + order.amount : sum, 0).toFixed(2)}</div>
+                  <div className="text-2xl font-bold">${orders.reduce((sum, order) => (order.status === 'paid' || order.status === 'activated') ? sum + order.amount : sum, 0).toFixed(2)}</div>
                   <p className="text-sm text-muted-foreground">Total Spent</p>
                 </div>
                 <div className="text-center">
@@ -196,9 +285,9 @@ function BillingContent() {
 
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => window.location.href = '/#pricing'}>
-              {orders.find(order => order.status === 'paid') ? 'Upgrade Plan' : 'Choose Plan'}
+              {orders.find(order => order.status === 'paid' || order.status === 'activated') ? 'Upgrade Plan' : 'Choose Plan'}
             </Button>
-            {orders.find(order => order.status === 'paid') && (
+            {orders.find(order => order.status === 'paid' || order.status === 'activated') && (
               <Button variant="outline">Manage Subscription</Button>
             )}
           </div>
@@ -254,32 +343,122 @@ function BillingContent() {
           ) : (
             <div className="space-y-4">
               {orders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">{order.productName}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Order #{order.orderNo} • {format(new Date(order.createdAt), 'MMM dd, yyyy')}
-                      </p>
-                      {order.paidAt && (
-                        <p className="text-xs text-green-600">
-                          Paid on {format(new Date(order.paidAt), 'MMM dd, yyyy')}
+                <div key={order.id} className="border rounded-lg">
+                  <div className="flex items-center justify-between p-4">
+                    <div className="flex items-center gap-4">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">{order.productName}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Order #{order.orderNo} • {format(new Date(order.createdAt), 'MMM dd, yyyy')}
                         </p>
+                        {order.paidAt && (
+                          <p className="text-xs text-green-600">
+                            Paid on {format(new Date(order.paidAt), 'MMM dd, yyyy')}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <p className="font-medium">${order.amount} {order.currency.toUpperCase()}</p>
+                        {getStatusBadge(order.status)}
+                      </div>
+                      {(order.status === 'paid' || order.status === 'activated') && (
+                        <Button variant="ghost" size="icon" title="Download Receipt">
+                          <Download className="h-4 w-4" />
+                        </Button>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <p className="font-medium">${order.amount} {order.currency.toUpperCase()}</p>
-                      {getStatusBadge(order.status)}
+
+                  {/* Activation Section for Paid Orders */}
+                  {canActivateOrder(order) && (
+                    <div className="px-4 pb-4 pt-2 border-t bg-gray-50 dark:bg-gray-800/50">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>Payment confirmed - Ready to activate</span>
+                        </div>
+                        <Button
+                          onClick={() => handleActivateOrder(order.orderNo)}
+                          disabled={isOrderActivating(order.orderNo)}
+                          size="sm"
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                        >
+                          {isOrderActivating(order.orderNo) ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Activating...
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-4 h-4 mr-2" />
+                              Activate Order
+                            </>
+                          )}
+                        </Button>
+                      </div>
                     </div>
-                    {order.status === 'paid' && (
-                      <Button variant="ghost" size="icon" title="Download Receipt">
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
+                  )}
+
+                  {/* GitHub Access Info for Activated Orders */}
+                  {order.status === 'activated' && (
+                    <div className="px-4 pb-4 pt-2 border-t bg-green-50 dark:bg-green-900/20">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                          <CheckCircle className="w-4 h-4" />
+                          <span className="font-medium">Order Activated</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleSendGithubInvitation(order)}
+                            className="text-xs bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+                          >
+                            <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            Send GitHub Invitation
+                          </Button>
+                          {getGitHubInfo(order)?.repositoryName && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => window.open(`https://github.com/ShipSaaSCo/${getGitHubInfo(order)?.repositoryName}`, '_blank')}
+                              className="text-xs"
+                            >
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              View Repository
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                      <div className="mt-2 space-y-1">
+                        {getGitHubInfo(order)?.githubUsername && (
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            GitHub User: <span className="font-mono">{getGitHubInfo(order)?.githubUsername}</span>
+                          </p>
+                        )}
+                        {getGitHubInfo(order)?.repositoryName && (
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            Repository: <span className="font-mono">ShipSaaSCo/{getGitHubInfo(order)?.repositoryName}</span>
+                          </p>
+                        )}
+                        {getGitHubInfo(order)?.invitationSentAt && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            Invitation sent: {format(new Date(getGitHubInfo(order)?.invitationSentAt!), 'MMM dd, yyyy HH:mm')}
+                          </p>
+                        )}
+                        {!getGitHubInfo(order)?.githubUsername && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            GitHub repository access has been granted. Check your GitHub notifications for the invitation.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -312,6 +491,16 @@ function BillingContent() {
           </div>
         </CardContent>
       </Card>
+
+      {/* GitHub Invite Modal */}
+      {selectedOrder && (
+        <GitHubInviteModal
+          isOpen={githubModalOpen}
+          onClose={handleCloseGithubModal}
+          orderNo={selectedOrder.orderNo}
+          productName={selectedOrder.productName}
+        />
+      )}
     </div>
   )
 }

@@ -68,13 +68,13 @@ export async function POST(request: Request) {
     
     console.log(`Activating order ${orderNo} for user ${user.email}`);
 
-    // Update order status to activated (you might want to add this status to your schema)
+    // Update order status to activated
     await prisma.order.update({
       where: {
         id: order.id,
       },
       data: {
-        // You can add an 'activated' status or use orderDetail to track activation
+        status: 'activated',
         orderDetail: JSON.stringify({
           activated: true,
           activatedAt: new Date().toISOString(),

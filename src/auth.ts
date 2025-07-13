@@ -1,5 +1,7 @@
 import NextAuth from "next-auth"
 import type { AuthOptions } from "next-auth"
+import type { Session, User } from "next-auth"
+import type { JWT } from "next-auth/jwt"
 import { getServerSession } from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
@@ -7,6 +9,97 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma, findUserWithPassword } from '@/lib/prisma'
 import { compare } from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
+import { headers } from 'next/headers'
+import { jwtDecode } from "jwt-decode"
+
+// 获取客户端IP地址
+async function getClientIP(): Promise<string> {
+  try {
+    const headersList = await headers();
+    const forwarded = headersList.get('x-forwarded-for');
+    const realIP = headersList.get('x-real-ip');
+
+    if (forwarded) {
+      return forwarded.split(',')[0].trim();
+    }
+    if (realIP) {
+      return realIP;
+    }
+    return '127.0.0.1';
+  } catch (error) {
+    console.warn('Failed to get client IP:', error);
+    return '127.0.0.1';
+  }
+}
+
+// Google One Tap凭据提供者
+const googleOneTapProvider = CredentialsProvider({
+  id: "google-one-tap",
+  name: "Google One Tap",
+  credentials: {
+    credential: { type: "text" }
+  },
+  async authorize(credentials) {
+    try {
+      if (!credentials?.credential) return null;
+
+      // 解码Google提供的JWT令牌
+      const decoded: any = jwtDecode(credentials.credential);
+      const clientIP = await getClientIP();
+
+      // 处理用户信息
+      const userData = {
+        uuid: decoded.sub,
+        email: decoded.email,
+        nickname: decoded.name,
+        avatarUrl: decoded.picture,
+        signinType: 'oauth',
+        signinIp: clientIP,
+        signinProvider: 'google-one-tap',
+        signinOpenid: decoded.sub,
+        createdAt: new Date(),
+      };
+
+      // 查找或创建用户
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          email: decoded.email,
+          signinProvider: 'google-one-tap',
+        },
+      });
+
+      if (existingUser) {
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: {
+            signinIp: clientIP,
+          },
+        });
+        return {
+          id: existingUser.id.toString(),
+          uuid: existingUser.uuid,
+          email: existingUser.email,
+          name: existingUser.nickname,
+          image: existingUser.avatarUrl,
+        };
+      } else {
+        const newUser = await prisma.user.create({
+          data: userData,
+        });
+        return {
+          id: newUser.id.toString(),
+          uuid: newUser.uuid,
+          email: newUser.email,
+          name: newUser.nickname,
+          image: newUser.avatarUrl,
+        };
+      }
+    } catch (error) {
+      console.error('Google One Tap authorization error:', error);
+      return null;
+    }
+  }
+});
 
 const authOptions: AuthOptions = {
   providers: [
@@ -28,6 +121,12 @@ const authOptions: AuthOptions = {
           }),
         ]
       : []),
+
+    // Google One Tap Provider (if enabled)
+    ...(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ONE_TAP_ENABLED === "true"
+      ? [googleOneTapProvider]
+      : []),
+
     // 邮箱密码登录
     CredentialsProvider({
       name: 'credentials',
@@ -144,13 +243,10 @@ const authOptions: AuthOptions = {
 
       return token
     },
-    async session({ session, token }: any) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user && token) {
         (session.user as any).id = token.id as string;
         (session.user as any).uuid = token.uuid as string;
-        session.user.email = token.email as string;
-        session.user.name = token.name as string;
-        session.user.image = token.image as string;
       }
       return session
     },
