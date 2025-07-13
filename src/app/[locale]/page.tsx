@@ -15,9 +15,14 @@ import { ChatGPTFeaturesSection } from "@/components/sections/chatgpt-features";
 import FAQsFour from "@/components/sections/faqs"
 import { Testimonials } from "@/components/sections/Testimonials";
 import CallToAction from "@/components/sections/call-to-action";
+import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
+
+  // 使用平滑滚动 hook
+  useSmoothScroll();
+
   return (
     <>
       <HeroSection
@@ -56,14 +61,24 @@ export default function LocaleHomePage() {
       }}
     />
 
-    <TechStack />
-    <FeatureInstruction />
-    <AIFeaturesSection />
+    <section id="tech-stack">
+      <TechStack />
+    </section>
+    <section id="features">
+      <FeatureInstruction />
+      <AIFeaturesSection />
     <ChatGPTFeaturesSection />
     <FeatureChose />
-    <Prices />
-    <Testimonials />
-    <FAQsFour />
+    </section>
+    <section id="pricing">
+      <Prices />
+    </section>
+    <section id="testimonials">
+      <Testimonials />
+    </section>
+    <section id="faq">
+      <FAQsFour />
+    </section>
     <CallToAction />
     </>
   )
