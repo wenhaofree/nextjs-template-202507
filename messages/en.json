@@ -159,6 +159,48 @@
       "privacy": "Data & Privacy"
     }
   },
+  "Features": {
+    "header": {
+      "badge": "SaaS Solutions. Real Results.",
+      "title": "What is ShipSaaS?",
+      "subtitle": "The Complete SaaS Development Platform"
+    },
+    "items": {
+      "rapidDevelopment": {
+        "title": "Rapid SaaS Development",
+        "description": "ShipSaaS provides a complete toolkit for building and launching SaaS applications quickly. From authentication to payments, everything is pre-built and ready to use."
+      },
+      "scalableArchitecture": {
+        "title": "Scalable Architecture",
+        "description": "Built with modern technologies and best practices, ShipSaaS ensures your application can scale from startup to enterprise level with confidence."
+      },
+      "productionReady": {
+        "title": "Production-Ready Features",
+        "description": "Get essential SaaS features out of the box: user management, billing, analytics, and more. Focus on your unique value proposition, not infrastructure."
+      }
+    }
+  },
+  "WhyChooseShipSaaS": {
+    "header": {
+      "badge": "Why Choose Us. Proven Success.",
+      "title": "Why Choose ShipSaaS?",
+      "subtitle": "The Smart Choice for Modern SaaS Development"
+    },
+    "items": {
+      "timeToMarket": {
+        "title": "Faster Time to Market",
+        "description": "Launch your SaaS product 10x faster with our pre-built components and templates. Skip months of development and focus on what makes your product unique."
+      },
+      "costEffective": {
+        "title": "Cost-Effective Solution",
+        "description": "Save thousands in development costs with our comprehensive starter kit. Get enterprise-grade features without the enterprise-grade price tag."
+      },
+      "provenReliability": {
+        "title": "Proven & Reliable",
+        "description": "Built on battle-tested technologies and patterns used by successful SaaS companies. Reduce technical debt and ensure long-term maintainability."
+      }
+    }
+  },
   "Footer": {
     "description": "Build your next project with our premium components.",
     "links": {

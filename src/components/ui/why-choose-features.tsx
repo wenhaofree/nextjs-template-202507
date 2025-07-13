@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
 
-
-interface FeaturesProps {
+interface WhyChooseFeaturesProps {
   features: {
     id: number;
     icon: React.ElementType;
@@ -19,17 +18,17 @@ interface FeaturesProps {
   progressGradientDark?: string;
 }
 
-export function Features({
+export function WhyChooseFeatures({
   features,
-  primaryColor,
-  progressGradientLight,
-  progressGradientDark,
-}: FeaturesProps) {
+  primaryColor = "emerald-500",
+  progressGradientLight = "bg-gradient-to-r from-emerald-400 to-emerald-500",
+  progressGradientDark = "bg-gradient-to-r from-emerald-300 to-emerald-400",
+}: WhyChooseFeaturesProps) {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const t = useTranslations('Features');
+  const t = useTranslations('WhyChooseShipSaaS');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -46,7 +45,7 @@ export function Features({
         setProgress(0);
       }, 200);
     }
-  }, [progress]);
+  }, [progress, features.length]);
 
   useEffect(() => {
     const activeFeatureElement = featureRefs.current[currentFeature];
@@ -76,7 +75,7 @@ export function Features({
         {/* Header */}
         <div className="text-center mb-16">
           <span
-            className={`text-sky-500 font-semibold text-sm uppercase tracking-wider`}
+            className={`text-${primaryColor} font-semibold text-sm uppercase tracking-wider`}
           >
             {t('header.badge')}
           </span>
@@ -88,7 +87,7 @@ export function Features({
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 lg:gap-16 gap-8   items-center">
+        <div className="grid lg:grid-cols-2 lg:gap-16 gap-8 items-center">
           {/* Left Side - Features with Progress Lines */}
           <div
             ref={containerRef}
@@ -124,8 +123,8 @@ export function Features({
                       p-3  hidden md:block rounded-full transition-all duration-300
                       ${
                         isActive
-                          ? `bg-sky-500 text-white`
-                          : `bg-sky-500/10 dark:bg-black/80 text-sky-500`
+                          ? `bg-${primaryColor} text-white`
+                          : `bg-${primaryColor}/10 dark:bg-black/80 text-${primaryColor}`
                       }
                     `}
                     >
@@ -158,7 +157,7 @@ export function Features({
                       >
                         {feature.description}
                       </p>
-                      <div className="mt-4 bg-white dark:bg-black/80 rounded-sm   h-1 overflow-hidden">
+                      <div className="mt-4 bg-white dark:bg-black/80 rounded-sm h-1 overflow-hidden">
                         {isActive && (
                           <motion.div
                             className={`h-full ${progressGradientLight} dark:${progressGradientDark}`}

@@ -159,6 +159,48 @@
       "privacy": "数据和隐私"
     }
   },
+  "Features": {
+    "header": {
+      "badge": "SaaS 解决方案。真实成果。",
+      "title": "什么是 ShipSaaS？",
+      "subtitle": "完整的 SaaS 开发平台"
+    },
+    "items": {
+      "rapidDevelopment": {
+        "title": "快速 SaaS 开发",
+        "description": "ShipSaaS 提供了构建和启动 SaaS 应用程序的完整工具包。从身份验证到支付，一切都已预构建并可立即使用。"
+      },
+      "scalableArchitecture": {
+        "title": "可扩展架构",
+        "description": "采用现代技术和最佳实践构建，ShipSaaS 确保您的应用程序能够从初创公司扩展到企业级别，充满信心。"
+      },
+      "productionReady": {
+        "title": "生产就绪功能",
+        "description": "开箱即用的基本 SaaS 功能：用户管理、计费、分析等。专注于您的独特价值主张，而非基础设施。"
+      }
+    }
+  },
+  "WhyChooseShipSaaS": {
+    "header": {
+      "badge": "为什么选择我们。经验证的成功。",
+      "title": "为什么选择 ShipSaaS？",
+      "subtitle": "现代 SaaS 开发的明智选择"
+    },
+    "items": {
+      "timeToMarket": {
+        "title": "更快的上市时间",
+        "description": "使用我们预构建的组件和模板，让您的 SaaS 产品上市速度提升 10 倍。跳过数月的开发时间，专注于让您的产品独一无二的特性。"
+      },
+      "costEffective": {
+        "title": "成本效益解决方案",
+        "description": "通过我们的综合启动套件节省数千元的开发成本。以非企业级的价格获得企业级功能。"
+      },
+      "provenReliability": {
+        "title": "经过验证且可靠",
+        "description": "基于成功 SaaS 公司使用的经过实战检验的技术和模式构建。减少技术债务，确保长期可维护性。"
+      }
+    }
+  },
   "Footer": {
     "description": "使用我们的高级组件构建您的下一个项目。",
     "links": {

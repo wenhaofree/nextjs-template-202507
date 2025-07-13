@@ -1,42 +1,44 @@
+"use client";
+
 import { Features } from "@/components/ui/features";
-
-import { Brain, BrainCog } from "lucide-react";
-
-const features= [
-  {
-    id: 1,
-    icon: BrainCog,
-    title: "Who Are AI Experts?",
-    description:
-      "AI Experts at BCA Labs are domain-specific mentors trained to guide you in tech, coding, and academics.",
-    image: "https://bcalabs.org/companions.jpg",
-  },
-  {
-    id: 2,
-    icon: BrainCog,
-    title: "Why AI Experts?",
-    description:
-      "Get instant, accurate help from experts—whether it's for coding or understanding tough concepts. They are trained on their expertise.",
-    image: "https://bcalabs.org/companions_group_1.jpg",
-  },
-  {
-    id: 3,
-    icon: Brain,
-    title: "AI-Powered Learning",
-    description:
-      "Experience personalized, AI-driven learning tailored for BCA, BBA, and other students.",
-    image: "https://bcalabs.org/companions_group_2.jpg",
-  },
-];
+import { useTranslations } from 'next-intl';
+import { Rocket, Settings, Zap } from "lucide-react";
 
 const FeatureInstruction = () => {
+  const t = useTranslations('Features');
+
+  const features = [
+    {
+      id: 1,
+      icon: Rocket,
+      title: t('items.rapidDevelopment.title'),
+      description: t('items.rapidDevelopment.description'),
+      image: "https://bcalabs.org/companions.jpg",
+    },
+    {
+      id: 2,
+      icon: Settings,
+      title: t('items.scalableArchitecture.title'),
+      description: t('items.scalableArchitecture.description'),
+      image: "https://bcalabs.org/companions_group_1.jpg",
+    },
+    {
+      id: 3,
+      icon: Zap,
+      title: t('items.productionReady.title'),
+      description: t('items.productionReady.description'),
+      image: "https://bcalabs.org/companions_group_2.jpg",
+    },
+  ];
+
   return (
-  <Features 
-  primaryColor="sky-500"
-  progressGradientLight="bg-gradient-to-r from-sky-400 to-sky-500"
-  progressGradientDark="bg-gradient-to-r from-sky-300 to-sky-400" 
-  features={features} />
-  )
+    <Features
+      primaryColor="sky-500"
+      progressGradientLight="bg-gradient-to-r from-sky-400 to-sky-500"
+      progressGradientDark="bg-gradient-to-r from-sky-300 to-sky-400"
+      features={features}
+    />
+  );
 };
 
 export { FeatureInstruction };
