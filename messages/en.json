@@ -36,6 +36,7 @@
     },
     "menu": {
       "home": "Home",
+      "docs": "Documentation",
       "aiTools": "AI Tools",
       "aiChat": "AI Chat",
       "imageGeneration": "Image Generator",
@@ -54,6 +55,7 @@
       "termsOfService": "Terms of Service"
     },
     "menuDescriptions": {
+      "docs": "Complete guides and API references to help you get started with ShipSaaS",
       "aiChat": "Chat with AI assistant powered by ChatGPT for intelligent conversations",
       "imageGeneration": "Generate stunning images from text descriptions using AI technology",
       "blog": "The latest industry news, updates, and info",
