@@ -8,7 +8,8 @@
     "description": "The complete Next.js boilerplate for building profitable SaaS, packed with AI, auth, payments, i18n, newsletter, dashboard, blog, docs, blocks, themes, SEO and more.",
     "actions": {
       "getStarted": "Get ShipSaaS",
-      "github": "See Demo"
+      "readDocs": "Read Documentation",
+      "seeDemo": "See Demo"
     },
     "image": {
       "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform"

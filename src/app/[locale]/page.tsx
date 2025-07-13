@@ -25,7 +25,7 @@ export default function LocaleHomePage() {
         text: t('badge.text'),
         action: {
           text: t('badge.action'),
-          href: "/docs",
+          href: "/pricing",
         },
       }}
       title={t('title')}
@@ -33,14 +33,20 @@ export default function LocaleHomePage() {
       actions={[
         {
           text: t('actions.getStarted'),
-          href: "/docs/getting-started",
+          href: "/#pricing",
           variant: "default",
         },
         {
-          text: t('actions.github'),
-          href: "https://github.com/your-repo",
+          text: t('actions.readDocs'),
+          href: "/docs",
+          variant: "outline",
+          icon: <Icons.book className="h-5 w-5" />,
+        },
+        {
+          text: t('actions.seeDemo'),
+          href: "https://demo.shipsaas.net",
           variant: "link",
-          icon: <Icons.gitHub className="h-5 w-5" />,
+          icon: <Icons.play className="h-5 w-5" />,
         },
       ]}
       image={{

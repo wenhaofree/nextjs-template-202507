@@ -8,7 +8,8 @@
     "description": "完整的 Next.js 样板，用于构建盈利的 SaaS，集成了 AI、身份验证、支付、国际化、新闻通讯、仪表板、博客、文档、组件块、主题、SEO 等功能。",
     "actions": {
       "getStarted": "获取 ShipSaaS",
-      "github": "查看演示"
+      "readDocs": "阅读文档",
+      "seeDemo": "查看演示"
     },
     "image": {
       "alt": "ShipSaaS 仪表板预览 - 完整的 SaaS 开发平台"

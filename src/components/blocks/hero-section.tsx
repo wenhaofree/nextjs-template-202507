@@ -91,7 +91,7 @@ export function HeroSection({
           </p>
 
           {/* Actions */}
-          <div className="relative z-10 flex animate-appear-normal justify-center gap-4 [animation-fill-mode:both]" style={{ animationDelay: '300ms' }}>
+          <div className="relative z-10 flex animate-appear-normal justify-center gap-4 flex-wrap [animation-fill-mode:both]" style={{ animationDelay: '300ms' }}>
             {actions.map((action, index) => (
               <Button
                 key={index}
@@ -99,6 +99,7 @@ export function HeroSection({
                 size="lg"
                 className={cn(
                   action.variant === "default" && "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 text-base",
+                  action.variant === "outline" && "border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950 font-medium px-6 py-3 text-base",
                   action.variant === "link" && "text-muted-foreground hover:text-foreground font-medium"
                 )}
                 asChild
