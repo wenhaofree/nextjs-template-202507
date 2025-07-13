@@ -28,6 +28,14 @@ export default function RootLayout({
   // 为了避免嵌套HTML标签，这里提供基础结构
   return (
     <html suppressHydrationWarning>
+      <head>
+        {/* Umami Analytics */}
+        <script
+          defer
+          src="https://umami.wenhaofree.com/script.js"
+          data-website-id="9bf16fcb-74c7-4fa1-bf5e-63694131abec"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
