@@ -4,9 +4,20 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+// 延迟初始化 Prisma 客户端，避免构建时错误
+let _prisma: PrismaClient | undefined
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop) {
+    if (!_prisma) {
+      _prisma = globalForPrisma.prisma ?? new PrismaClient()
+      if (process.env.NODE_ENV !== 'production') {
+        globalForPrisma.prisma = _prisma
+      }
+    }
+    return (_prisma as any)[prop]
+  }
+})
 
 // 扩展类型，处理password字段问题
 export type UserWithPassword = {

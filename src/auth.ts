@@ -4,7 +4,16 @@ import { getServerSession } from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { prisma, findUserWithPassword } from '@/lib/prisma'
+// 动态导入 Prisma，避免构建时初始化
+const getPrisma = async () => {
+  const { prisma } = await import('@/lib/prisma')
+  return prisma
+}
+
+const getFindUserWithPassword = async () => {
+  const { findUserWithPassword } = await import('@/lib/prisma')
+  return findUserWithPassword
+}
 import { compare } from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -41,6 +50,7 @@ const authOptions: AuthOptions = {
         }
 
         // 使用辅助函数查找用户，包含password字段
+        const findUserWithPassword = await getFindUserWithPassword()
         const user = await findUserWithPassword(credentials.email, 'credentials');
 
         if (!user || !user.password) {
@@ -92,6 +102,7 @@ const authOptions: AuthOptions = {
       // 如果是OAuth登录，处理用户信息
       if (user && account && account.provider !== 'credentials') {
         try {
+          const prisma = await getPrisma()
           // 查找或创建用户
           let dbUser = await prisma.user.findFirst({
             where: {
