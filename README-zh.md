@@ -214,8 +214,8 @@ const buttonVariants = cva(
 	- techstack ✅
 	- features ✅
 	- pricing ✅
-	- faq
-	- Testimonials
+	- faq ✅
+	- Testimonials ✅
 	- cat
 	- stats
 	- showcase
@@ -223,10 +223,10 @@ const buttonVariants = cva(
 	- footer ✅
 	- dashboard 
 	- docs ✅
-	- blog 
+	- blog ✅
 	- demo页面
 3. 功能组件依赖：
-	- next-theme
+	- next-theme ✅
 	- auth（betterauth， next-auth）
 		- next-auth ✅
 		- google 
@@ -264,3 +264,6 @@ const buttonVariants = cva(
 - 拆分入门版，标准版，高级版代码仓库
 	- 优先拆分分支，实现不同仓库的功能以及官网页面；
 
+ToDo-standard功能：
+- dashboard 页面
+	- 订单

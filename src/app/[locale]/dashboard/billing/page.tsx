@@ -1,26 +1,132 @@
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
+"use client"
+
+import { useEffect, useState, Suspense } from "react"
+import { useSession } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { 
-  CreditCard, 
-  Download, 
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import {
+  CreditCard,
+  Download,
   Calendar,
   DollarSign,
-  AlertCircle
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+  Package
 } from "lucide-react"
+import { format } from "date-fns"
 
-export default async function DashboardBillingPage() {
-  const session = await auth()
+interface Order {
+  id: number
+  orderNo: string
+  amount: number
+  status: string
+  createdAt: string
+  productName: string
+  currency: string
+  paidAt: string | null
+}
+
+function BillingContent() {
+  const { data: session, status } = useSession()
+  const searchParams = useSearchParams()
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState(true)
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+
+  // Check for payment success parameters
+  const sessionId = searchParams.get('session_id')
+  const amount = searchParams.get('amount')
+
+  useEffect(() => {
+    if (sessionId && amount) {
+      setShowSuccessAlert(true)
+      // Auto-hide success alert after 10 seconds
+      const timer = setTimeout(() => {
+        setShowSuccessAlert(false)
+      }, 10000)
+      return () => clearTimeout(timer)
+    }
+  }, [sessionId, amount])
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch("/api/orders")
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders")
+        }
+        const data = await response.json()
+        setOrders(data)
+      } catch (error) {
+        console.error("Error fetching orders:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (session) {
+      fetchOrders()
+    }
+  }, [session])
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading billing information...</span>
+        </div>
+      </div>
+    )
+  }
 
   if (!session?.user) {
-    redirect('/auth/signin?callbackUrl=/dashboard/billing')
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-8">
+          <h1 className="text-2xl font-bold mb-4">Please sign in to view billing</h1>
+          <Button onClick={() => window.location.href = '/auth/signin?callbackUrl=/dashboard/billing'}>
+            Sign In
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'paid':
+        return <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Paid</Badge>
+      case 'pending':
+        return <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pending</Badge>
+      case 'failed':
+        return <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Failed</Badge>
+      case 'expired':
+        return <Badge className="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">Expired</Badge>
+      default:
+        return <Badge variant="secondary">{status}</Badge>
+    }
   }
 
   return (
     <div className="space-y-6">
+      {/* Payment Success Alert */}
+      {showSuccessAlert && (
+        <Alert className="border-green-200 bg-green-50 dark:bg-green-950/20">
+          <CheckCircle className="h-4 w-4 text-green-600" />
+          <AlertDescription className="text-green-800 dark:text-green-200">
+            Payment successful! Your order for ${amount} has been processed. You can view the details in your billing history below.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold">Billing</h1>
@@ -41,39 +147,60 @@ export default async function DashboardBillingPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold">Pro Plan</h3>
-              <p className="text-sm text-muted-foreground">
-                Billed monthly • Next billing date: January 15, 2025
-              </p>
+          {orders.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold">
+                    {orders.find(order => order.status === 'paid')?.productName || 'No Active Plan'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {orders.find(order => order.status === 'paid')
+                      ? `Purchased • ${orders.filter(order => order.status === 'paid').length} order(s) completed`
+                      : 'No active subscription'
+                    }
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold">
+                    ${orders.find(order => order.status === 'paid')?.amount || '0.00'}
+                  </div>
+                  <Badge variant={orders.find(order => order.status === 'paid') ? "default" : "secondary"}>
+                    {orders.find(order => order.status === 'paid') ? "Active" : "No Plan"}
+                  </Badge>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="text-center">
+                  <div className="text-2xl font-bold">{orders.filter(order => order.status === 'paid').length}</div>
+                  <p className="text-sm text-muted-foreground">Paid Orders</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">${orders.reduce((sum, order) => order.status === 'paid' ? sum + order.amount : sum, 0).toFixed(2)}</div>
+                  <p className="text-sm text-muted-foreground">Total Spent</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">{orders.length}</div>
+                  <p className="text-sm text-muted-foreground">Total Orders</p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-4">
+              <p className="text-muted-foreground">No subscription plan active</p>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold">$29.99</div>
-              <Badge variant="secondary">Active</Badge>
-            </div>
-          </div>
-          
-          <Separator />
-          
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="text-center">
-              <div className="text-2xl font-bold">85%</div>
-              <p className="text-sm text-muted-foreground">API Usage</p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">12/15</div>
-              <p className="text-sm text-muted-foreground">Team Members</p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">∞</div>
-              <p className="text-sm text-muted-foreground">Projects</p>
-            </div>
-          </div>
-          
+          )}
+
           <div className="flex gap-2">
-            <Button variant="outline">Change Plan</Button>
-            <Button variant="outline">Cancel Subscription</Button>
+            <Button variant="outline" onClick={() => window.location.href = '/#pricing'}>
+              {orders.find(order => order.status === 'paid') ? 'Upgrade Plan' : 'Choose Plan'}
+            </Button>
+            {orders.find(order => order.status === 'paid') && (
+              <Button variant="outline">Manage Subscription</Button>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -109,37 +236,54 @@ export default async function DashboardBillingPage() {
         <CardHeader>
           <CardTitle>Billing History</CardTitle>
           <CardDescription>
-            Download your previous invoices and receipts
+            Your purchase history and order details
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {[
-              { date: "Dec 15, 2024", amount: "$29.99", status: "Paid", invoice: "INV-001" },
-              { date: "Nov 15, 2024", amount: "$29.99", status: "Paid", invoice: "INV-002" },
-              { date: "Oct 15, 2024", amount: "$29.99", status: "Paid", invoice: "INV-003" },
-              { date: "Sep 15, 2024", amount: "$29.99", status: "Paid", invoice: "INV-004" },
-            ].map((invoice, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                <div className="flex items-center gap-4">
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">{invoice.date}</p>
-                    <p className="text-sm text-muted-foreground">{invoice.invoice}</p>
+          {orders.length === 0 ? (
+            <div className="text-center py-8">
+              <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+              <h3 className="text-lg font-semibold mb-2">No orders yet</h3>
+              <p className="text-muted-foreground mb-4">
+                You haven't made any purchases yet. Browse our pricing plans to get started.
+              </p>
+              <Button onClick={() => window.location.href = '/#pricing'}>
+                View Pricing
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {orders.map((order) => (
+                <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-4">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-medium">{order.productName}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Order #{order.orderNo} • {format(new Date(order.createdAt), 'MMM dd, yyyy')}
+                      </p>
+                      {order.paidAt && (
+                        <p className="text-xs text-green-600">
+                          Paid on {format(new Date(order.paidAt), 'MMM dd, yyyy')}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="font-medium">${order.amount} {order.currency.toUpperCase()}</p>
+                      {getStatusBadge(order.status)}
+                    </div>
+                    {order.status === 'paid' && (
+                      <Button variant="ghost" size="icon" title="Download Receipt">
+                        <Download className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <p className="font-medium">{invoice.amount}</p>
-                    <Badge variant="secondary">{invoice.status}</Badge>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <Download className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -169,5 +313,24 @@ export default async function DashboardBillingPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+function BillingPageFallback() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-center py-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Loading billing information...</span>
+      </div>
+    </div>
+  )
+}
+
+export default function DashboardBillingPage() {
+  return (
+    <Suspense fallback={<BillingPageFallback />}>
+      <BillingContent />
+    </Suspense>
   )
 }

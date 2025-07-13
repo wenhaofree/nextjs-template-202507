@@ -51,7 +51,7 @@ function CreativePricing({
                     price: tier.price,
                     email: session.user?.email,
                     productName: `${tier.name} - Creative Plan`,
-                    successUrl: `${window.location.origin}/${locale}/orders?session_id={CHECKOUT_SESSION_ID}&amount=${tier.price}`,
+                    successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${tier.price}`,
                     cancelUrl: `${window.location.origin}/${locale}/#pricing`,
                 }),
             });

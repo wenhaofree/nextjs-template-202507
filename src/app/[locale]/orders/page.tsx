@@ -25,6 +25,24 @@ export default function OrdersPage() {
   const [activatingOrders, setActivatingOrders] = useState<Set<string>>(new Set());
   const { data: session } = useSession();
 
+  // Redirect to dashboard billing page if user is authenticated
+  useEffect(() => {
+    if (session) {
+      // Check if there are URL parameters that should be passed to billing page
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session_id');
+      const amount = urlParams.get('amount');
+
+      if (sessionId && amount) {
+        // Redirect to billing page with payment success parameters
+        window.location.href = `/dashboard/billing?session_id=${sessionId}&amount=${amount}`;
+      } else {
+        // Redirect to billing page without parameters
+        window.location.href = '/dashboard/billing';
+      }
+    }
+  }, [session]);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {

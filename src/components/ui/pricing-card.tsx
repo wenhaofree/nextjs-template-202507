@@ -77,7 +77,7 @@ export function PricingCard({ tier, paymentFrequency }: PricingCardProps) {
           price,
           email: session.user?.email,
           productName: `${tier.name} - ShipSaas`,
-          successUrl: `${window.location.origin}/${locale}/orders?session_id={CHECKOUT_SESSION_ID}&amount=${price}`,
+          successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${price}`,
           cancelUrl: `${window.location.origin}/${locale}/#pricing`,
         }),
       })

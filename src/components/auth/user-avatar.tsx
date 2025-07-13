@@ -76,14 +76,20 @@ export function UserAvatar({ showName = false, size = "md" }: UserAvatarProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <a href="/profile">
+          <a href="/dashboard/profile">
             <Icons.user className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </a>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <Icons.settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
+        </DropdownMenuItem> */}
+        <DropdownMenuItem asChild>
+          <a href="/dashboard/billing"> 
+          <Icons.settings className="mr-2 h-4 w-4" />
+          <span>Billing</span>
+          </a>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

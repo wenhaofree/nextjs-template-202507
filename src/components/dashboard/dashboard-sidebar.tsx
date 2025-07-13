@@ -47,12 +47,12 @@ export const DashboardSidebar = () => {
   }
 
   const sidebarItems: SidebarItem[] = [
-    {
-      title: t('navigation.dashboard'),
-      href: "/dashboard",
-      icon: Home,
-      description: t('subtitle')
-    },
+    // {
+    //   title: t('navigation.dashboard'),
+    //   href: "/dashboard",
+    //   icon: Home,
+    //   description: t('subtitle')
+    // },
     {
       title: t('navigation.profile'),
       href: "/dashboard/profile",
@@ -71,18 +71,18 @@ export const DashboardSidebar = () => {
       icon: Shield,
       description: t('security.subtitle')
     },
-    {
-      title: t('navigation.notifications'),
-      href: "/dashboard/notifications",
-      icon: Bell,
-      description: t('notifications.subtitle')
-    },
-    {
-      title: t('navigation.settings'),
-      href: "/dashboard/settings",
-      icon: Settings,
-      description: t('settings.subtitle')
-    }
+    // {
+    //   title: t('navigation.notifications'),
+    //   href: "/dashboard/notifications",
+    //   icon: Bell,
+    //   description: t('notifications.subtitle')
+    // },
+    // {
+    //   title: t('navigation.settings'),
+    //   href: "/dashboard/settings",
+    //   icon: Settings,
+    //   description: t('settings.subtitle')
+    // }
   ]
 
   return (
