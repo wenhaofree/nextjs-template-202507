@@ -1,17 +1,17 @@
 {
   "HomePage": {
     "badge": {
-      "text": "Introducing our new components",
-      "action": "Learn more"
+      "text": "🚀 Special Gift: 20% off",
+      "action": "Get ShipSaaS"
     },
-    "title": "Build faster with beautiful components",
-    "description": "Premium UI components built with React and Tailwind CSS. Save time and ship your next project faster with our ready-to-use components.",
+    "title": "Make Your AI SaaS Product in a weekend",
+    "description": "The complete Next.js boilerplate for building profitable SaaS, packed with AI, auth, payments, i18n, newsletter, dashboard, blog, docs, blocks, themes, SEO and more.",
     "actions": {
-      "getStarted": "Get Started",
-      "github": "GitHub"
+      "getStarted": "Get ShipSaaS",
+      "github": "See Demo"
     },
     "image": {
-      "alt": "UI Components Preview"
+      "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform"
     }
   },
   "Navigation": {

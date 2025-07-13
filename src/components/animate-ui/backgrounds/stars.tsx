@@ -21,9 +21,12 @@ type StarLayerProps = HTMLMotionProps<'div'> & {
 
 function generateStars(count: number, starColor: string) {
   const shadows: string[] = [];
+  // 使用确定性的伪随机数生成器避免水合错误
   for (let i = 0; i < count; i++) {
-    const x = Math.floor(Math.random() * 4000) - 2000;
-    const y = Math.floor(Math.random() * 4000) - 2000;
+    // 使用索引作为种子生成确定性的位置
+    const seed = i * 9301 + 49297;
+    const x = Math.floor((seed % 4000)) - 2000;
+    const y = Math.floor(((seed * 233) % 4000)) - 2000;
     shadows.push(`${x}px ${y}px ${starColor}`);
   }
   return shadows.join(', ');

@@ -83,13 +83,13 @@ const NavigationBar = ({
   },
 }: NavigationBarProps) => {
   return (
-    <section className="py-4">
-      <div className="container">
+    <section className="py-4 relative z-50 glass border-b">
+      <div className="container-wide">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
-            <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="w-8" alt={logo.alt} />
-              <span className="text-lg font-semibold">{logo.title}</span>
+            <a href={logo.url} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <img src={logo.src} className="w-8 h-8 object-contain" alt={logo.alt} />
+              <span className="text-lg font-semibold text-brand-gradient">{logo.title}</span>
             </a>
             <div className="flex items-center">
               <NavigationMenu>

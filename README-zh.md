@@ -244,3 +244,21 @@ const buttonVariants = cva(
 	- animate-ui ✅
 	- vercel ai sdk
 	- ChatGPT
+
+4. ToDo：
+- 企业版内容：
+	- 控制台
+	- 积分系统
+	- API管理系统
+	- 一对一咨询
+- 将支付成功的订单信息整合到dashboard的billion
+	- http://localhost:3000/zh/orders?session_id=cs_test_a1PmZQz2GAgi4O3KQfrBBaaK6r4Ae96ZnTiK0fgwhHGyBEaBmql0SocowB&amount=169
+- 控制台展示
+- 积分展示
+- 营销系统展示
+- demo页面
+- 配置支付功能
+- 营销推广
+- 拆分入门版，标准版，高级版代码仓库
+	- 优先拆分分支，实现不同仓库的功能以及官网页面；
+

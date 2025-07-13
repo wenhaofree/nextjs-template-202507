@@ -1,17 +1,17 @@
 {
   "HomePage": {
     "badge": {
-      "text": "介绍我们的新组件",
-      "action": "了解更多"
+      "text": "🚀 特别优惠：20% 折扣",
+      "action": "获取 ShipSaaS"
     },
-    "title": "使用精美组件更快构建",
-    "description": "使用 React 和 Tailwind CSS 构建的高级 UI 组件。节省时间，使用我们现成的组件更快地发布您的下一个项目。",
+    "title": "在一个周末制作您的 AI SaaS 产品",
+    "description": "完整的 Next.js 样板，用于构建盈利的 SaaS，集成了 AI、身份验证、支付、国际化、新闻通讯、仪表板、博客、文档、组件块、主题、SEO 等功能。",
     "actions": {
-      "getStarted": "开始使用",
-      "github": "GitHub"
+      "getStarted": "获取 ShipSaaS",
+      "github": "查看演示"
     },
     "image": {
-      "alt": "UI 组件预览"
+      "alt": "ShipSaaS 仪表板预览 - 完整的 SaaS 开发平台"
     }
   },
   "Navigation": {

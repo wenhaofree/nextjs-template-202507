@@ -32,7 +32,7 @@ export const AnimatedBeam = forwardRef<SVGSVGElement, AnimatedBeamProps>(
       toRef,
       curvature = 0,
       reverse = false,
-      duration = Math.random() * 3 + 4,
+      duration = 5, // 使用固定值避免水合错误
       delay = 0,
       pathColor = "gray",
       pathWidth = 2,

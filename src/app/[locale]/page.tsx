@@ -6,7 +6,7 @@ import { TechStack } from "@/components/sections/TechStack"
 import { Icons } from "@/components/ui/icons"
 import { Prices } from "@/components/sections/prices"
 import { Footer } from "@/components/sections/Footer"
-import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
+
 import { FeatureInstruction } from "@/components/sections/feature-instroduction";
 import { useTranslations } from 'next-intl';
 import { FeatureChose } from "@/components/sections/feature-chose"
