@@ -7,6 +7,8 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
+import { SiteHeader } from "@/components/sections/site-header";
+import { Footer } from "@/components/sections/Footer"
 
 // 中文翻译
 const zh: Partial<Translations> = {
@@ -71,7 +73,9 @@ export default async function LocaleLayout({
             translations: { en, zh }[locale],
           }}
         >
+          <SiteHeader />
           {children}
+          <Footer />
         </RootProvider>
       </NextIntlClientProvider>
     </Providers>

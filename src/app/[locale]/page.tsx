@@ -20,11 +20,7 @@ export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
   return (
     <>
-
-    <SiteHeader />
-    
-
-    <HeroSection
+      <HeroSection
       badge={{
         text: t('badge.text'),
         action: {
@@ -63,7 +59,6 @@ export default function LocaleHomePage() {
     <Testimonials />
     <FAQsFour />
     <CallToAction />
-    <Footer />
     </>
   )
 }
