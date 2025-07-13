@@ -12,7 +12,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['bcalabs.org'],
+    domains: ['bcalabs.org', 'html.tailus.io'],
   },
   /* config options here */
 };

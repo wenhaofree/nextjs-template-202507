@@ -97,7 +97,7 @@ export const DashboardSidebar = () => {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">M</span>
             </div>
-            <span className="font-semibold">MkSaaS</span>
+            <span className="font-semibold">ShipSaaS</span>
           </Link>
         )}
         <Button
