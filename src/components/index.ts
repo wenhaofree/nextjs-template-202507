@@ -46,7 +46,7 @@ export { PricingSection as PricingSectionBlock } from "./blocks/pricing-section"
 
 // Section Components
 export { CreativePricingDemo } from "./sections/CreativePricingDemo"
-export { DemoOne } from "./sections/DemoOne"
+export { FeatureInstruction } from "./sections/feature-instroduction"
 export { DisplayCardsDemo } from "./sections/DisplayCardsDemo"
 export { Footer } from "./sections/Footer"
 export { Pricing } from "./sections/Pricing"

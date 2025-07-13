@@ -29,7 +29,7 @@ const features= [
   },
 ];
 
-const DemoOne = () => {
+const FeatureChose = () => {
   return (
   <Features 
   primaryColor="sky-500"
@@ -37,8 +37,6 @@ const DemoOne = () => {
   progressGradientDark="bg-gradient-to-r from-sky-300 to-sky-400" 
   features={features} />
   )
-  
-
 };
 
-export { DemoOne };
+export { FeatureChose };

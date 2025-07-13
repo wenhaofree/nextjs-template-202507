@@ -7,8 +7,9 @@ import { Icons } from "@/components/ui/icons"
 import { CreativePricingDemo } from "@/components/sections/CreativePricingDemo"
 import { Footer } from "@/components/sections/Footer"
 import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
-import { DemoOne } from "@/components/sections/DemoOne";
+import { FeatureInstruction } from "@/components/sections/feature-instroduction";
 import { useTranslations } from 'next-intl';
+import { FeatureChose } from "@/components/sections/feature-chose"
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
@@ -49,7 +50,8 @@ export default function LocaleHomePage() {
     />
 
     <TechStack />
-    <DemoOne />
+    <FeatureInstruction />
+    <FeatureChose />
     {/* <DisplayCardsDemo /> */}
     <CreativePricingDemo />
     <Footer />
