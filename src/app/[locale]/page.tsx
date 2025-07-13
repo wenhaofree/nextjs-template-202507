@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { HeroSection } from "@/components/blocks/hero-section"
 import { SiteHeader } from "@/components/sections/site-header"
@@ -25,6 +25,7 @@ export default function LocaleHomePage() {
 
   return (
     <>
+      <SiteHeader />
       <HeroSection
       badge={{
         text: t('badge.text'),
@@ -80,6 +81,7 @@ export default function LocaleHomePage() {
       <FAQsFour />
     </section>
     <CallToAction />
+    <Footer />
     </>
   )
 }
