@@ -201,6 +201,63 @@
       }
     }
   },
+  "Pricing": {
+    "header": {
+      "tag": "简单定价",
+      "title": "选择您的 ShipSaaS 计划",
+      "description": "使用我们的综合开发工具包更快地开始构建您的 SaaS"
+    },
+    "tiers": {
+      "starter": {
+        "name": "基础版",
+        "price": "99",
+        "description": "适合独立开发者和小型项目",
+        "features": [
+          "Next.js 框架",
+          "TailwindCSS 样式",
+          "国际化支持 (i18n)",
+          "Neon 数据库存储",
+          "主题切换 (深色/浅色)",
+          "Google & GitHub 一键登录",
+          "SEO 友好支持",
+          "Stripe 支付集成",
+          "邮件密码重置功能"
+        ]
+      },
+      "professional": {
+        "name": "标准版",
+        "price": "169",
+        "description": "适合成长中的团队和严肃的 SaaS 项目",
+        "popular": true,
+        "features": [
+          "包含基础版所有功能",
+          "文档系统",
+          "博客功能",
+          "MagicUI 组件库",
+          "TailArk UI 库",
+          "Animate-UI 动画",
+          "Vercel AI SDK",
+          "ChatGPT 集成",
+          "高级 UI 组件"
+        ]
+      },
+      "enterprise": {
+        "name": "高级版",
+        "price": "299",
+        "description": "适合大型团队和企业应用",
+        "features": [
+          "包含标准版所有功能",
+          "用户控制台",
+          "后台管理系统",
+          "积分管理系统",
+          "优先技术支持",
+          "自定义集成",
+          "高级分析",
+          "一对一咨询"
+        ]
+      }
+    }
+  },
   "Footer": {
     "description": "使用我们的高级组件构建您的下一个项目。",
     "links": {

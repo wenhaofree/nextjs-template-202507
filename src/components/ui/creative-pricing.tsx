@@ -159,9 +159,9 @@ function CreativePricing({
                                 <span className="text-4xl font-bold text-zinc-900 dark:text-white">
                                     $<NumberTicker value={tier.price} />
                                 </span>
-                                <span className="text-zinc-600 dark:text-zinc-400">
+                                {/* <span className="text-zinc-600 dark:text-zinc-400">
                                     /month
-                                </span>
+                                </span> */}
                             </div>
 
                             <div className="space-y-3 mb-6">

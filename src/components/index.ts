@@ -45,7 +45,7 @@ export { NavigationBar } from "./blocks/navigation-bar"
 export { PricingSection as PricingSectionBlock } from "./blocks/pricing-section"
 
 // Section Components
-export { CreativePricingDemo } from "./sections/CreativePricingDemo"
+export { Prices } from "./sections/prices"
 export { FeatureInstruction } from "./sections/feature-instroduction"
 export { DisplayCardsDemo } from "./sections/DisplayCardsDemo"
 export { Footer } from "./sections/Footer"

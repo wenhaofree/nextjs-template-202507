@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/blocks/hero-section"
 import { SiteHeader } from "@/components/sections/site-header"
 import { TechStack } from "@/components/sections/TechStack"
 import { Icons } from "@/components/ui/icons"
-import { CreativePricingDemo } from "@/components/sections/CreativePricingDemo"
+import { Prices } from "@/components/sections/prices"
 import { Footer } from "@/components/sections/Footer"
 import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
 import { FeatureInstruction } from "@/components/sections/feature-instroduction";
@@ -52,8 +52,7 @@ export default function LocaleHomePage() {
     <TechStack />
     <FeatureInstruction />
     <FeatureChose />
-    {/* <DisplayCardsDemo /> */}
-    <CreativePricingDemo />
+    <Prices />
     <Footer />
     </>
   )

@@ -201,6 +201,63 @@
       }
     }
   },
+  "Pricing": {
+    "header": {
+      "tag": "Simple Pricing",
+      "title": "Choose Your ShipSaaS Plan",
+      "description": "Start building your SaaS faster with our comprehensive development toolkit"
+    },
+    "tiers": {
+      "starter": {
+        "name": "Basic",
+        "price": "99",
+        "description": "Perfect for indie developers and small projects",
+        "features": [
+          "Next.js Framework",
+          "TailwindCSS Styling",
+          "Internationalization (i18n)",
+          "Neon Database Storage",
+          "Theme Switching (Dark/Light)",
+          "Google & GitHub OAuth Login",
+          "SEO-Friendly Support",
+          "Stripe Payment Integration",
+          "Email Password Reset"
+        ]
+      },
+      "professional": {
+        "name": "Standard",
+        "price": "169",
+        "description": "For growing teams and serious SaaS projects",
+        "popular": true,
+        "features": [
+          "Everything in Basic",
+          "Documentation System",
+          "Blog Functionality",
+          "MagicUI Components",
+          "TailArk UI Library",
+          "Animate-UI Animations",
+          "Vercel AI SDK",
+          "ChatGPT Integration",
+          "Advanced UI Components"
+        ]
+      },
+      "enterprise": {
+        "name": "Premium",
+        "price": "299",
+        "description": "For large teams and enterprise applications",
+        "features": [
+          "Everything in Standard",
+          "User Dashboard Console",
+          "Admin Management System",
+          "Points/Credits Management",
+          "Priority Technical Support",
+          "Custom Integrations",
+          "Advanced Analytics",
+          "1-on-1 Consultation"
+        ]
+      }
+    }
+  },
   "Footer": {
     "description": "Build your next project with our premium components.",
     "links": {
