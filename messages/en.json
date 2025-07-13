@@ -301,13 +301,45 @@
     }
   },
   "Footer": {
-    "description": "Build your next project with our premium components.",
-    "links": {
-      "product": "Product",
-      "company": "Company",
-      "resources": "Resources",
-      "legal": "Legal"
+    "newsletter": {
+      "title": "Stay Connected",
+      "description": "Join our newsletter for the latest updates and exclusive offers.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
     },
-    "copyright": "© 2025 Next.js Template. All rights reserved."
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "products": "Products",
+      "contact": "Contact",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "documentation": "Documentation"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "address": "123 Innovation Street",
+      "city": "Tech City, TC 12345",
+      "phone": "Phone: (123) 456-7890",
+      "email": "Email: hello@shipsaas.net"
+    },
+    "social": {
+      "title": "Follow Us",
+      "facebook": "Follow us on Facebook",
+      "twitter": "Follow us on Twitter",
+      "instagram": "Follow us on Instagram",
+      "linkedin": "Connect with us on LinkedIn"
+    },
+    "theme": {
+      "toggle": "Toggle dark mode"
+    },
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Settings"
+    },
+    "copyright": "© 2025 ShipSaaS. All rights reserved."
   }
 }

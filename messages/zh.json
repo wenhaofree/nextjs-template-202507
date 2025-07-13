@@ -301,13 +301,45 @@
     }
   },
   "Footer": {
-    "description": "使用我们的高级组件构建您的下一个项目。",
-    "links": {
-      "product": "产品",
-      "company": "公司",
-      "resources": "资源",
-      "legal": "法律"
+    "newsletter": {
+      "title": "保持联系",
+      "description": "订阅我们的新闻通讯，获取最新更新和独家优惠。",
+      "placeholder": "输入您的邮箱",
+      "subscribe": "订阅"
     },
-    "copyright": "© 2025 Next.js 模板。保留所有权利。"
+    "quickLinks": {
+      "title": "快速链接",
+      "home": "首页",
+      "about": "关于我们",
+      "services": "服务",
+      "products": "产品",
+      "contact": "联系我们",
+      "pricing": "定价",
+      "blog": "博客",
+      "documentation": "文档"
+    },
+    "contact": {
+      "title": "联系我们",
+      "address": "创新街123号",
+      "city": "科技城, TC 12345",
+      "phone": "电话: (123) 456-7890",
+      "email": "邮箱: hello@shipsaas.net"
+    },
+    "social": {
+      "title": "关注我们",
+      "facebook": "在Facebook上关注我们",
+      "twitter": "在Twitter上关注我们",
+      "instagram": "在Instagram上关注我们",
+      "linkedin": "在LinkedIn上联系我们"
+    },
+    "theme": {
+      "toggle": "切换深色模式"
+    },
+    "legal": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "cookies": "Cookie设置"
+    },
+    "copyright": "© 2025 ShipSaaS。保留所有权利。"
   }
 }

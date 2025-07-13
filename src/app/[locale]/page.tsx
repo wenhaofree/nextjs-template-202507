@@ -12,6 +12,7 @@ import { useTranslations } from 'next-intl';
 import { FeatureChose } from "@/components/sections/feature-chose"
 import FAQsFour from "@/components/sections/faqs"
 import { Testimonials } from "@/components/sections/Testimonials";
+import CallToAction from "@/components/sections/call-to-action";
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
@@ -55,8 +56,9 @@ export default function LocaleHomePage() {
     <FeatureInstruction />
     <FeatureChose />
     <Prices />
-    <FAQsFour />
     <Testimonials />
+    <FAQsFour />
+    <CallToAction />
     <Footer />
     </>
   )
