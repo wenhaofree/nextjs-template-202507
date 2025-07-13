@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, UserIcon } from 'lucide-react';
 import { setRequestLocale } from 'next-intl/server';
 import { SiteHeader } from '@/components';
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
 
 interface BlogPageProps {
   params: Promise<{ locale: string }>;
@@ -139,11 +140,25 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
 export async function generateMetadata({ params }: BlogPageProps) {
   const { locale } = await params;
-  
-  return {
-    title: locale === 'zh' ? 'ShipSaaS 博客 - SaaS 开发技巧和教程' : 'ShipSaaS Blog - SaaS Development Tips and Tutorials',
-    description: locale === 'zh' 
-      ? '探索 SaaS 开发的最新趋势、技巧和最佳实践。学习如何使用现代技术构建成功的 SaaS 应用程序。'
-      : 'Explore the latest trends, tips, and best practices in SaaS development. Learn how to build successful SaaS applications with modern technologies.',
-  };
+
+  const title = locale === 'zh'
+    ? 'ShipSaaS 博客 - SaaS 开发技巧和教程'
+    : 'ShipSaaS Blog - SaaS Development Tips and Tutorials';
+
+  const description = locale === 'zh'
+    ? '探索 SaaS 开发的最新趋势、技巧和最佳实践。学习如何使用现代技术构建成功的 SaaS 应用程序，包括 Next.js、AI 集成、支付系统等。'
+    : 'Explore the latest trends, tips, and best practices in SaaS development. Learn how to build successful SaaS applications with modern technologies including Next.js, AI integration, payment systems, and more.';
+
+  const keywords = locale === 'zh'
+    ? ['shipsaas 博客', 'saas 开发教程', 'nextjs 教程', 'saas 最佳实践', 'ai saas 开发', 'saas 技巧']
+    : ['shipsaas blog', 'saas development tutorials', 'nextjs tutorials', 'saas best practices', 'ai saas development', 'saas tips'];
+
+  return generateSEOMetadata({
+    title,
+    description,
+    keywords,
+    canonical: locale === 'zh' ? 'https://shipsaas.net/zh/blog' : 'https://shipsaas.net/blog',
+    locale,
+    type: 'website',
+  });
 }

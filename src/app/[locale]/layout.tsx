@@ -8,7 +8,8 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { SiteHeader } from "@/components/sections/site-header";
-import { Footer } from "@/components/sections/Footer"
+import { Footer } from "@/components/sections/Footer";
+import { WebVitals, PreloadResources } from '@/components/seo/web-vitals';
 
 // 中文翻译
 const zh: Partial<Translations> = {
@@ -73,6 +74,8 @@ export default async function LocaleLayout({
             translations: { en, zh }[locale],
           }}
         >
+          <PreloadResources />
+          <WebVitals />
           {/* <SiteHeader /> */}
           {children}
           {/* <Footer /> */}

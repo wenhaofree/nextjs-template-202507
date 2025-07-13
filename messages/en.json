@@ -4,15 +4,15 @@
       "text": "🚀 Special Gift: 20% off",
       "action": "Get ShipSaaS"
     },
-    "title": "Make Your AI SaaS Product in a weekend",
-    "description": "The complete Next.js boilerplate for building profitable SaaS, packed with AI, auth, payments, i18n, newsletter, dashboard, blog, docs, blocks, themes, SEO and more.",
+    "title": "ShipSaaS - Build Your AI SaaS Product in a Weekend",
+    "description": "ShipSaaS is the complete Next.js SaaS boilerplate for building profitable SaaS applications. Packed with AI integration, authentication, Stripe payments, i18n, dashboard, blog, docs, and more. Start your SaaS journey with ShipSaaS today.",
     "actions": {
       "getStarted": "Get ShipSaaS",
       "readDocs": "Read Documentation",
       "seeDemo": "See Demo"
     },
     "image": {
-      "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform"
+      "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform with AI Integration"
     }
   },
   "Navigation": {

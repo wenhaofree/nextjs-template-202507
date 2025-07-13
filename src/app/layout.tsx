@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { generateMetadata as generateSEOMetadata, defaultSEO } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +13,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Next.js Template 2025",
-  description: "A modern Next.js template with advanced UI components",
-};
+export const metadata: Metadata = generateSEOMetadata({
+  title: defaultSEO.defaultTitle,
+  description: defaultSEO.defaultDescription,
+  canonical: defaultSEO.siteUrl,
+});
 
 export default function RootLayout({
   children,

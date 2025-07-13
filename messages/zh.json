@@ -4,15 +4,15 @@
       "text": "🚀 特别优惠：20% 折扣",
       "action": "获取 ShipSaaS"
     },
-    "title": "在一个周末制作您的 AI SaaS 产品",
-    "description": "完整的 Next.js 样板，用于构建盈利的 SaaS，集成了 AI、身份验证、支付、国际化、新闻通讯、仪表板、博客、文档、组件块、主题、SEO 等功能。",
+    "title": "ShipSaaS - 在一个周末构建您的 AI SaaS 产品",
+    "description": "ShipSaaS 是完整的 Next.js SaaS 样板，用于构建盈利的 SaaS 应用程序。集成了 AI 功能、身份验证、Stripe 支付、国际化、仪表板、博客、文档等。立即使用 ShipSaaS 开始您的 SaaS 之旅。",
     "actions": {
       "getStarted": "获取 ShipSaaS",
       "readDocs": "阅读文档",
       "seeDemo": "查看演示"
     },
     "image": {
-      "alt": "ShipSaaS 仪表板预览 - 完整的 SaaS 开发平台"
+      "alt": "ShipSaaS 仪表板预览 - 完整的 SaaS 开发平台，集成 AI 功能"
     }
   },
   "Navigation": {

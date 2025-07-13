@@ -1,87 +1,60 @@
-"use client";
+import { generateMetadata as generateSEOMetadata, generateStructuredData } from "@/lib/seo";
+import { ClientHomePage } from "@/app/[locale]/client-page";
 
-import { HeroSection } from "@/components/blocks/hero-section"
-import { SiteHeader } from "@/components/sections/site-header"
-import { TechStack } from "@/components/sections/TechStack"
-import { Icons } from "@/components/ui/icons"
-import { Prices } from "@/components/sections/prices"
-import { Footer } from "@/components/sections/Footer"
+interface HomePageProps {
+  params: Promise<{ locale: string }>;
+}
 
-import { FeatureInstruction } from "@/components/sections/feature-instroduction";
-import { useTranslations } from 'next-intl';
-import { FeatureChose } from "@/components/sections/feature-chose"
-import { AIFeaturesSection } from "@/components/sections/ai-features";
-import { ChatGPTFeaturesSection } from "@/components/sections/chatgpt-features";
-import FAQsFour from "@/components/sections/faqs"
-import { Testimonials } from "@/components/sections/Testimonials";
-import CallToAction from "@/components/sections/call-to-action";
-import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
+export async function generateMetadata({ params }: HomePageProps) {
+  const { locale } = await params;
 
-export default function LocaleHomePage() {
-  const t = useTranslations('HomePage');
+  const title = locale === 'zh'
+    ? 'ShipSaaS - 完整的 Next.js SaaS 样板，集成 AI 功能'
+    : 'ShipSaaS - Complete Next.js SaaS Boilerplate with AI Integration';
 
-  // 使用平滑滚动 hook
-  useSmoothScroll();
+  const description = locale === 'zh'
+    ? '使用 ShipSaaS 在一个周末构建盈利的 SaaS 产品。完整的 Next.js 样板，包含 AI 集成、身份验证、支付、国际化、仪表板、博客、文档等功能。'
+    : 'Build profitable SaaS products in a weekend with ShipSaaS. Complete Next.js boilerplate featuring AI integration, authentication, payments, i18n, dashboard, blog, docs, and more.';
+
+  const keywords = locale === 'zh'
+    ? ['shipsaas', 'saas 样板', 'nextjs saas', 'ai saas', 'saas 模板', 'nextjs 模板', 'saas 启动器', 'react saas', 'typescript saas', 'saas 开发']
+    : ['shipsaas', 'saas boilerplate', 'nextjs saas', 'ai saas', 'saas template', 'nextjs template', 'saas starter', 'react saas', 'typescript saas', 'saas development'];
+
+  return generateSEOMetadata({
+    title,
+    description,
+    keywords,
+    canonical: locale === 'zh' ? 'https://shipsaas.net/zh' : 'https://shipsaas.net',
+    locale,
+    type: 'website',
+  });
+}
+
+export default async function LocaleHomePage({ params }: HomePageProps) {
+  const { locale } = await params;
+
+  // 生成结构化数据
+  const structuredData = generateStructuredData({
+    title: locale === 'zh' ? 'ShipSaaS - 完整的 Next.js SaaS 样板' : 'ShipSaaS - Complete Next.js SaaS Boilerplate',
+    description: locale === 'zh'
+      ? '使用 ShipSaaS 快速构建 SaaS 产品'
+      : 'Build SaaS products quickly with ShipSaaS',
+    type: 'website',
+    breadcrumbs: [
+      { name: 'Home', url: '/' }
+    ]
+  });
 
   return (
     <>
-      <SiteHeader />
-      <HeroSection
-      badge={{
-        text: t('badge.text'),
-        action: {
-          text: t('badge.action'),
-          href: "/pricing",
-        },
-      }}
-      title={t('title')}
-      description={t('description')}
-      actions={[
-        {
-          text: t('actions.getStarted'),
-          href: "/#pricing",
-          variant: "default",
-        },
-        {
-          text: t('actions.readDocs'),
-          href: "/docs",
-          variant: "outline",
-          icon: <Icons.book className="h-5 w-5" />,
-        },
-        {
-          text: t('actions.seeDemo'),
-          href: "https://demo.shipsaas.net",
-          variant: "link",
-          icon: <Icons.play className="h-5 w-5" />,
-        },
-      ]}
-      image={{
-        light: "/app-light.png",
-        dark: "/app-dark.png",
-        alt: t('image.alt'),
-      }}
-    />
-
-    <section id="tech-stack">
-      <TechStack />
-    </section>
-    <section id="features">
-      <FeatureInstruction />
-      <AIFeaturesSection />
-    <ChatGPTFeaturesSection />
-    <FeatureChose />
-    </section>
-    <section id="pricing">
-      <Prices />
-    </section>
-    <section id="testimonials">
-      <Testimonials />
-    </section>
-    <section id="faq">
-      <FAQsFour />
-    </section>
-    <CallToAction />
-    <Footer />
+      {/* 结构化数据 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+      <ClientHomePage />
     </>
-  )
+  );
 }

@@ -7,7 +7,7 @@ import {
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/mdx-components';
-import { i18n } from '@/lib/i18n';
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
 
 export default async function Page(props: {
   params: Promise<{ locale: string; slug?: string[] }>;
@@ -44,8 +44,21 @@ export async function generateMetadata(props: {
 
   if (!page) notFound();
 
-  return {
-    title: page.data.title,
-    description: page.data.description,
-  };
+  const title = `${page.data.title} | ShipSaaS Documentation`;
+  const description = page.data.description || (params.locale === 'zh'
+    ? 'ShipSaaS 文档 - 学习如何使用 ShipSaaS 构建 SaaS 应用程序'
+    : 'ShipSaaS Documentation - Learn how to build SaaS applications with ShipSaaS');
+
+  const keywords = params.locale === 'zh'
+    ? ['shipsaas 文档', 'saas 文档', 'nextjs 文档', 'saas 开发指南', page.data.title]
+    : ['shipsaas documentation', 'saas docs', 'nextjs docs', 'saas development guide', page.data.title];
+
+  return generateSEOMetadata({
+    title,
+    description,
+    keywords,
+    canonical: `https://shipsaas.net/${params.locale}/docs/${params.slug?.join('/') || ''}`,
+    locale: params.locale,
+    type: 'article',
+  });
 }
