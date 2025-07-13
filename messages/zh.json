@@ -341,5 +341,31 @@
       "cookies": "Cookie设置"
     },
     "copyright": "© 2025 ShipSaaS。保留所有权利。"
+  },
+  "Blog": {
+    "title": "ShipSaaS 博客",
+    "subtitle": "SaaS 开发技巧和教程",
+    "description": "探索 SaaS 开发的最新趋势、技巧和最佳实践。学习如何使用现代技术构建成功的 SaaS 应用程序。",
+    "backToBlog": "返回博客",
+    "readMore": "阅读更多",
+    "readingTime": "分钟阅读",
+    "tableOfContents": "目录",
+    "relatedPosts": "相关文章",
+    "author": "作者",
+    "publishedOn": "发布于",
+    "tags": "标签",
+    "noPostsYet": "暂无博客文章",
+    "stayTuned": "敬请期待更多精彩内容！",
+    "newsletter": {
+      "title": "订阅我们的新闻通讯",
+      "description": "获取最新的 SaaS 开发技巧、教程和产品更新，直接发送到您的收件箱。",
+      "placeholder": "输入您的邮箱",
+      "subscribe": "订阅"
+    },
+    "enjoyedArticle": {
+      "title": "喜欢这篇文章吗？",
+      "description": "订阅我们的新闻通讯，获取更多 SaaS 开发技巧和教程。",
+      "cta": "查看更多文章"
+    }
   }
 }

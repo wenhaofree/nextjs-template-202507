@@ -341,5 +341,31 @@
       "cookies": "Cookie Settings"
     },
     "copyright": "© 2025 ShipSaaS. All rights reserved."
+  },
+  "Blog": {
+    "title": "ShipSaaS Blog",
+    "subtitle": "SaaS Development Tips and Tutorials",
+    "description": "Explore the latest trends, tips, and best practices in SaaS development. Learn how to build successful SaaS applications with modern technologies.",
+    "backToBlog": "Back to Blog",
+    "readMore": "Read More",
+    "readingTime": "min read",
+    "tableOfContents": "Table of Contents",
+    "relatedPosts": "Related Posts",
+    "author": "Author",
+    "publishedOn": "Published on",
+    "tags": "Tags",
+    "noPostsYet": "No blog posts yet",
+    "stayTuned": "Stay tuned for more content!",
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "description": "Get the latest SaaS development tips, tutorials, and product updates delivered straight to your inbox.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "enjoyedArticle": {
+      "title": "Enjoyed this article?",
+      "description": "Subscribe to our newsletter for more SaaS development tips and tutorials.",
+      "cta": "Read More Articles"
+    }
   }
 }

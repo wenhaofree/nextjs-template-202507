@@ -222,6 +222,8 @@ const buttonVariants = cva(
 	- Newsletter
 	- footer ✅
 	- dashboard 
+	- docs ✅
+	- blog 
 	- demo页面
 3. 功能组件依赖：
 	- next-theme

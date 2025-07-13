@@ -31,6 +31,9 @@ export * from "./tailark"
 // Dashboard Components
 export * from "./dashboard"
 
+// Blog Components
+export * from "./blog"
+
 // Auth Components
 export { default as AuthCheck } from "./auth/auth-check"
 export { AuthStatus } from "./auth/auth-status"

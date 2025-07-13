@@ -6,12 +6,17 @@ export function baseOptions(locale: string): BaseLayoutProps {
   return {
     i18n,
     nav: {
-      title: locale === 'zh' ? '我的应用' : 'My App',
+      title: locale === 'zh' ? 'ShipSaaS' : 'ShipSaaS',
     },
     links: [
       {
         text: locale === 'zh' ? '文档' : 'Documentation',
         url: `/${locale}/docs`,
+        active: 'nested-url',
+      },
+      {
+        text: locale === 'zh' ? '博客' : 'Blog',
+        url: `/${locale}/blog`,
         active: 'nested-url',
       },
     ],
