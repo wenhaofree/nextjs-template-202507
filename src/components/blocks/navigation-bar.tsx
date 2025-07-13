@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import { AuthStatus } from "@/components/auth/auth-status";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { Link } from "@/i18n/navigation";
 
 import {
   Accordion,
@@ -87,10 +88,10 @@ const NavigationBar = ({
       <div className="container-wide">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
-            <a href={logo.url} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <Link href={logo.url} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <img src={logo.src} className="w-8 h-8 object-contain" alt={logo.alt} />
               <span className="text-lg font-semibold text-foreground dark:text-white">{logo.title}</span>
-            </a>
+            </Link>
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -107,10 +108,10 @@ const NavigationBar = ({
         </nav>
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="w-8" alt={logo.alt} />
               <span className="text-lg font-semibold text-foreground dark:text-white">{logo.title}</span>
-            </a>
+            </Link>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -120,12 +121,12 @@ const NavigationBar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
+                    <Link href={logo.url} className="flex items-center gap-2">
                       <img src={logo.src} className="w-8" alt={logo.alt} />
                       <span className="text-lg font-semibold text-foreground dark:text-white">
                         {logo.title}
                       </span>
-                    </a>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="my-6 flex flex-col gap-6">
@@ -139,13 +140,13 @@ const NavigationBar = ({
                   <div className="border-t py-4">
                     <div className="grid grid-cols-2 justify-start">
                       {mobileExtraLinks.map((link, idx) => (
-                        <a
+                        <Link
                           key={idx}
                           className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-accent-foreground"
                           href={link.url}
                         >
                           {link.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -180,7 +181,7 @@ const renderMenuItem = (item: MenuItem) => {
             <NavigationMenuLink>
               {item.items.map((subItem) => (
                 <li key={subItem.title}>
-                  <a
+                  <Link
                     className="flex select-none gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
                     href={subItem.url}
                   >
@@ -195,7 +196,7 @@ const renderMenuItem = (item: MenuItem) => {
                         </p>
                       )}
                     </div>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </NavigationMenuLink>
@@ -206,13 +207,13 @@ const renderMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <a
+    <Link
       key={item.title}
       className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-accent-foreground"
       href={item.url}
     >
       {item.title}
-    </a>
+    </Link>
   );
 };
 
@@ -225,7 +226,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
         </AccordionTrigger>
         <AccordionContent className="mt-2">
           {item.items.map((subItem) => (
-            <a
+            <Link
               key={subItem.title}
               className="flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
               href={subItem.url}
@@ -239,7 +240,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
                   </p>
                 )}
               </div>
-            </a>
+            </Link>
           ))}
         </AccordionContent>
       </AccordionItem>
@@ -247,9 +248,9 @@ const renderMobileMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <a key={item.title} href={item.url} className="font-semibold">
+    <Link key={item.title} href={item.url} className="font-semibold">
       {item.title}
-    </a>
+    </Link>
   );
 };
 

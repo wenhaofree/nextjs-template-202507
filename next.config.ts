@@ -95,16 +95,7 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      {
-        source: '/docs',
-        destination: '/en/docs',
-        permanent: false,
-      },
-      {
-        source: '/blog',
-        destination: '/en/blog',
-        permanent: false,
-      },
+      // 移除 /docs 和 /blog 重定向，让 next-intl 中间件处理
     ];
   },
 };

@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  // Since we're using 'as-needed' localePrefix,
-  // the default locale (en) should redirect to root path
-  redirect('/');
+  // Redirect to the default locale page
+  // Since we're using 'as-needed' localePrefix, /en will be shown as /
+  redirect('/en');
 }
