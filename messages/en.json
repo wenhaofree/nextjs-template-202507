@@ -35,6 +35,9 @@
     },
     "menu": {
       "home": "Home",
+      "aiTools": "AI Tools",
+      "aiChat": "AI Chat",
+      "imageGeneration": "Image Generator",
       "products": "Products",
       "resources": "Resources",
       "pricing": "Pricing",
@@ -49,6 +52,8 @@
       "termsOfService": "Terms of Service"
     },
     "menuDescriptions": {
+      "aiChat": "Chat with AI assistant powered by ChatGPT for intelligent conversations",
+      "imageGeneration": "Generate stunning images from text descriptions using AI technology",
       "blog": "The latest industry news, updates, and info",
       "company": "Our mission is to innovate and empower the world",
       "careers": "Browse job listing and discover our workspace",
@@ -201,6 +206,249 @@
       }
     }
   },
+  "AIFeatures": {
+    "header": {
+      "badge": "AI-Powered. Future-Ready.",
+      "title": "Vercel AI SDK Integration",
+      "subtitle": "Build Intelligent Applications with Cutting-Edge AI Technology"
+    },
+    "items": {
+      "chatInterface": {
+        "title": "Interactive Chat Interface",
+        "description": "Build conversational AI experiences with streaming responses, message history, and real-time interactions using the useChat hook."
+      },
+      "textGeneration": {
+        "title": "Streaming Text Generation",
+        "description": "Generate dynamic content with real-time streaming capabilities. Perfect for content creation, writing assistance, and automated responses."
+      },
+      "toolCalling": {
+        "title": "AI Tool Integration",
+        "description": "Extend AI capabilities with custom tools and function calling. Connect to APIs, databases, and external services seamlessly."
+      },
+      "codeGeneration": {
+        "title": "Code Generation & Analysis",
+        "description": "Generate, review, and optimize code with AI assistance. Support for multiple programming languages and frameworks."
+      },
+      "aiAgents": {
+        "title": "Intelligent AI Agents",
+        "description": "Create autonomous AI agents that can perform complex tasks, make decisions, and interact with multiple systems."
+      },
+      "multiModal": {
+        "title": "Multi-Modal AI",
+        "description": "Process text, images, and other media types with advanced AI models. Build rich, interactive experiences."
+      }
+    }
+  },
+  "ChatGPTFeatures": {
+    "header": {
+      "badge": "Powered by OpenAI",
+      "title": "ChatGPT Integration",
+      "subtitle": "Experience the power of ChatGPT with advanced conversational AI, intelligent responses, and seamless tool integration."
+    },
+    "sections": {
+      "features": "Key Features",
+      "capabilities": "Core Capabilities"
+    },
+    "features": {
+      "conversational": {
+        "title": "Natural Conversations",
+        "description": "Engage in human-like conversations with context awareness and memory retention across multiple exchanges."
+      },
+      "intelligent": {
+        "title": "Intelligent Reasoning",
+        "description": "Advanced problem-solving capabilities with logical reasoning, analysis, and comprehensive understanding."
+      },
+      "realtime": {
+        "title": "Real-time Streaming",
+        "description": "Experience instant responses with real-time text streaming for smooth, interactive conversations."
+      },
+      "multilingual": {
+        "title": "Multilingual Support",
+        "description": "Communicate in multiple languages with accurate translation and cultural context understanding."
+      },
+      "coding": {
+        "title": "Code Assistance",
+        "description": "Get help with programming, code review, debugging, and technical problem-solving across languages."
+      },
+      "creative": {
+        "title": "Creative Writing",
+        "description": "Generate creative content, stories, articles, and assist with various writing tasks and brainstorming."
+      }
+    },
+    "capabilities": {
+      "analysis": {
+        "category": "Analysis & Research",
+        "items": [
+          "Data analysis and interpretation",
+          "Research assistance and summarization",
+          "Complex problem breakdown and solving"
+        ]
+      },
+      "creation": {
+        "category": "Content Creation",
+        "items": [
+          "Creative writing and storytelling",
+          "Technical documentation",
+          "Marketing copy and content strategy"
+        ]
+      },
+      "assistance": {
+        "category": "Task Assistance",
+        "items": [
+          "Planning and organization",
+          "Learning and education support",
+          "Decision-making guidance"
+        ]
+      }
+    },
+    "integration": {
+      "title": "Seamless Integration",
+      "description": "Built with Vercel AI SDK and OpenAI's latest models, providing enterprise-grade reliability and performance."
+    }
+  },
+  "ChatGPTDemo": {
+    "placeholder": "Ask ChatGPT anything...",
+    "thinking": "ChatGPT is thinking...",
+    "examples": {
+      "creative": "Write a short story about a robot learning to paint",
+      "problem": "Help me plan a productive morning routine",
+      "math": "Calculate compound interest on $1000 at 5% for 10 years",
+      "search": "What are the latest trends in artificial intelligence?"
+    }
+  },
+  "ChatPage": {
+    "title": "AI Chat Assistant",
+    "subtitle": "Experience the power of ChatGPT with advanced conversational AI, real-time responses, and intelligent tool integration.",
+    "welcome": "Hello! I'm your AI assistant powered by ChatGPT. I can help you with a wide variety of tasks including answering questions, creative writing, problem-solving, coding assistance, and much more. What would you like to explore today?",
+    "chatTitle": "ChatGPT Conversation",
+    "quickStart": "Quick Start Examples",
+    "inputPlaceholder": "Type your message here... (Shift+Enter for new line)",
+    "inputHint": "Press Enter to send, Shift+Enter for new line",
+    "badges": {
+      "realtime": "Real-time",
+      "intelligent": "Intelligent",
+      "multilingual": "Multilingual"
+    },
+    "examples": {
+      "creative": {
+        "category": "Creative Writing",
+        "prompt": "Write a short story about a time traveler who accidentally changes history"
+      },
+      "analysis": {
+        "category": "Data Analysis",
+        "prompt": "Analyze the pros and cons of remote work vs office work"
+      },
+      "coding": {
+        "category": "Code Help",
+        "prompt": "Explain how to implement a binary search algorithm in Python"
+      },
+      "math": {
+        "category": "Mathematics",
+        "prompt": "Solve this equation: 2x² + 5x - 3 = 0"
+      },
+      "search": {
+        "category": "Research",
+        "prompt": "What are the latest developments in renewable energy technology?"
+      },
+      "weather": {
+        "category": "Weather Info",
+        "prompt": "What's the weather like in Tokyo today?"
+      }
+    },
+    "models": {
+      "gpt4omini": "Fast and efficient for most tasks",
+      "gpt4o": "Advanced reasoning and complex tasks",
+      "gpt4": "High-quality responses for complex queries",
+      "gpt35turbo": "Quick responses for simple tasks"
+    },
+    "settings": {
+      "title": "Settings",
+      "model": "AI Model"
+    },
+    "actions": {
+      "clear": "Clear Chat",
+      "export": "Export Chat"
+    },
+    "status": {
+      "ready": "Ready",
+      "thinking": "Thinking...",
+      "error": "Error"
+    },
+    "error": "An error occurred"
+  },
+  "ImageGenerationPage": {
+    "title": "AI Image Generator",
+    "subtitle": "Create stunning images from text descriptions using advanced AI technology. Transform your ideas into beautiful visual art.",
+    "inspiration": "Inspiration Gallery",
+    "generator": {
+      "title": "Image Generator",
+      "placeholder": "Describe the image you want to create... Be as detailed as possible for better results.",
+      "hint": "Tip: Be specific about style, colors, composition, and mood",
+      "generate": "Generate Image",
+      "generating": "Generating..."
+    },
+    "gallery": {
+      "title": "Generated Images",
+      "empty": "No images generated yet",
+      "emptyHint": "Start by entering a prompt above to create your first AI-generated image"
+    },
+    "badges": {
+      "aiPowered": "AI-Powered",
+      "creative": "Creative",
+      "highQuality": "High Quality"
+    },
+    "examples": {
+      "nature": {
+        "category": "Nature & Landscape",
+        "prompt": "A serene mountain lake at sunset with reflection of snow-capped peaks, golden hour lighting, photorealistic"
+      },
+      "portrait": {
+        "category": "Portrait & People",
+        "prompt": "Portrait of a wise elderly woman with kind eyes, soft natural lighting, oil painting style"
+      },
+      "abstract": {
+        "category": "Abstract Art",
+        "prompt": "Abstract geometric composition with vibrant blues and oranges, modern minimalist style"
+      },
+      "architecture": {
+        "category": "Architecture",
+        "prompt": "Futuristic glass skyscraper with organic curves, surrounded by green gardens, architectural photography"
+      },
+      "fantasy": {
+        "category": "Fantasy & Sci-Fi",
+        "prompt": "Magical forest with glowing mushrooms and fairy lights, mystical atmosphere, fantasy art style"
+      },
+      "scifi": {
+        "category": "Science Fiction",
+        "prompt": "Cyberpunk cityscape at night with neon lights and flying cars, futuristic urban environment"
+      }
+    },
+    "styles": {
+      "realistic": "Realistic",
+      "realisticDesc": "Photorealistic images with high detail",
+      "artistic": "Artistic",
+      "artisticDesc": "Painterly and creative interpretations",
+      "cartoon": "Cartoon",
+      "cartoonDesc": "Animated and playful style",
+      "abstract": "Abstract",
+      "abstractDesc": "Modern abstract art style",
+      "vintage": "Vintage",
+      "vintageDesc": "Retro and aged aesthetic",
+      "minimalist": "Minimalist",
+      "minimalistDesc": "Clean and simple composition"
+    },
+    "sizes": {
+      "square": "Square format",
+      "portrait": "Portrait format",
+      "landscape": "Landscape format"
+    },
+    "settings": {
+      "title": "Generation Settings",
+      "style": "Art Style",
+      "size": "Image Size"
+    },
+    "error": "Generation failed"
+  },
   "Pricing": {
     "header": {
       "tag": "Simple Pricing",
@@ -250,6 +498,9 @@
           "User Dashboard Console",
           "Admin Management System",
           "Points/Credits Management",
+          "AI Tool Integration",
+          "Multi-Modal AI Support",
+          "AI Agent Development",
           "Priority Technical Support",
           "Custom Integrations",
           "Advanced Analytics",

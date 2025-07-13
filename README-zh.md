@@ -244,8 +244,8 @@ const buttonVariants = cva(
 	- magicui ✅
 	- tailark ✅
 	- animate-ui ✅
-	- vercel ai sdk
-	- ChatGPT
+	- vercel ai sdk ✅
+	- ChatGPT ✅
 
 4. ToDo：
 - 企业版内容：
@@ -264,6 +264,12 @@ const buttonVariants = cva(
 - 拆分入门版，标准版，高级版代码仓库
 	- 优先拆分分支，实现不同仓库的功能以及官网页面；
 
+starter功能：
+- 入门基础功能
+
 ToDo-standard功能：
 - dashboard 页面
 	- 订单
+ToDo-Premium功能：
+- AI功能放在高级版本
+- vercel
