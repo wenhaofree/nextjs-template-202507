@@ -10,6 +10,8 @@ import { DisplayCardsDemo } from "@/components/sections/DisplayCardsDemo";
 import { FeatureInstruction } from "@/components/sections/feature-instroduction";
 import { useTranslations } from 'next-intl';
 import { FeatureChose } from "@/components/sections/feature-chose"
+import FAQsFour from "@/components/sections/faqs"
+import { Testimonials } from "@/components/sections/Testimonials";
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
@@ -53,6 +55,8 @@ export default function LocaleHomePage() {
     <FeatureInstruction />
     <FeatureChose />
     <Prices />
+    <FAQsFour />
+    <Testimonials />
     <Footer />
     </>
   )

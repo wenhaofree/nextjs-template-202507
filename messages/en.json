@@ -258,6 +258,48 @@
       }
     }
   },
+  "FAQs": {
+    "header": {
+      "title": "Frequently Asked Questions",
+      "description": "Discover quick and comprehensive answers to common questions about ShipSaaS platform, services, and features."
+    },
+    "items": [
+      {
+        "id": "item-1",
+        "question": "What is included in ShipSaaS?",
+        "answer": "ShipSaaS includes a complete Next.js template with authentication, payments, database integration, UI components, internationalization, and much more. Everything you need to launch your SaaS quickly."
+      },
+      {
+        "id": "item-2",
+        "question": "How quickly can I launch my SaaS?",
+        "answer": "With ShipSaaS, you can have a fully functional SaaS application running in minutes, not months. Our pre-built components and integrations eliminate weeks of development time."
+      },
+      {
+        "id": "item-3",
+        "question": "Do you provide technical support?",
+        "answer": "Yes! All plans include documentation and community support. Standard and Premium plans include priority technical support with faster response times."
+      },
+      {
+        "id": "item-4",
+        "question": "Can I customize the components and design?",
+        "answer": "Absolutely! ShipSaaS is built with modern, customizable components using TailwindCSS. You have full control over styling, branding, and functionality to match your vision."
+      },
+      {
+        "id": "item-5",
+        "question": "What technologies does ShipSaaS use?",
+        "answer": "ShipSaaS is built with Next.js 15, React, TypeScript, TailwindCSS, Neon Database, NextAuth.js, Stripe, and many other modern technologies following industry best practices."
+      },
+      {
+        "id": "item-6",
+        "question": "Is there a refund policy?",
+        "answer": "We offer a 30-day money-back guarantee. If you're not satisfied with ShipSaaS, contact our support team within 30 days for a full refund."
+      }
+    ],
+    "contact": {
+      "text": "Can't find what you're looking for? Contact our",
+      "linkText": "customer support team"
+    }
+  },
   "Footer": {
     "description": "Build your next project with our premium components.",
     "links": {

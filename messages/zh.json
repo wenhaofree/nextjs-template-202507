@@ -258,6 +258,48 @@
       }
     }
   },
+  "FAQs": {
+    "header": {
+      "title": "常见问题",
+      "description": "快速了解关于 ShipSaaS 平台、服务和功能的常见问题的全面答案。"
+    },
+    "items": [
+      {
+        "id": "item-1",
+        "question": "ShipSaaS 包含什么内容？",
+        "answer": "ShipSaaS 包含完整的 Next.js 模板，具有身份验证、支付、数据库集成、UI 组件、国际化等功能。您快速启动 SaaS 所需的一切。"
+      },
+      {
+        "id": "item-2",
+        "question": "我可以多快启动我的 SaaS？",
+        "answer": "使用 ShipSaaS，您可以在几分钟内（而不是几个月）拥有一个功能齐全的 SaaS 应用程序。我们预构建的组件和集成消除了数周的开发时间。"
+      },
+      {
+        "id": "item-3",
+        "question": "你们提供技术支持吗？",
+        "answer": "是的！所有计划都包括文档和社区支持。标准版和高级版计划包括优先技术支持，响应时间更快。"
+      },
+      {
+        "id": "item-4",
+        "question": "我可以自定义组件和设计吗？",
+        "answer": "当然可以！ShipSaaS 使用 TailwindCSS 构建了现代化、可定制的组件。您可以完全控制样式、品牌和功能，以匹配您的愿景。"
+      },
+      {
+        "id": "item-5",
+        "question": "ShipSaaS 使用什么技术？",
+        "answer": "ShipSaaS 使用 Next.js 15、React、TypeScript、TailwindCSS、Neon 数据库、NextAuth.js、Stripe 和许多其他现代技术构建，遵循行业最佳实践。"
+      },
+      {
+        "id": "item-6",
+        "question": "有退款政策吗？",
+        "answer": "我们提供 30 天退款保证。如果您对 ShipSaaS 不满意，请在 30 天内联系我们的支持团队获得全额退款。"
+      }
+    ],
+    "contact": {
+      "text": "找不到您要找的内容？联系我们的",
+      "linkText": "客户支持团队"
+    }
+  },
   "Footer": {
     "description": "使用我们的高级组件构建您的下一个项目。",
     "links": {
