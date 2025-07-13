@@ -4,116 +4,185 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { Marquee } from "@/components/magicui";
+import {
+  Zap,
+  Shield,
+  Database,
+  CreditCard,
+  Palette,
+  Paintbrush,
+  Sparkles,
+  Building,
+  Mail,
+  Bot,
+  MessageSquare,
+  BookOpen,
+  Settings,
+  Cloud,
+  Lock
+} from "lucide-react";
+
+// Icon mapping for tech stack
+const iconMap = {
+  nextjs: Zap,
+  betterauth: Shield,
+  drizzle: Database,
+  stripe: CreditCard,
+  shadcn: Palette,
+  tailwind: Paintbrush,
+  magicui: Sparkles,
+  tailark: Building,
+  resend: Mail,
+  vercel: Bot,
+  chatgpt: MessageSquare,
+  fumadocs: BookOpen,
+  nextinit: Settings,
+  prisma: Database,
+  neon: Cloud,
+  nextauth: Lock
+};
 
 // Tech stack data based on the image and project requirements
 const techStackData = [
   {
     name: "Next.js",
     description: "The most popular full stack React framework for production.",
-    icon: "N",
+    icon: "nextjs" as keyof typeof iconMap,
     category: "Framework",
     color: "from-gray-900 to-black",
     textColor: "text-white",
-    bgColor: "bg-black"
-  },
-  {
-    name: "BetterAuth",
-    description: "The best open source authentication library.",
-    icon: "🔐",
-    category: "Authentication",
-    color: "from-blue-600 to-blue-800",
-    textColor: "text-white",
-    bgColor: "bg-blue-600"
-  },
-  {
-    name: "Drizzle ORM",
-    description: "Lightweight, performant, headless TypeScript ORM.",
-    icon: "🌊",
-    category: "Database",
-    color: "from-green-600 to-green-800",
-    textColor: "text-white",
-    bgColor: "bg-green-600"
-  },
-  {
-    name: "Stripe",
-    description: "The best and most secure online payment service.",
-    icon: "S",
-    category: "Payment",
-    color: "from-purple-600 to-purple-800",
-    textColor: "text-white",
-    bgColor: "bg-purple-600"
-  },
-  {
-    name: "Shadcn UI",
-    description: "Open source components for building modern websites.",
-    icon: "//",
-    category: "UI Library",
-    color: "from-slate-700 to-slate-900",
-    textColor: "text-white",
-    bgColor: "bg-slate-700"
+    bgColor: "bg-black",
+    url: "https://nextjs.org"
   },
   {
     name: "Tailwind CSS",
     description: "The CSS framework for rapid UI development.",
-    icon: "🎨",
+    icon: "tailwind" as keyof typeof iconMap,
     category: "Styling",
     color: "from-cyan-500 to-blue-600",
     textColor: "text-white",
-    bgColor: "bg-cyan-500"
+    bgColor: "bg-cyan-500",
+    url: "https://tailwindcss.com"
+  },
+  {
+    name: "next-intl",
+    description: "Internationalization (i18n) library for Next.js with type-safe translations.",
+    icon: "nextinit" as keyof typeof iconMap,
+    category: "Internationalization",
+    color: "from-blue-600 to-blue-800",
+    textColor: "text-white",
+    bgColor: "bg-blue-600",
+    url: "https://next-intl.dev/"
+  },
+  {
+    name: "Prisma",
+    description: "Next-generation Node.js and TypeScript ORM for modern applications.",
+    icon: "prisma" as keyof typeof iconMap,
+    category: "Database",
+    color: "from-indigo-600 to-indigo-800",
+    textColor: "text-white",
+    bgColor: "bg-indigo-600",
+    url: "https://prisma.io"
+  },
+  {
+    name: "Neon",
+    description: "Serverless Postgres database with branching, bottomless storage and generous free tier.",
+    icon: "neon" as keyof typeof iconMap,
+    category: "Database",
+    color: "from-green-600 to-green-800",
+    textColor: "text-white",
+    bgColor: "bg-green-600",
+    url: "https://neon.tech"
+  },
+  {
+    name: "next-auth",
+    description: "Complete open source authentication solution for Next.js applications.",
+    icon: "nextauth" as keyof typeof iconMap,
+    category: "Authentication",
+    color: "from-purple-600 to-purple-800",
+    textColor: "text-white",
+    bgColor: "bg-purple-600",
+    url: "https://next-auth.js.org"
+  },
+  {
+    name: "Stripe",
+    description: "The best and most secure online payment service.",
+    icon: "stripe" as keyof typeof iconMap,
+    category: "Payment",
+    color: "from-violet-600 to-violet-800",
+    textColor: "text-white",
+    bgColor: "bg-violet-600",
+    url: "https://stripe.com"
+  },
+  {
+    name: "Shadcn UI",
+    description: "Open source components for building modern websites.",
+    icon: "shadcn" as keyof typeof iconMap,
+    category: "UI Library",
+    color: "from-slate-700 to-slate-900",
+    textColor: "text-white",
+    bgColor: "bg-slate-700",
+    url: "https://ui.shadcn.com"
   },
   {
     name: "MagicUI",
     description: "150+ free open source animated components and effects.",
-    icon: "✨",
+    icon: "magicui" as keyof typeof iconMap,
     category: "Animation",
     color: "from-pink-500 to-rose-600",
     textColor: "text-white",
-    bgColor: "bg-pink-500"
+    bgColor: "bg-pink-500",
+    url: "https://magicui.design"
   },
   {
     name: "Tailark",
     description: "Responsive, pre-built Shadcn/UI and Tailwindcss blocks.",
-    icon: "🏗️",
+    icon: "tailark" as keyof typeof iconMap,
     category: "Components",
     color: "from-indigo-600 to-purple-700",
     textColor: "text-white",
-    bgColor: "bg-indigo-600"
+    bgColor: "bg-indigo-600",
+    url: "https://tailark.com"
   },
   {
     name: "Resend",
     description: "The best modern email service for developers.",
-    icon: "R",
+    icon: "resend" as keyof typeof iconMap,
     category: "Email",
     color: "from-orange-500 to-red-600",
     textColor: "text-white",
-    bgColor: "bg-orange-500"
+    bgColor: "bg-orange-500",
+    url: "https://resend.com"
   },
   {
     name: "Vercel AI SDK",
     description: "The open source AI Toolkit for TypeScript.",
-    icon: "🤖",
+    icon: "vercel" as keyof typeof iconMap,
     category: "AI",
     color: "from-gray-800 to-gray-900",
     textColor: "text-white",
-    bgColor: "bg-gray-800"
+    bgColor: "bg-gray-800",
+    url: "https://sdk.vercel.ai"
   },
   {
     name: "ChatGPT",
     description: "The most powerful AI model with API access.",
-    icon: "💬",
+    icon: "chatgpt" as keyof typeof iconMap,
     category: "AI",
     color: "from-emerald-600 to-teal-700",
     textColor: "text-white",
-    bgColor: "bg-emerald-600"
+    bgColor: "bg-emerald-600",
+    url: "https://openai.com/chatgpt"
   },
   {
     name: "Fumadocs",
     description: "The best documentation framework for Next.js.",
-    icon: "📚",
+    icon: "fumadocs" as keyof typeof iconMap,
     category: "Documentation",
     color: "from-violet-600 to-purple-700",
     textColor: "text-white",
-    bgColor: "bg-violet-600"
+    bgColor: "bg-violet-600",
+    url: "https://fumadocs.vercel.app"
   }
 ];
 
@@ -180,23 +249,31 @@ interface TechCardProps {
   tech: {
     name: string;
     description: string;
-    icon: string;
+    icon: keyof typeof iconMap;
     category: string;
     color: string;
     textColor: string;
     bgColor: string;
+    url: string;
   };
   index: number;
 }
 
 const TechCard = ({ tech, index }: TechCardProps) => {
+  const IconComponent = iconMap[tech.icon];
+
+  const handleClick = () => {
+    window.open(tech.url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative min-h-[14rem]"
+      className="group relative min-h-[14rem] cursor-pointer"
+      onClick={handleClick}
     >
       <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
         <GlowingEffect
@@ -218,9 +295,7 @@ const TechCard = ({ tech, index }: TechCardProps) => {
               "w-fit rounded-lg border-[0.75px] border-border bg-gradient-to-br p-3 group-hover:scale-110 transition-transform duration-300",
               tech.color
             )}>
-              <span className={cn("text-xl font-bold", tech.textColor)}>
-                {tech.icon}
-              </span>
+              <IconComponent className={cn("h-6 w-6", tech.textColor)} />
             </div>
 
             {/* Content */}
@@ -245,14 +320,22 @@ const TechCard = ({ tech, index }: TechCardProps) => {
 };
 
 const TechBadge = ({ tech }: { tech: typeof techStackData[0] }) => {
+  const IconComponent = iconMap[tech.icon];
+
+  const handleClick = () => {
+    window.open(tech.url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <div className="flex items-center gap-3 px-6 py-3 mx-2 rounded-full bg-background border border-border shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 min-w-fit">
+    <div
+      className="flex items-center gap-3 px-6 py-3 mx-2 rounded-full bg-background border border-border shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 min-w-fit cursor-pointer"
+      onClick={handleClick}
+    >
       <div className={cn(
-        "w-8 h-8 rounded-lg border border-border bg-gradient-to-br flex items-center justify-center text-sm font-bold",
-        tech.color,
-        tech.textColor
+        "w-8 h-8 rounded-lg border border-border bg-gradient-to-br flex items-center justify-center",
+        tech.color
       )}>
-        {tech.icon}
+        <IconComponent className={cn("h-4 w-4", tech.textColor)} />
       </div>
       <span className="font-medium text-foreground whitespace-nowrap">{tech.name}</span>
       <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground border border-border whitespace-nowrap">
