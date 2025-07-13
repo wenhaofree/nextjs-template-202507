@@ -295,7 +295,7 @@ function BillingContent() {
       </Card>
 
       {/* Payment Method */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Payment Method</CardTitle>
           <CardDescription>
@@ -318,7 +318,7 @@ function BillingContent() {
           
           <Button variant="outline">Add Payment Method</Button>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Billing History */}
       <Card>
@@ -467,7 +467,7 @@ function BillingContent() {
       </Card>
 
       {/* Usage Alerts */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <AlertCircle className="h-5 w-5 text-orange-500" />
@@ -490,7 +490,7 @@ function BillingContent() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* GitHub Invite Modal */}
       {selectedOrder && (
