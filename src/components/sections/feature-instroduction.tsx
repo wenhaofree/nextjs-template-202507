@@ -32,12 +32,16 @@ const FeatureInstruction = () => {
   ];
 
   return (
-    <Features
-      primaryColor="sky-500"
-      progressGradientLight="bg-gradient-to-r from-sky-400 to-sky-500"
-      progressGradientDark="bg-gradient-to-r from-sky-300 to-sky-400"
-      features={features}
-    />
+    <div className="py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Features
+          primaryColor="sky-500"
+          progressGradientLight="bg-gradient-to-r from-sky-400 to-sky-500"
+          progressGradientDark="bg-gradient-to-r from-sky-300 to-sky-400"
+          features={features}
+        />
+      </div>
+    </div>
   );
 };
 
