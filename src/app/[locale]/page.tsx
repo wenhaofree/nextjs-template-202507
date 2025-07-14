@@ -14,6 +14,7 @@ import FAQsFour from "@/components/sections/faqs"
 import { Testimonials } from "@/components/sections/Testimonials";
 import CallToAction from "@/components/sections/call-to-action";
 import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
+import GoogleOneTapWrapper from "@/components/GoogleOneTapWrapper";
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
@@ -23,6 +24,9 @@ export default function LocaleHomePage() {
 
   return (
     <>
+      {/* Google One Tap 登录组件 */}
+      <GoogleOneTapWrapper />
+
       <HeroSection
       badge={{
         text: t('badge.text'),
