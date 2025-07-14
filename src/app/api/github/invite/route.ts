@@ -201,7 +201,7 @@ export async function POST(request: Request) {
     };
 
     const repositoryName = getRepositoryName(order.productName || '');
-    const githubApiUrl = `https://api.github.com/repos/ShipSaaSCo/${repositoryName}/collaborators/${githubUsername}`;
+    const githubApiUrl = `https://api.github.com/repos/shipsaasnet/${repositoryName}/collaborators/${githubUsername}`;
 
     console.log(`=== GitHub Invitation Debug Info ===`);
     console.log(`Order: ${orderNo}`);
@@ -211,7 +211,7 @@ export async function POST(request: Request) {
     console.log(`API URL: ${githubApiUrl}`);
     console.log(`GitHub Token configured: ${!!githubToken}`);
     console.log(`GitHub Token length: ${githubToken ? githubToken.length : 0}`);
-    console.log(`Sending GitHub invitation to ${githubUsername} for repository ShipSaaSCo/${repositoryName} (Product: ${order.productName})`);
+    console.log(`Sending GitHub invitation to ${githubUsername} for repository shipsaasnet/${repositoryName} (Product: ${order.productName})`);
 
     const githubResponse = await fetch(githubApiUrl, {
       method: 'PUT',
@@ -257,7 +257,7 @@ export async function POST(request: Request) {
           error: 'GitHub username not found or repository not accessible. Please check the username and ensure the repository exists.',
           details: {
             username: githubUsername,
-            repository: `ShipSaaSCo/${repositoryName}`,
+            repository: `shipsaasnet/${repositoryName}`,
             possibleCauses: [
               'GitHub username does not exist',
               'Repository does not exist',
@@ -315,7 +315,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: 'GitHub invitation sent successfully',
-      invitationUrl: `https://github.com/ShipSaaSCo/${repositoryName}/invitations`,
+      invitationUrl: `https://github.com/shipsaasnet/${repositoryName}/invitations`,
       repositoryName: repositoryName
     });
 

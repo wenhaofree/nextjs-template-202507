@@ -124,7 +124,7 @@ Content-Type: application/json
   "success": true,
   "message": "GitHub invitation sent successfully",
   "repositoryName": "nextjs-template-basic",
-  "invitationUrl": "https://github.com/ShipSaaSCo/nextjs-template-basic/invitations"
+  "invitationUrl": "https://github.com/shipsaasnet/nextjs-template-basic/invitations"
 }
 ```
 

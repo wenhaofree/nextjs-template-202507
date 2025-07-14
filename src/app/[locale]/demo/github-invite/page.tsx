@@ -308,7 +308,7 @@ export default function GitHubInviteDemo() {
                 <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                   <p className="text-sm font-medium mb-1">Repository:</p>
                   <p className="text-sm font-mono text-blue-600 dark:text-blue-400">
-                    ShipSaaSCo/{inviteResult.repositoryName}
+                    shipsaasnet/{inviteResult.repositoryName}
                   </p>
                 </div>
               )}
@@ -325,7 +325,7 @@ export default function GitHubInviteDemo() {
                 {inviteResult.repositoryName && (
                   <Button
                     variant="outline"
-                    onClick={() => window.open(`https://github.com/ShipSaaSCo/${inviteResult.repositoryName}`, "_blank")}
+                    onClick={() => window.open(`https://github.com/shipsaasnet/${inviteResult.repositoryName}`, "_blank")}
                   >
                     <Github className="w-4 h-4 mr-2" />
                     View Repository

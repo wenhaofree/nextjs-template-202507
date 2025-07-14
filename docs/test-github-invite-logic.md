@@ -34,7 +34,7 @@ VALUES ('TEST-002', 'user-uuid', 'test@example.com', 2999, 'activated', 'Pro Pla
 2. 验证显示：
    - ✅ 灰色禁用的 "Invitation Sent" 按钮
    - ✅ GitHub用户名：`testuser`
-   - ✅ 仓库名：`ShipSaaSCo/shipsaas-starter`
+   - ✅ 仓库名：`shipsaasnet/shipsaas-starter`
    - ✅ 发送时间：`Jan 15, 2024 10:30`
    - ✅ 绿色成功状态："✅ GitHub invitation sent: ..."
 
@@ -92,7 +92,7 @@ curl -X POST http://localhost:3000/api/github/invite \
 {
   "success": true,
   "message": "GitHub invitation sent successfully",
-  "invitationUrl": "https://github.com/ShipSaaSCo/shipsaas-starter/invitations",
+  "invitationUrl": "https://github.com/shipsaasnet/shipsaas-starter/invitations",
   "repositoryName": "shipsaas-starter"
 }
 ```

@@ -170,7 +170,7 @@ Order ORDER-123 activated successfully for user test@example.com
 Order is already activated (ORDER-123)
 
 # 首次邀请
-Sending GitHub invitation to testuser for repository ShipSaaSCo/shipsaas-starter
+Sending GitHub invitation to testuser for repository shipsaasnet/shipsaas-starter
 GitHub invitation sent successfully to testuser for order ORDER-123
 
 # 重复邀请尝试  

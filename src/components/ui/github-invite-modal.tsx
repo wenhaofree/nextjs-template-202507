@@ -216,7 +216,7 @@ export function GitHubInviteModal({
               <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                 <p className="text-sm font-medium mb-1">Repository:</p>
                 <p className="text-sm font-mono text-blue-600 dark:text-blue-400">
-                  ShipSaaSCo/{inviteResult.repositoryName}
+                  shipsaasnet/{inviteResult.repositoryName}
                 </p>
               </div>
             )}

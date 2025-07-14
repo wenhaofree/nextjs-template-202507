@@ -111,7 +111,7 @@ export async function GET() {
 
       // Check repository access / 检查仓库访问权限
       // Test with basic template repository
-      const repoResponse = await fetch('https://api.github.com/repos/ShipSaaSCo/nextjs-template-basic', {
+      const repoResponse = await fetch('https://api.github.com/repos/shipsaasnet/nextjs-template-basic', {
         headers: {
           'Accept': 'application/vnd.github+json',
           'Authorization': `Bearer ${githubToken}`,

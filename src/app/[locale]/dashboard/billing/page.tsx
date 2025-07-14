@@ -469,7 +469,7 @@ function BillingContent() {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => window.open(`https://github.com/ShipSaaSCo/${getGitHubInfo(order)?.repositoryName}`, '_blank')}
+                              onClick={() => window.open(`https://github.com/shipsaasnet/${getGitHubInfo(order)?.repositoryName}`, '_blank')}
                               className="text-xs"
                             >
                               <ExternalLink className="w-3 h-3 mr-1" />
@@ -488,7 +488,7 @@ function BillingContent() {
                             )}
                             {getGitHubInfo(order)?.repositoryName && (
                               <p className="text-xs text-gray-600 dark:text-gray-400">
-                                Repository: <span className="font-mono">ShipSaaSCo/{getGitHubInfo(order)?.repositoryName}</span>
+                                Repository: <span className="font-mono">shipsaasnet/{getGitHubInfo(order)?.repositoryName}</span>
                               </p>
                             )}
                             <p className="text-xs text-green-600 dark:text-green-400 font-medium">
