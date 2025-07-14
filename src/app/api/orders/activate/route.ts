@@ -55,6 +55,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check if order is already activated
+    if (order.status === 'activated') {
+      return NextResponse.json(
+        { error: 'Order is already activated' },
+        { status: 400 }
+      );
+    }
+
     // Check if order is paid
     if (order.status !== 'paid') {
       return NextResponse.json(
@@ -68,6 +76,14 @@ export async function POST(request: Request) {
     
     console.log(`Activating order ${orderNo} for user ${user.email}`);
 
+    // Parse existing order detail to preserve GitHub invitation info
+    let existingOrderDetail = {};
+    try {
+      existingOrderDetail = JSON.parse(order.orderDetail || '{}');
+    } catch (error) {
+      console.warn('Failed to parse existing order detail:', error);
+    }
+
     // Update order status to activated
     await prisma.order.update({
       where: {
@@ -76,10 +92,12 @@ export async function POST(request: Request) {
       data: {
         status: 'activated',
         orderDetail: JSON.stringify({
+          ...existingOrderDetail, // Preserve existing data (including GitHub invitation info)
           activated: true,
           activatedAt: new Date().toISOString(),
           activatedBy: user.email,
         }),
+        updatedAt: new Date(),
       },
     });
 

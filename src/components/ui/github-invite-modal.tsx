@@ -24,6 +24,7 @@ interface GitHubInviteModalProps {
   onClose: () => void;
   orderNo: string;
   productName: string;
+  onSuccess?: (orderNo: string, githubInfo: { githubUsername: string; repositoryName: string; invitationSentAt: string }) => void;
 }
 
 /**
@@ -41,11 +42,12 @@ interface GitHubInviteResponse {
  * GitHub Invite Modal Component
  * GitHub 邀请弹窗组件
  */
-export function GitHubInviteModal({ 
-  isOpen, 
-  onClose, 
-  orderNo, 
-  productName 
+export function GitHubInviteModal({
+  isOpen,
+  onClose,
+  orderNo,
+  productName,
+  onSuccess
 }: GitHubInviteModalProps) {
   const t = useTranslations('dashboard.billing');
   
@@ -92,6 +94,15 @@ export function GitHubInviteModal({
 
       setSuccess(true);
       setInviteResult(data);
+
+      // Call success callback to update parent component
+      if (onSuccess && data.repositoryName) {
+        onSuccess(orderNo, {
+          githubUsername: githubUsername.trim(),
+          repositoryName: data.repositoryName,
+          invitationSentAt: new Date().toISOString()
+        });
+      }
 
     } catch (error) {
       console.error("Error sending GitHub invitation:", error);

@@ -31,7 +31,7 @@ interface SidebarItem {
 const communityItems: SidebarItem[] = [
   {
     title: "Discord Community",
-    href: "/discord",
+    href: "https://discord.gg/MNQvzb4xBU",
     icon: MessageSquare,
     description: "Join our Discord community"
   }
@@ -199,7 +199,7 @@ export const DashboardSidebar = () => {
       </div>
 
       {/* Footer */}
-      {!isCollapsed && (
+      {/* {!isCollapsed && (
         <div className="border-t p-4">
           <div className="text-xs text-muted-foreground text-center">
             <p>Join our Discord community to</p>
@@ -210,7 +210,7 @@ export const DashboardSidebar = () => {
             </Button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

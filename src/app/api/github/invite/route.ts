@@ -137,9 +137,34 @@ export async function POST(request: Request) {
 
     // Check if order is activated / 检查订单是否已激活
     if (order.status !== 'activated') {
-      return NextResponse.json({ 
-        error: 'Order must be activated before sending GitHub invitation' 
+      return NextResponse.json({
+        error: 'Order must be activated before sending GitHub invitation'
       }, { status: 400 });
+    }
+
+    // Check if GitHub invitation has already been sent / 检查是否已经发送过GitHub邀请
+    try {
+      const orderDetail = JSON.parse(order.orderDetail || '{}');
+
+      // Multiple checks for invitation status
+      if (orderDetail.invitationSentAt || orderDetail.githubUsername) {
+        console.log(`GitHub invitation already sent for order ${orderNo}:`, {
+          invitationSentAt: orderDetail.invitationSentAt,
+          githubUsername: orderDetail.githubUsername,
+          repositoryName: orderDetail.repositoryName
+        });
+
+        return NextResponse.json({
+          error: 'GitHub invitation has already been sent for this order',
+          alreadySent: true,
+          sentAt: orderDetail.invitationSentAt,
+          githubUsername: orderDetail.githubUsername,
+          repositoryName: orderDetail.repositoryName
+        }, { status: 400 });
+      }
+    } catch (error) {
+      // If orderDetail is not valid JSON, continue with the invitation process
+      console.warn('Failed to parse order detail:', error);
     }
 
     // Get GitHub API token from environment / 从环境变量获取 GitHub API token
@@ -155,19 +180,19 @@ export async function POST(request: Request) {
     const getRepositoryName = (productName: string): string => {
       const productLower = productName.toLowerCase();
 
-      // Check for Starter plan / 检查入门版
-      if (productLower.includes('starter') || productLower.includes('基础版')) {
+      // Check for Basic/Starter plan / 检查基础版/入门版
+      if (productLower.includes('basic') || productLower.includes('starter') || productLower.includes('基础版')) {
         return 'shipsaas-starter';
       }
 
-      // Check for Pro plan / 检查专业版
-      if (productLower.includes('pro') || productLower.includes('专业版')) {
+      // Check for Standard/Pro plan / 检查标准版/专业版
+      if (productLower.includes('standard') || productLower.includes('pro') || productLower.includes('标准版') || productLower.includes('专业版')) {
         return 'shipsaas-standard';
       }
 
-      // Check for Enterprise plan / 检查旗舰版
-      if (productLower.includes('enterprise') || productLower.includes('旗舰版')) {
-        return 'shipsaas-enterprise';
+      // Check for Enterprise plan / 检查企业版/高级版
+      if (productLower.includes('premium') || productLower.includes('enterprise') || productLower.includes('高级版') || productLower.includes('旗舰版')) {
+        return 'shipsaas-premium';
       }
 
       // Default to starter if no match / 默认使用入门版
