@@ -29,6 +29,11 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head>
+        {/* Google Site Verification */}
+        {process.env.GOOGLE_SITE_VERIFICATION && (
+          <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
+        )}
+
         {/* Umami Analytics */}
         <script
           defer
