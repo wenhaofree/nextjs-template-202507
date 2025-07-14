@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: HomePageProps) {
   const keywords = locale === 'zh'
     ? ['shipsaas', 'saas 样板', 'nextjs saas', 'ai saas', 'saas 模板', 'nextjs 模板', 'saas 启动器', 'react saas', 'typescript saas', 'saas 开发']
     : ['shipsaas', 'saas boilerplate', 'nextjs saas', 'ai saas', 'saas template', 'nextjs template', 'saas starter', 'react saas', 'typescript saas', 'saas development'];
+import GoogleOneTapWrapper from "@/components/GoogleOneTapWrapper";
 
   return generateSEOMetadata({
     title,
