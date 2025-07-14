@@ -15,6 +15,7 @@ import FAQsFour from "@/components/sections/faqs"
 import { Testimonials } from "@/components/sections/Testimonials";
 import CallToAction from "@/components/sections/call-to-action";
 import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
+import GoogleOneTapWrapper from "@/components/GoogleOneTapWrapper";
 
 export function ClientHomePage() {
   const t = useTranslations('HomePage');
@@ -24,6 +25,7 @@ export function ClientHomePage() {
 
   return (
     <>
+      <GoogleOneTapWrapper />
       <SiteHeader />
       <HeroSection
       badge={{

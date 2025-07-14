@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import type { AuthOptions } from "next-auth"
-import type { Session, User } from "next-auth"
+import type { Session } from "next-auth"
 import type { JWT } from "next-auth/jwt"
 import { getServerSession } from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
@@ -110,69 +110,6 @@ const googleOneTapProvider = CredentialsProvider({
     }
   }
 });
-import { jwtDecode } from "jwt-decode"
-
-// 添加Google One Tap凭据提供者
-const googleOneTapProvider = CredentialsProvider({
-  id: "google-one-tap",
-  name: "Google One Tap",
-  credentials: {
-    credential: { type: "text" }
-  },
-  async authorize(credentials) {
-    try {
-      if (!credentials?.credential) return null;
-
-      // 解码Google提供的JWT令牌
-      const decoded: any = jwtDecode(credentials.credential);
-
-      // 处理用户信息
-      const userData = {
-        uuid: decoded.sub,
-        email: decoded.email,
-        nickname: decoded.name,
-        avatarUrl: decoded.picture,
-        signinType: 'oauth',
-        signinIp: '127.0.0.1', // 可以使用相同的IP获取逻辑
-        signinProvider: 'google-one-tap',
-        signinOpenid: decoded.sub,
-        createdAt: new Date(),
-      };
-
-      // 查找或创建用户
-      const existingUser = await prisma.user.findFirst({
-        where: {
-          email: decoded.email,
-          signinProvider: 'google-one-tap',
-        },
-      });
-
-      if (existingUser) {
-        await prisma.user.update({
-          where: { id: existingUser.id },
-          data: {
-            nickname: userData.nickname,
-            avatarUrl: userData.avatarUrl,
-          },
-        });
-      } else {
-        await prisma.user.create({ data: userData });
-      }
-
-      // 返回符合User接口的对象
-      return {
-        id: decoded.sub,
-        email: decoded.email,
-        name: decoded.name,
-        image: decoded.picture,
-        uuid: decoded.sub // 添加uuid字段以符合User接口要求
-      };
-    } catch (error) {
-      console.error("Google One Tap验证错误:", error);
-      return null;
-    }
-  }
-});
 
 const authOptions: AuthOptions = {
   providers: [
@@ -195,11 +132,6 @@ const authOptions: AuthOptions = {
         ]
       : []),
     // 配置Google One Tap登录
-    ...(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ONE_TAP_ENABLED === "true"
-      ? [googleOneTapProvider]
-      : []),
-
-    // Google One Tap Provider (if enabled)
     ...(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ONE_TAP_ENABLED === "true"
       ? [googleOneTapProvider]
       : []),
