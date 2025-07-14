@@ -459,10 +459,17 @@
       "title": "Choose Your ShipSaaS Plan",
       "description": "Start building your SaaS faster with our comprehensive development toolkit"
     },
+    "labels": {
+      "save": "Save",
+      "month": "month",
+      "popular": "Popular!"
+    },
     "tiers": {
       "starter": {
         "name": "Basic",
         "price": "99",
+        "originalPrice": "149",
+        "discount": "34",
         "description": "Perfect for indie developers and small projects",
         "features": [
           "Next.js Framework",
@@ -479,6 +486,8 @@
       "professional": {
         "name": "Standard",
         "price": "169",
+        "originalPrice": "249",
+        "discount": "32",
         "description": "For growing teams and serious SaaS projects",
         "popular": true,
         "features": [
@@ -496,6 +505,8 @@
       "enterprise": {
         "name": "Premium",
         "price": "299",
+        "originalPrice": "449",
+        "discount": "33",
         "description": "For large teams and enterprise applications",
         "features": [
           "Everything in Standard",

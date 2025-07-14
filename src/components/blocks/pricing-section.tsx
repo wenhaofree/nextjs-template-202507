@@ -4,6 +4,7 @@ import { useState } from "react"
 import { PricingCard, type PricingTier } from "@/components/ui/pricing-card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
 
 interface PricingSectionProps {
   title: string
@@ -57,15 +58,31 @@ export function PricingSection({
         )}
       </div>
 
-      <div className="grid w-full max-w-6xl gap-8 md:grid-cols-3 justify-items-center px-4 pt-8">
-        {tiers.map((tier) => (
-          <PricingCard
+      <motion.div
+        className="grid w-full max-w-6xl gap-8 md:grid-cols-3 justify-items-center px-4 pt-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+      >
+        {tiers.map((tier, index) => (
+          <motion.div
             key={tier.name}
-            tier={tier}
-            paymentFrequency={selectedFrequency}
-          />
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              delay: index * 0.1 + 0.7,
+              duration: 0.5,
+              type: "spring",
+              stiffness: 100
+            }}
+          >
+            <PricingCard
+              tier={tier}
+              paymentFrequency={selectedFrequency}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   )
 }

@@ -459,10 +459,17 @@
       "title": "选择您的 ShipSaaS 计划",
       "description": "使用我们的综合开发工具包更快地开始构建您的 SaaS"
     },
+    "labels": {
+      "save": "节省",
+      "month": "月",
+      "popular": "热门推荐!"
+    },
     "tiers": {
       "starter": {
         "name": "基础版",
         "price": "99",
+        "originalPrice": "149",
+        "discount": "34",
         "description": "适合独立开发者和小型项目",
         "features": [
           "Next.js 框架",
@@ -479,6 +486,8 @@
       "professional": {
         "name": "标准版",
         "price": "169",
+        "originalPrice": "249",
+        "discount": "32",
         "description": "适合成长中的团队和严肃的 SaaS 项目",
         "popular": true,
         "features": [
@@ -496,6 +505,8 @@
       "enterprise": {
         "name": "高级版",
         "price": "299",
+        "originalPrice": "449",
+        "discount": "33",
         "description": "适合大型团队和企业应用",
         "features": [
           "包含标准版所有功能",

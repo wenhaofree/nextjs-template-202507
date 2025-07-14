@@ -6,6 +6,7 @@ import NumberFlow from "@number-flow/react"
 import { useSession } from "next-auth/react"
 import { useRouter, usePathname } from "next/navigation"
 import { toast } from "sonner"
+import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -99,9 +100,21 @@ export function PricingCard({ tier, paymentFrequency }: PricingCardProps) {
   }
 
   return (
-    <Card
+    <motion.div
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        duration: 0.5,
+        type: "spring",
+        stiffness: 100
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.02,
+        transition: { duration: 0.2 }
+      }}
       className={cn(
-        "relative flex flex-col p-6 transition-all duration-300",
+        "relative flex flex-col p-6 transition-all duration-300 rounded-lg border bg-card text-card-foreground shadow-sm",
         isHighlighted
           ? "border-primary shadow-lg scale-105"
           : "border-border hover:border-primary/50",
@@ -123,8 +136,48 @@ export function PricingCard({ tier, paymentFrequency }: PricingCardProps) {
           <p className="text-sm text-muted-foreground mt-1">{tier.description}</p>
         </div>
 
-        <div className="mb-6">
-          <div className="flex items-baseline gap-2">
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        >
+          {originalPrice && typeof originalPrice === "number" && (
+            <motion.div
+              className="flex items-center gap-2 mb-2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.3 }}
+            >
+              <span className="text-sm text-muted-foreground line-through">
+                ${originalPrice}
+              </span>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.3,
+                  type: "spring",
+                  stiffness: 200
+                }}
+              >
+                <Badge
+                  variant="destructive"
+                  className="text-xs bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white animate-pulse"
+                >
+                  Save ${originalPrice - (price as number)}
+                </Badge>
+              </motion.div>
+            </motion.div>
+          )}
+
+          <motion.div
+            className="flex items-baseline gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+          >
             {typeof price === "number" ? (
               <>
                 <span className="text-3xl font-bold">
@@ -137,19 +190,8 @@ export function PricingCard({ tier, paymentFrequency }: PricingCardProps) {
             ) : (
               <span className="text-3xl font-bold">{price}</span>
             )}
-          </div>
-          
-          {originalPrice && typeof originalPrice === "number" && (
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-sm text-muted-foreground line-through">
-                ${originalPrice}
-              </span>
-              <Badge variant="secondary" className="text-xs">
-                Save ${originalPrice - (price as number)}
-              </Badge>
-            </div>
-          )}
-        </div>
+          </motion.div>
+        </motion.div>
 
         <ul className="space-y-3 mb-6">
           {tier.features.map((feature, index) => (
@@ -173,6 +215,6 @@ export function PricingCard({ tier, paymentFrequency }: PricingCardProps) {
       >
         {tier.cta}
       </Button>
-    </Card>
+    </motion.div>
   )
 }

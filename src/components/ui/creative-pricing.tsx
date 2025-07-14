@@ -1,15 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { Check, Pencil, Star, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { BorderBeam, NumberTicker } from "@/components/magicui";
+import { motion } from "framer-motion";
+import { useTranslations } from 'next-intl';
 
 interface PricingTier {
     name: string;
     icon: React.ReactNode;
     price: number;
+    originalPrice?: number;
+    discount?: number;
     description: string;
     features: string[];
     popular?: boolean;
@@ -31,6 +36,7 @@ function CreativePricing({
     const router = useRouter();
     const pathname = usePathname();
     const locale = pathname.split('/')[1] || "";
+    const t = useTranslations('Pricing');
 
     const handlePayment = async (tier: PricingTier) => {
         // 检查登录状态
@@ -97,10 +103,28 @@ function CreativePricing({
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+            >
                 {tiers.map((tier, index) => (
-                    <div
+                    <motion.div
                         key={tier.name}
+                        initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{
+                            delay: index * 0.1,
+                            duration: 0.5,
+                            type: "spring",
+                            stiffness: 100
+                        }}
+                        whileHover={{
+                            y: -8,
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                        }}
                         className={cn(
                             "relative group",
                             "transition-all duration-300",
@@ -131,7 +155,7 @@ function CreativePricing({
                                     className="absolute -top-2 -right-2 bg-amber-400 text-zinc-900 
                                     font-handwritten px-3 py-1 rounded-full rotate-12 text-sm border-2 border-zinc-900"
                                 >
-                                    Popular!
+                                    {t('labels.popular')}
                                 </div>
                             )}
 
@@ -155,14 +179,65 @@ function CreativePricing({
                             </div>
 
                             {/* Price */}
-                            <div className="mb-6 font-handwritten">
-                                <span className="text-4xl font-bold text-zinc-900 dark:text-white">
-                                    $<NumberTicker value={tier.price} />
-                                </span>
-                                {/* <span className="text-zinc-600 dark:text-zinc-400">
-                                    /month
-                                </span> */}
-                            </div>
+                            <motion.div
+                                className="mb-6 font-handwritten"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
+                            >
+                                {tier.originalPrice && tier.discount && (
+                                    <motion.div
+                                        className="flex items-center gap-2 mb-2"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.1 + 0.4, duration: 0.3 }}
+                                    >
+                                        <span className="text-lg text-zinc-500 dark:text-zinc-400 line-through">
+                                            ${tier.originalPrice}
+                                        </span>
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{
+                                                delay: index * 0.1 + 0.5,
+                                                duration: 0.3,
+                                                type: "spring",
+                                                stiffness: 200
+                                            }}
+                                        >
+                                            <Badge
+                                                variant="destructive"
+                                                className="text-xs font-bold bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white shadow-lg animate-pulse"
+                                            >
+                                                -{tier.discount}% OFF
+                                            </Badge>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                                <motion.div
+                                    className="flex items-baseline gap-1"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 + 0.2, duration: 0.4 }}
+                                >
+                                    <span className="text-4xl font-bold text-zinc-900 dark:text-white">
+                                        $<NumberTicker value={tier.price} />
+                                    </span>
+                                    <span className="text-zinc-600 dark:text-zinc-400 text-lg">
+                                        /{t('labels.month')}
+                                    </span>
+                                </motion.div>
+                                {tier.originalPrice && tier.discount && (
+                                    <motion.div
+                                        className="mt-1 text-sm text-green-600 dark:text-green-400 font-medium"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: index * 0.1 + 0.6, duration: 0.3 }}
+                                    >
+                                        💰 {t('labels.save')} ${tier.originalPrice - tier.price}
+                                    </motion.div>
+                                )}
+                            </motion.div>
 
                             <div className="space-y-3 mb-6">
                                 {tier.features.map((feature) => (
@@ -211,16 +286,26 @@ function CreativePricing({
                                 {!session ? "Sign in to Purchase" : "Get Started"}
                             </Button>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
             <div className="absolute -z-10 inset-0 overflow-hidden">
-                <div className="absolute top-40 left-20 text-4xl rotate-12">
+                <motion.div
+                    className="absolute top-40 left-20 text-4xl rotate-12"
+                    initial={{ opacity: 0, rotate: 0, scale: 0 }}
+                    animate={{ opacity: 0.3, rotate: 12, scale: 1 }}
+                    transition={{ delay: 1, duration: 0.8, type: "spring" }}
+                >
                     ✎
-                </div>
-                <div className="absolute bottom-40 right-20 text-4xl -rotate-12">
+                </motion.div>
+                <motion.div
+                    className="absolute bottom-40 right-20 text-4xl -rotate-12"
+                    initial={{ opacity: 0, rotate: 0, scale: 0 }}
+                    animate={{ opacity: 0.3, rotate: -12, scale: 1 }}
+                    transition={{ delay: 1.2, duration: 0.8, type: "spring" }}
+                >
                     ✏️
-                </div>
+                </motion.div>
             </div>
         </div>
     );
