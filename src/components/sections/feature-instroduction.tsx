@@ -13,21 +13,21 @@ const FeatureInstruction = () => {
       icon: Rocket,
       title: t('items.rapidDevelopment.title'),
       description: t('items.rapidDevelopment.description'),
-      image: "https://bcalabs.org/companions.jpg",
+      image: "/feature/01.png",
     },
     {
       id: 2,
       icon: Settings,
       title: t('items.scalableArchitecture.title'),
       description: t('items.scalableArchitecture.description'),
-      image: "https://bcalabs.org/companions_group_1.jpg",
+      image: "/feature/02.png",
     },
     {
       id: 3,
       icon: Zap,
       title: t('items.productionReady.title'),
       description: t('items.productionReady.description'),
-      image: "https://bcalabs.org/companions_group_2.jpg",
+      image: "/feature/03.png",
     },
   ];
 

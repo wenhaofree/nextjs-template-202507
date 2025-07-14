@@ -13,21 +13,21 @@ const FeatureChose = () => {
       icon: Clock,
       title: t('items.timeToMarket.title'),
       description: t('items.timeToMarket.description'),
-      image: "https://bcalabs.org/companions.jpg",
+      image: "/feature/04.png",
     },
     {
       id: 2,
       icon: DollarSign,
       title: t('items.costEffective.title'),
       description: t('items.costEffective.description'),
-      image: "https://bcalabs.org/companions_group_1.jpg",
+      image: "/feature/05.png",
     },
     {
       id: 3,
       icon: Shield,
       title: t('items.provenReliability.title'),
       description: t('items.provenReliability.description'),
-      image: "https://bcalabs.org/companions_group_2.jpg",
+      image: "/feature/06.png",
     },
   ];
 
