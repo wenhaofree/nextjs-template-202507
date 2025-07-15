@@ -20,7 +20,9 @@ import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { v4 as uuidv4 } from 'uuid';
+import { measureDatabaseQuery, measureStripeCall, performanceMonitor } from '@/lib/performance';
+import { getStripePaymentMethodTypes } from '@/lib/stripe-config';
+import { toStripeAmount, isCurrencySupported } from '@/lib/currency-utils';
 
 /**
  * Request body interface for Stripe payment creation
@@ -37,6 +39,10 @@ interface StripePaymentRequest {
   cancelUrl: string;
   /** Optional product name / 可选的产品名称 */
   productName?: string;
+  /** Optional currency / 可选的货币类型 */
+  currency?: string;
+  /** Optional region for payment methods / 可选的支付方式地区 */
+  region?: string;
 }
 
 /**
@@ -59,13 +65,17 @@ interface ErrorResponse {
   error: string;
 }
 
-// Initialize Stripe with private key / 使用私钥初始化 Stripe
+// Initialize Stripe with private key and optimized configuration / 使用私钥和优化配置初始化 Stripe
 if (!process.env.STRIPE_PRIVATE_KEY) {
   throw new Error('Missing STRIPE_PRIVATE_KEY environment variable');
 }
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY, {
   apiVersion: '2025-06-30.basil',
+  // 优化配置以提高性能
+  timeout: 10000, // 10秒超时
+  maxNetworkRetries: 2, // 最多重试2次
+  telemetry: false, // 禁用遥测以减少开销
 });
 
 /**
@@ -74,6 +84,9 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY, {
  * 创建 Stripe 结账会话用于支付处理
  */
 export async function POST(request: Request): Promise<NextResponse<StripePaymentResponse | ErrorResponse>> {
+  const requestId = `stripe-payment-${Date.now()}`;
+  performanceMonitor.start(requestId, 'Stripe Payment Request');
+
   try {
     // Get user session / 获取用户会话
     const session = await getServerSession(authOptions);
@@ -88,7 +101,15 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
 
     // Parse request body / 解析请求体
     const body: StripePaymentRequest = await request.json();
-    const { email, price, successUrl, cancelUrl, productName = 'Product Purchase' } = body;
+    let {
+      email,
+      price,
+      successUrl,
+      cancelUrl,
+      productName = 'Product Purchase',
+      currency = 'usd',
+      region = 'global'
+    } = body;
 
     // Validate required fields / 验证必填字段
     if (!email || !price || !successUrl || !cancelUrl) {
@@ -117,15 +138,33 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
       );
     }
 
-    console.log('Stripe API: 开始创建支付会话', { email, price, productName });
+    // 验证货币支持
+    if (!isCurrencySupported(currency)) {
+      currency = 'usd';
+    }
 
-    // Find user in database / 在数据库中查找用户
-    const user = await prisma.user.findFirst({
-      where: {
-        email,
-        isDeleted: false,
-      },
-    });
+    // 获取支持的支付方式
+    const supportedPaymentMethods = getStripePaymentMethodTypes(currency, region);
+
+    // 如果是中国地区且使用人民币，确保支付宝可用
+    if (region === 'cn' && currency === 'cny' && !supportedPaymentMethods.includes('alipay')) {
+      supportedPaymentMethods.push('alipay');
+    }
+
+    // Find user in database with optimized query / 使用优化查询在数据库中查找用户
+    const user = await measureDatabaseQuery('findUser', () =>
+      prisma.user.findFirst({
+        where: {
+          email,
+          isDeleted: false,
+        },
+        select: {
+          uuid: true,
+          email: true,
+          isDeleted: true,
+        },
+      })
+    );
 
     if (!user) {
       console.log('Stripe API: 用户不存在');
@@ -137,69 +176,76 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
 
     // Generate order number / 生成订单号
     const orderNo = `ORDER-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-    
-    // Convert price to cents for Stripe / 将价格转换为分（Stripe 要求）
-    const amountInCents = Math.round(price * 100);
+
+    // Convert price to Stripe amount (smallest currency unit) / 将价格转换为 Stripe 金额（最小货币单位）
+    const amountInCents = toStripeAmount(price, currency);
 
     console.log('Stripe API: 创建 Stripe 结账会话');
 
-    // Create Stripe checkout session / 创建 Stripe 结账会话
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: productName,
-              description: `Purchase for ${email}`,
+    // 使用性能监控创建 Stripe 会话（支持多种支付方式包括支付宝）
+    const stripeSession = await measureStripeCall('createCheckoutSession', () =>
+      stripe.checkout.sessions.create({
+        // 动态支持多种支付方式：信用卡、支付宝等
+        payment_method_types: supportedPaymentMethods as Stripe.Checkout.SessionCreateParams.PaymentMethodType[],
+        line_items: [
+          {
+            price_data: {
+              currency: currency,
+              product_data: {
+                name: productName,
+                description: `Purchase for ${email}`,
+              },
+              unit_amount: amountInCents,
             },
-            unit_amount: amountInCents,
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+        mode: 'payment',
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+        customer_email: email,
+        metadata: {
+          orderNo,
+          userUuid: user.uuid,
+          userEmail: email,
+          productName,
         },
-      ],
-      mode: 'payment',
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      customer_email: email,
-      metadata: {
-        orderNo,
-        userUuid: user.uuid,
-        userEmail: email,
-        productName,
-      },
-    });
+      })
+    );
 
-    console.log('Stripe API: Stripe 会话创建成功', stripeSession.id);
 
-    // Create order record in database / 在数据库中创建订单记录
-    const order = await prisma.order.create({
-      data: {
-        orderNo,
-        userUuid: user.uuid,
-        userEmail: email,
-        amount: amountInCents, // Store in cents / 以分为单位存储
-        currency: 'usd',
-        status: 'pending',
-        stripeSessionId: stripeSession.id,
-        credits: 0, // Default credits / 默认积分
-        productName,
-        validMonths: 1, // Default 1 month / 默认1个月
-      },
-    });
-
-    console.log('Stripe API: 订单创建成功', order.id);
+    // 创建订单记录（使用性能监控）
+    await measureDatabaseQuery('createOrder', () =>
+      prisma.order.create({
+        data: {
+          orderNo,
+          userUuid: user.uuid,
+          userEmail: email,
+          amount: amountInCents, // Store in cents / 以分为单位存储
+          currency: 'usd',
+          status: 'pending',
+          stripeSessionId: stripeSession.id,
+          credits: 0, // Default credits / 默认积分
+          productName,
+          validMonths: 1, // Default 1 month / 默认1个月
+        },
+      })
+    );
 
     // Return Stripe checkout URL and session ID / 返回 Stripe 结账 URL 和会话 ID
-    console.log('返回支付URL:', stripeSession.url);
-    return NextResponse.json({ 
+
+    // 记录总体性能
+    performanceMonitor.end(requestId);
+
+    return NextResponse.json({
       url: stripeSession.url!,
-      id: stripeSession.id 
+      id: stripeSession.id
     });
 
   } catch (error) {
-    console.error('Stripe API 错误:', error);
+    // 记录错误时的性能
+    performanceMonitor.end(requestId);
+    console.error('Stripe API Error:', error);
     
     // Handle Stripe-specific errors / 处理 Stripe 特定错误
     if (error instanceof Stripe.errors.StripeError) {

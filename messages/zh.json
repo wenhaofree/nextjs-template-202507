@@ -567,6 +567,13 @@
       "linkText": "客户支持团队"
     }
   },
+  "PaymentMethods": {
+    "title": "支持的支付方式",
+    "description": "选择您喜欢的支付方式，安全便捷",
+    "secureNote": "所有支付均通过 Stripe 安全处理",
+    "accepts": "支持：",
+    "popular": "热门"
+  },
   "Footer": {
     "newsletter": {
       "title": "保持联系",

@@ -105,7 +105,7 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2">
           <Bot className="h-5 w-5 text-primary" />
-          ChatGPT Demo
+          ChatGPT
           <Badge variant="outline" className="ml-auto">
             <Sparkles className="h-3 w-3 mr-1" />
             AI-Powered

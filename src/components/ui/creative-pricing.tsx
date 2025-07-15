@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
@@ -8,6 +8,10 @@ import { toast } from "sonner";
 import { BorderBeam, NumberTicker } from "@/components/magicui";
 import { motion } from "framer-motion";
 import { useTranslations } from 'next-intl';
+import { useState, useCallback, useEffect } from 'react';
+import { getStripePaymentMethodTypes } from '@/lib/stripe-config';
+import { InlinePaymentMethods } from '@/components/ui/payment-methods-display';
+import { convertCurrency, formatCurrency, getCurrencySymbol } from '@/lib/currency-utils';
 
 interface PricingTier {
     name: string;
@@ -38,13 +42,48 @@ function CreativePricing({
     const locale = pathname.split('/')[1] || "";
     const t = useTranslations('Pricing');
 
-    const handlePayment = async (tier: PricingTier) => {
+    // 添加加载状态管理
+    const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+    // 获取支持的支付方式（根据地区和语言）
+    const region = locale === 'zh' ? 'cn' : 'global';
+    const currency = region === 'cn' ? 'cny' : 'usd';
+    const supportedPaymentMethods = getStripePaymentMethodTypes(currency, region);
+
+    // 货币转换状态
+    const [displayCurrency, setDisplayCurrency] = useState(currency);
+    const [convertedPrices, setConvertedPrices] = useState<Record<string, number>>({});
+
+    // 转换价格到目标货币
+    useEffect(() => {
+        const converted: Record<string, number> = {};
+        tiers.forEach((tier: PricingTier) => {
+            converted[tier.name] = convertCurrency(tier.price, displayCurrency);
+        });
+        setConvertedPrices(converted);
+    }, [displayCurrency, tiers]);
+
+    // 使用 useCallback 优化性能并添加防抖
+    const handlePayment = useCallback(async (tier: PricingTier) => {
+        // 防止重复点击
+        if (loadingTier) {
+            return;
+        }
+
         // 检查登录状态
         if (!session) {
             toast.error(locale === "zh" ? "请先登录再进行购买" : "Please login before making a purchase");
             router.push(`/auth/signin?callbackUrl=${encodeURIComponent(pathname)}`);
             return;
         }
+
+        // 设置加载状态
+        setLoadingTier(tier.name);
+
+        // 显示加载提示
+        const loadingToast = toast.loading(
+            locale === "zh" ? "正在创建支付会话..." : "Creating payment session..."
+        );
 
         try {
             // 调用 Stripe API 创建支付会话
@@ -54,11 +93,13 @@ function CreativePricing({
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    price: tier.price,
+                    price: convertedPrices[tier.name] || tier.price,
                     email: session.user?.email,
                     productName: `${tier.name} - Creative Plan`,
-                    successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${tier.price}`,
+                    successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${convertedPrices[tier.name] || tier.price}`,
                     cancelUrl: `${window.location.origin}/${locale}/#pricing`,
+                    currency: displayCurrency,
+                    region: region,
                 }),
             });
 
@@ -69,14 +110,28 @@ function CreativePricing({
 
             const { url } = await response.json();
             if (url) {
+                // 更新加载提示
+                toast.success(
+                    locale === "zh" ? "正在跳转到支付页面..." : "Redirecting to payment page...",
+                    { id: loadingToast }
+                );
+
+                // 跳转到 Stripe 支付页面
                 window.location.href = url;
             } else {
                 throw new Error(locale === "zh" ? "未收到结账 URL" : "No checkout URL received");
             }
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : (locale === "zh" ? "支付失败，请重试" : "Payment failed. Please try again."));
+            // 清除加载提示并显示错误
+            toast.error(
+                error instanceof Error ? error.message : (locale === "zh" ? "支付失败，请重试" : "Payment failed. Please try again."),
+                { id: loadingToast }
+            );
+        } finally {
+            // 清除加载状态
+            setLoadingTier(null);
         }
-    };
+    }, [session, router, pathname, locale, loadingTier]);
     return (
         <div className="container-wide section-padding">
             <div className="text-center space-y-6 mb-16">
@@ -193,7 +248,7 @@ function CreativePricing({
                                         transition={{ delay: index * 0.1 + 0.4, duration: 0.3 }}
                                     >
                                         <span className="text-lg text-zinc-500 dark:text-zinc-400 line-through">
-                                            ${tier.originalPrice}
+                                            {formatCurrency(tier.originalPrice || 0, displayCurrency, locale)}
                                         </span>
                                         <motion.div
                                             initial={{ scale: 0 }}
@@ -221,7 +276,7 @@ function CreativePricing({
                                     transition={{ delay: index * 0.1 + 0.2, duration: 0.4 }}
                                 >
                                     <span className="text-4xl font-bold text-zinc-900 dark:text-white">
-                                        $<NumberTicker value={tier.price} />
+                                        {getCurrencySymbol(displayCurrency)}<NumberTicker value={convertedPrices[tier.name] || tier.price} />
                                     </span>
                                     <span className="text-zinc-600 dark:text-zinc-400 text-lg">
                                         /{t('labels.month')}
@@ -258,8 +313,17 @@ function CreativePricing({
                                 ))}
                             </div>
 
+                            {/* 支付方式显示 */}
+                            <div className="mb-4">
+                                <InlinePaymentMethods
+                                    currency="usd"
+                                    className="justify-center"
+                                />
+                            </div>
+
                             <Button
                                 onClick={() => handlePayment(tier)}
+                                disabled={loadingTier !== null}
                                 className={cn(
                                     "w-full h-12 font-handwritten text-lg relative",
                                     "border-2 border-zinc-900 dark:border-white",
@@ -267,6 +331,9 @@ function CreativePricing({
                                     "shadow-[4px_4px_0px_0px] shadow-zinc-900 dark:shadow-white",
                                     "hover:shadow-[6px_6px_0px_0px]",
                                     "hover:translate-x-[-2px] hover:translate-y-[-2px]",
+                                    "disabled:opacity-50 disabled:cursor-not-allowed",
+                                    "disabled:hover:shadow-[4px_4px_0px_0px]",
+                                    "disabled:hover:translate-x-0 disabled:hover:translate-y-0",
                                     tier.popular
                                         ? [
                                               "bg-amber-400 text-zinc-900",
@@ -283,7 +350,16 @@ function CreativePricing({
                                           ]
                                 )}
                             >
-                                {!session ? "Sign in to Purchase" : "Get Started"}
+                                {loadingTier === tier.name ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        {locale === "zh" ? "处理中..." : "Processing..."}
+                                    </>
+                                ) : !session ? (
+                                    locale === "zh" ? "登录购买" : "Sign in to Purchase"
+                                ) : (
+                                    locale === "zh" ? "立即开始" : "Get Started"
+                                )}
                             </Button>
                         </div>
                     </motion.div>

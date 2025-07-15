@@ -567,6 +567,13 @@
       "linkText": "customer support team"
     }
   },
+  "PaymentMethods": {
+    "title": "Supported Payment Methods",
+    "description": "Choose your preferred payment method, secure and convenient",
+    "secureNote": "All payments are securely processed by Stripe",
+    "accepts": "Accepts:",
+    "popular": "Popular"
+  },
   "Footer": {
     "newsletter": {
       "title": "Stay Connected",
