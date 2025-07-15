@@ -1,0 +1,254 @@
+---
+title: Authentication Configuration
+description: Configure OAuth providers and authentication settings
+icon: Shield
+---
+
+# Authentication Configuration
+
+Configure authentication providers and security settings for your ShipSaaS application.
+
+## NextAuth.js Setup
+
+### Basic Configuration
+
+```typescript
+// src/auth.ts
+import NextAuth from 'next-auth';
+import Google from 'next-auth/providers/google';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { prisma } from '@/lib/prisma';
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (token) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
+});
+```
+
+### Environment Variables
+
+```bash
+NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_URL="http://localhost:3000"
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
+
+## OAuth Providers
+
+### Google OAuth
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create or select a project
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Configure authorized redirect URIs
+
+### GitHub OAuth (Optional)
+
+```typescript
+import GitHub from 'next-auth/providers/github';
+
+// Add to providers array
+GitHub({
+  clientId: process.env.GITHUB_CLIENT_ID!,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+}),
+```
+
+## Session Management
+
+### JWT Configuration
+
+```typescript
+session: {
+  strategy: 'jwt',
+  maxAge: 30 * 24 * 60 * 60, // 30 days
+},
+jwt: {
+  maxAge: 30 * 24 * 60 * 60, // 30 days
+},
+```
+
+### Database Sessions
+
+```typescript
+session: {
+  strategy: 'database',
+  maxAge: 30 * 24 * 60 * 60, // 30 days
+  updateAge: 24 * 60 * 60, // 24 hours
+},
+```
+
+## Security Configuration
+
+### CSRF Protection
+
+NextAuth.js includes built-in CSRF protection. Ensure it's enabled:
+
+```typescript
+useSecureCookies: process.env.NODE_ENV === 'production',
+cookies: {
+  sessionToken: {
+    name: `__Secure-next-auth.session-token`,
+    options: {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+    },
+  },
+},
+```
+
+### Custom Sign-in Page
+
+```typescript
+pages: {
+  signIn: '/auth/signin',
+  signOut: '/auth/signout',
+  error: '/auth/error',
+},
+```
+
+## User Management
+
+### User Registration
+
+```typescript
+// Handle new user registration
+callbacks: {
+  async signIn({ user, account, profile }) {
+    if (account?.provider === 'google') {
+      // Custom logic for new users
+      const existingUser = await prisma.user.findUnique({
+        where: { email: user.email! },
+      });
+      
+      if (!existingUser) {
+        // Create user profile
+        await prisma.user.create({
+          data: {
+            email: user.email!,
+            name: user.name!,
+            image: user.image,
+          },
+        });
+      }
+    }
+    return true;
+  },
+},
+```
+
+## Middleware Protection
+
+```typescript
+// middleware.ts
+import { auth } from '@/auth';
+
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+  
+  // Protect dashboard routes
+  if (pathname.startsWith('/dashboard')) {
+    if (!req.auth) {
+      return Response.redirect(new URL('/auth/signin', req.url));
+    }
+  }
+});
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+};
+```
+
+## Error Handling
+
+```typescript
+callbacks: {
+  async signIn({ user, account, profile, email, credentials }) {
+    try {
+      // Your sign-in logic
+      return true;
+    } catch (error) {
+      console.error('Sign-in error:', error);
+      return false;
+    }
+  },
+},
+events: {
+  async signIn({ user, account, profile, isNewUser }) {
+    console.log('User signed in:', user.email);
+  },
+  async signOut({ session, token }) {
+    console.log('User signed out');
+  },
+},
+```
+
+## Testing Authentication
+
+### Local Testing
+
+```bash
+# Start development server
+npm run dev
+
+# Test sign-in flow
+curl -X POST http://localhost:3000/api/auth/signin/google
+```
+
+### Unit Tests
+
+```typescript
+// __tests__/auth.test.ts
+import { auth } from '@/auth';
+
+describe('Authentication', () => {
+  it('should authenticate valid user', async () => {
+    const session = await auth();
+    expect(session?.user).toBeDefined();
+  });
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**OAuth redirect URI mismatch:**
+- Verify redirect URIs in OAuth provider settings
+- Check NEXTAUTH_URL environment variable
+
+**Session not persisting:**
+- Verify NEXTAUTH_SECRET is set
+- Check cookie settings for your domain
+
+**Database connection errors:**
+- Ensure Prisma adapter is configured correctly
+- Verify database schema is up to date
+
+For more authentication options, check the [NextAuth.js documentation](https://next-auth.js.org/).

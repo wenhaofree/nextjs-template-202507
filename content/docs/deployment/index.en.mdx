@@ -1,0 +1,282 @@
+---
+title: Deployment Overview
+description: Guide to deploying your ShipSaaS application to various platforms
+icon: FileText
+---
+
+# Deployment Overview
+
+This section covers deploying your ShipSaaS application to production environments. Choose the deployment method that best fits your needs.
+
+## Deployment Options
+
+### 🚀 [Vercel](/docs/deployment/vercel) (Recommended)
+Deploy to Vercel for the best Next.js experience with zero configuration.
+
+- One-click deployment
+- Automatic HTTPS
+- Global CDN
+- Serverless functions
+- Built-in analytics
+
+### 🌐 [Netlify](/docs/deployment/netlify)
+Deploy to Netlify for a powerful JAMstack hosting solution.
+
+- Git-based deployments
+- Form handling
+- Edge functions
+- Split testing
+- Identity management
+
+### 🐳 [Docker](/docs/deployment/docker)
+Containerize your application for consistent deployments across environments.
+
+- Container orchestration
+- Scalable infrastructure
+- Environment consistency
+- Multi-stage builds
+- Production optimization
+
+### 🖥️ [Custom Server](/docs/deployment/custom-server)
+Deploy to your own infrastructure with full control.
+
+- VPS deployment
+- Cloud providers (AWS, GCP, Azure)
+- Load balancing
+- Custom configurations
+- Advanced monitoring
+
+## Pre-Deployment Checklist
+
+Before deploying to production, ensure you have:
+
+### Environment Configuration
+- [ ] Production environment variables set
+- [ ] Database connection configured
+- [ ] OAuth providers configured for production URLs
+- [ ] Stripe webhooks updated with production endpoints
+- [ ] Email service configured and verified
+
+### Security
+- [ ] NEXTAUTH_SECRET generated and set
+- [ ] HTTPS enabled
+- [ ] Security headers configured
+- [ ] Rate limiting implemented
+- [ ] Input validation in place
+
+### Performance
+- [ ] Images optimized
+- [ ] Bundle size analyzed
+- [ ] Caching strategies implemented
+- [ ] Database queries optimized
+- [ ] CDN configured
+
+### Monitoring
+- [ ] Error tracking set up (Sentry, etc.)
+- [ ] Analytics configured (Umami)
+- [ ] Uptime monitoring enabled
+- [ ] Performance monitoring in place
+- [ ] Log aggregation configured
+
+## Environment Variables for Production
+
+Update your environment variables for production:
+
+```bash
+# Production Environment Variables
+NODE_ENV=production
+NEXTAUTH_URL=https://yourdomain.com
+DATABASE_URL=postgresql://prod_user:prod_pass@prod_host/prod_db
+
+# Stripe Production Keys
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# OAuth Production Settings
+GOOGLE_CLIENT_ID=your-prod-google-client-id
+GOOGLE_CLIENT_SECRET=your-prod-google-client-secret
+
+# Email Production Settings
+RESEND_API_KEY=re_...
+```
+
+## Database Migration
+
+Ensure your production database is properly set up:
+
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to production database
+npx prisma db push
+
+# Or run migrations
+npx prisma migrate deploy
+```
+
+## Build Optimization
+
+Optimize your build for production:
+
+```bash
+# Build the application
+npm run build
+
+# Analyze bundle size
+npm run analyze
+
+# Start production server locally (for testing)
+npm start
+```
+
+## Domain Configuration
+
+### DNS Settings
+
+Configure your domain DNS:
+
+```
+Type    Name    Value
+A       @       your-server-ip
+CNAME   www     yourdomain.com
+```
+
+### SSL Certificate
+
+Ensure HTTPS is enabled:
+- Most platforms (Vercel, Netlify) provide automatic SSL
+- For custom servers, use Let's Encrypt or purchase SSL certificates
+
+## Performance Optimization
+
+### Next.js Configuration
+
+```javascript
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Enable compression
+  compress: true,
+  
+  // Optimize images
+  images: {
+    domains: ['yourdomain.com'],
+    formats: ['image/webp', 'image/avif'],
+  },
+  
+  // Enable experimental features
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
+  },
+  
+  // Security headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
+  },
+};
+
+module.exports = nextConfig;
+```
+
+### Caching Strategy
+
+Implement proper caching:
+
+```typescript
+// API route caching example
+export async function GET() {
+  const data = await fetchData();
+  
+  return Response.json(data, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+    },
+  });
+}
+```
+
+## Monitoring and Maintenance
+
+### Health Checks
+
+Implement health check endpoints:
+
+```typescript
+// app/api/health/route.ts
+export async function GET() {
+  try {
+    // Check database connection
+    await prisma.$queryRaw`SELECT 1`;
+    
+    return Response.json({ status: 'healthy' });
+  } catch (error) {
+    return Response.json(
+      { status: 'unhealthy', error: error.message },
+      { status: 500 }
+    );
+  }
+}
+```
+
+### Error Tracking
+
+Set up error tracking with Sentry:
+
+```typescript
+// sentry.client.config.ts
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+});
+```
+
+## Rollback Strategy
+
+Prepare for rollbacks:
+
+1. **Database migrations** - Use reversible migrations
+2. **Feature flags** - Implement feature toggles
+3. **Blue-green deployment** - Maintain parallel environments
+4. **Backup strategy** - Regular database and file backups
+
+## Common Deployment Issues
+
+### Build Failures
+- Check Node.js version compatibility
+- Verify all dependencies are installed
+- Review build logs for specific errors
+
+### Runtime Errors
+- Validate environment variables
+- Check database connectivity
+- Review server logs
+
+### Performance Issues
+- Analyze bundle size
+- Check database query performance
+- Monitor server resources
+
+Choose your preferred deployment platform from the options above to get detailed deployment instructions.

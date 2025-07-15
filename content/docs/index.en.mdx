@@ -1,90 +1,124 @@
 ---
-title: Documentation System
-description: Modern documentation system based on Fumadocs
+title: Introduction
+description: Welcome to ShipSaaS - The complete Next.js boilerplate for building SaaS applications
+icon: Home
 ---
 
-## Welcome to Documentation System
+## What is ShipSaaS?
 
-This is a modern documentation system built with **Fumadocs**, integrated with Next.js 15, React 19, and TypeScript.
+Welcome to ShipSaaS, **a complete boilerplate for building SaaS applications**. This project is designed to accelerate your development with a robust, modular, and extensible foundation. Feel free to use it as is or extend it for your own needs.
 
-### 🚀 Key Features
+People use ShipSaaS to build SaaS applications for a variety of reasons:
 
-- **Modern UI**: Beautiful, responsive design built with Fumadocs UI
-- **MDX Support**: Use React components in Markdown
-- **Code Highlighting**: Syntax highlighting for multiple programming languages
-- **Search Functionality**: Built-in search feature
-- **Dark Mode**: Automatic dark/light mode support
-- **Type Safety**: Complete TypeScript support
-- **Internationalization**: Support for multiple languages with language switcher
+- 🚀 **Fast & Modern** - Built with Next.js 15 App Router and React 19
+- 🎨 **Beautiful UI** - Powered by TailwindCSS v4 and shadcn/ui components
+- 📱 **Responsive** - Works great on all devices
+- 🔍 **SEO Optimized** - Built-in SEO features and metadata management
+- 💳 **Payment Ready** - Integrated Stripe with multiple payment methods
+- 🌍 **Global Ready** - Complete internationalization support
+- 🔐 **Secure by Default** - Enterprise-grade authentication and security
 
-### 📁 Project Structure
+Whether you're a beginner or an experienced developer, this documentation will guide you through the setup, configuration, and deployment of your SaaS application.
 
-```
-├── content/docs/          # Documentation content
-│   ├── index.en.mdx      # English homepage
-│   ├── index.zh.mdx      # Chinese homepage
-│   └── ...
-├── src/
-│   ├── app/[locale]/docs/ # Internationalized documentation routes
-│   ├── lib/source.ts     # Documentation source configuration
-│   └── mdx-components.tsx # MDX component configuration
-├── source.config.ts      # Fumadocs configuration
-└── .source/              # Auto-generated type files
-```
+This guide assumes you have some familiarity with Next.js and Prisma ORM. If you don't have any of these, please refer to the [Official Documentation](#official-documentation) as we will not cover the basics in this guide.
 
-### 🛠 How to Start
+Let's get started!
 
-1. **Install dependencies**:
-   ```bash
-   pnpm install
-   ```
+## Tech Stack
 
-2. **Generate documentation types**:
-   ```bash
-   pnpm fumadocs-mdx
-   ```
+### Next.js 15
+The React framework for building full-stack web applications using React 19.
 
-3. **Start development server**:
-   ```bash
-   pnpm dev
-   ```
+### Prisma ORM
+A next-generation ORM that helps you access your database in a type-safe way.
 
-4. **Visit documentation**: 
-   - English: [http://localhost:3001/en/docs](http://localhost:3001/en/docs)
-   - Chinese: [http://localhost:3001/zh/docs](http://localhost:3001/zh/docs)
+### TailwindCSS v4
+A utility-first CSS framework packed with utility classes that can be composed to build any design.
 
-### 🌐 Language Support
+### Shadcn/ui / Magic UI / Animate UI / TailArk
+A collection of pre-built components and blocks that you can use to build your SaaS applications.
 
-This documentation system supports multiple languages:
+### NextAuth.js
+A complete authentication solution for Next.js applications with support for multiple providers.
 
-- **English** (en) - Default language
-- **中文** (zh) - Chinese language
+### Resend
+A modern email service that allows you to send emails from your application.
 
-You can switch between languages using the language selector in the navigation bar.
+### Fumadocs
+A beautiful documentation framework for developers, flexible and performant.
 
-### 📝 Adding New Documentation
+### Stripe
+The most popular and secure payment processor for SaaS applications.
 
-1. Create a new `.mdx` file with language suffix (e.g., `page.en.mdx`, `page.zh.mdx`)
-2. Add frontmatter:
-   ```yaml
-   ---
-   title: Page Title
-   description: Page Description
-   ---
-   ```
-3. Write content
-4. Update the corresponding `meta.json` file to include the new page
-5. Run `pnpm fumadocs-mdx` to regenerate types
+### Vercel AI SDK
+A collection of tools for building AI applications, open source and free.
 
-### 🔧 Configuration Guide
+### Next-Intl
+Internationalization library for Next.js that supports routing, messages, and localization.
 
-- **source.config.ts**: Main configuration file, defines document collections and MDX options
-- **mdx-components.tsx**: Custom MDX components
-- **src/lib/source.ts**: Document source loader configuration with i18n support
-- **src/lib/i18n.ts**: Internationalization configuration
+### Neon PostgreSQL
+A serverless PostgreSQL database that scales automatically and provides excellent performance.
 
-### 📚 Quick Navigation
+### Umami Analytics
+Privacy-focused web analytics that provides insights without compromising user privacy.
 
-- [Getting Started](/en/docs/getting-started) - Detailed getting started guide
-- [Components](/en/docs/components) - Available UI components
-- [Configuration](/en/docs/configuration) - System configuration guide
+## Scope of This Documentation
+
+This documentation will guide you through configuring, running, and deploying the boilerplate, and will provide links to the official documentation of the underlying technologies where necessary. To fully grasp the boilerplate's capabilities, it's essential to understand these technologies, so be sure to explore their documentation as well.
+
+For anything strictly related to the [ShipSaaS boilerplate](https://shipsaas.net/), this documentation has you covered!
+
+### Official Documentation
+
+For in-depth understanding of the underlying technologies, refer to their official documentation:
+
+- Next.js: [Next.js Documentation](https://nextjs.org/docs)
+- Prisma: [Prisma Documentation](https://www.prisma.io/docs)
+- TailwindCSS: [TailwindCSS Documentation](https://tailwindcss.com/docs)
+- Shadcn/ui: [Shadcn/ui Documentation](https://ui.shadcn.com/docs)
+- Magic UI: [Magic UI Documentation](https://magicui.design/docs)
+- TailArk: [TailArk Documentation](https://tailark.com/)
+- NextAuth.js: [NextAuth.js Documentation](https://next-auth.js.org/getting-started/introduction)
+- Resend: [Resend Documentation](https://resend.com/docs)
+- Fumadocs: [Fumadocs Documentation](https://fumadocs.vercel.app/docs)
+- Stripe: [Stripe Documentation](https://stripe.com/docs)
+- Vercel AI SDK: [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
+- Next-Intl: [Next-Intl Documentation](https://next-intl.dev/)
+- Neon: [Neon Documentation](https://neon.tech/docs)
+- Umami: [Umami Documentation](https://umami.is/docs)
+
+Understanding these technologies is crucial for building a successful SaaS application.
+
+## Getting Help
+
+If you're stuck, here are some ways to get help:
+
+- Check the [ShipSaaS documentation](/docs)
+- Follow us on [X (Twitter)](https://twitter.com/shipsaas)
+- Join our community discussions
+- Open an issue on [GitHub Issues](https://github.com/ShipSaaSCo/nextjs-template-202507/issues)
+- Contact our support team at [support@shipsaas.net](mailto:support@shipsaas.net)
+
+## Next Steps
+
+Now that you have ShipSaaS running, here are some next steps:
+
+### Getting Started
+Learn how to set up and run your ShipSaaS application
+
+### Environment Setup
+Configure environment variables and external services
+
+### Database Setup
+Set up and configure your database connection
+
+### Authentication
+Configure OAuth providers and authentication settings
+
+### Payment Integration
+Set up Stripe payments and webhooks
+
+### Deployment
+Deploy your application to production
+
+Ready to start building? Head over to the [Getting Started](/docs/getting-started) guide to set up your development environment and create your first SaaS application.

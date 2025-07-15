@@ -1,0 +1,331 @@
+---
+title: Deploy to Vercel
+description: Step-by-step guide to deploy your ShipSaaS application to Vercel
+icon: Triangle
+---
+
+# Deploy to Vercel
+
+Vercel provides the best deployment experience for Next.js applications with zero configuration and automatic optimizations.
+
+## Prerequisites
+
+- GitHub, GitLab, or Bitbucket account
+- Vercel account (free tier available)
+- Your ShipSaaS project pushed to a Git repository
+
+## Quick Deployment
+
+### 1. Connect Repository
+
+1. Visit [Vercel Dashboard](https://vercel.com/dashboard)
+2. Click **"New Project"**
+3. Import your Git repository
+4. Select your ShipSaaS project
+
+### 2. Configure Project
+
+Vercel will automatically detect Next.js and configure:
+- **Framework Preset**: Next.js
+- **Root Directory**: `./` (unless you have a monorepo)
+- **Build Command**: `npm run build`
+- **Output Directory**: `.next`
+
+### 3. Environment Variables
+
+Add your production environment variables:
+
+```bash
+# Database
+DATABASE_URL=postgresql://user:pass@host/db
+
+# Authentication
+NEXTAUTH_SECRET=your-production-secret
+NEXTAUTH_URL=https://yourdomain.vercel.app
+
+# Stripe
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# OAuth
+GOOGLE_CLIENT_ID=your-prod-google-client-id
+GOOGLE_CLIENT_SECRET=your-prod-google-client-secret
+
+# Email
+RESEND_API_KEY=re_...
+```
+
+### 4. Deploy
+
+Click **"Deploy"** and Vercel will:
+- Build your application
+- Deploy to global CDN
+- Provide a production URL
+
+## Custom Domain
+
+### 1. Add Domain
+
+1. Go to your project dashboard
+2. Click **"Domains"** tab
+3. Add your custom domain
+4. Configure DNS records as instructed
+
+### 2. DNS Configuration
+
+Add these DNS records to your domain provider:
+
+```
+Type    Name    Value
+A       @       76.76.19.19
+CNAME   www     cname.vercel-dns.com
+```
+
+### 3. SSL Certificate
+
+Vercel automatically provisions SSL certificates for your domain.
+
+## Advanced Configuration
+
+### Vercel Configuration File
+
+Create `vercel.json` for advanced settings:
+
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/old-path",
+      "destination": "/new-path",
+      "permanent": true
+    }
+  ]
+}
+```
+
+### Environment-Specific Variables
+
+Set different variables for preview and production:
+
+1. **Production**: Used for your main domain
+2. **Preview**: Used for pull request previews
+3. **Development**: Used locally (not on Vercel)
+
+## Webhook Configuration
+
+### Stripe Webhooks
+
+Update your Stripe webhook endpoint:
+
+1. Go to Stripe Dashboard → Webhooks
+2. Update endpoint URL to: `https://yourdomain.com/api/webhooks/stripe`
+3. Update webhook secret in Vercel environment variables
+
+### OAuth Redirect URIs
+
+Update OAuth provider settings:
+
+**Google OAuth:**
+- Add: `https://yourdomain.com/api/auth/callback/google`
+
+## Performance Optimization
+
+### Edge Functions
+
+Convert API routes to Edge Runtime for better performance:
+
+```typescript
+// app/api/example/route.ts
+export const runtime = 'edge';
+
+export async function GET() {
+  return Response.json({ message: 'Hello from Edge!' });
+}
+```
+
+### Image Optimization
+
+Configure Next.js image optimization:
+
+```javascript
+// next.config.js
+module.exports = {
+  images: {
+    domains: ['yourdomain.com'],
+    formats: ['image/webp', 'image/avif'],
+  },
+};
+```
+
+### Caching
+
+Implement proper caching headers:
+
+```typescript
+export async function GET() {
+  const data = await fetchData();
+  
+  return Response.json(data, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+    },
+  });
+}
+```
+
+## Monitoring
+
+### Vercel Analytics
+
+Enable Vercel Analytics:
+
+1. Go to project dashboard
+2. Click **"Analytics"** tab
+3. Enable Web Analytics
+4. Add analytics code to your app
+
+### Error Tracking
+
+Set up error tracking with Sentry:
+
+```bash
+npm install @sentry/nextjs
+```
+
+```typescript
+// sentry.client.config.ts
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.VERCEL_ENV,
+});
+```
+
+## Continuous Deployment
+
+### Automatic Deployments
+
+Vercel automatically deploys when you:
+- Push to main branch (production)
+- Create pull requests (preview deployments)
+
+### Branch Protection
+
+Configure branch protection rules:
+
+1. **Production branch**: `main` or `master`
+2. **Preview branches**: All other branches
+3. **Ignored branches**: Add patterns to ignore specific branches
+
+## Database Considerations
+
+### Connection Pooling
+
+For serverless functions, use connection pooling:
+
+```typescript
+// lib/prisma.ts
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+```
+
+### Database Migrations
+
+Run migrations during build:
+
+```json
+{
+  "scripts": {
+    "build": "prisma generate && prisma migrate deploy && next build"
+  }
+}
+```
+
+## Troubleshooting
+
+### Build Failures
+
+**Out of memory errors:**
+```json
+{
+  "functions": {
+    "app/**/*.ts": {
+      "memory": 1024
+    }
+  }
+}
+```
+
+**Timeout errors:**
+```json
+{
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}
+```
+
+### Runtime Issues
+
+**Environment variables not loading:**
+- Check variable names match exactly
+- Ensure variables are set for correct environment (production/preview)
+
+**Database connection issues:**
+- Verify DATABASE_URL format
+- Check connection limits
+- Consider using connection pooling
+
+### Performance Issues
+
+**Slow API responses:**
+- Use Edge Runtime where possible
+- Implement proper caching
+- Optimize database queries
+
+**Large bundle size:**
+- Analyze bundle with `npm run analyze`
+- Use dynamic imports for large components
+- Optimize images and assets
+
+## Support
+
+- [Vercel Documentation](https://vercel.com/docs)
+- [Next.js on Vercel](https://vercel.com/docs/frameworks/nextjs)
+- [Vercel Community](https://github.com/vercel/vercel/discussions)
+
+Your ShipSaaS application is now deployed on Vercel with automatic HTTPS, global CDN, and serverless functions!

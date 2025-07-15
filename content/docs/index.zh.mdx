@@ -1,90 +1,125 @@
 ---
-title: 文档系统
-description: 基于 Fumadocs 的现代化文档系统
+title: 介绍
+description: 欢迎使用 ShipSaaS - 构建现代 SaaS 应用程序的完整 Next.js 样板
+icon: Home
 ---
 
-## 欢迎使用文档系统
 
-这是一个基于 **Fumadocs** 构建的现代化文档系统，集成了 Next.js 15、React 19 和 TypeScript。
+## 什么是 ShipSaaS？
 
-### 🚀 主要特性
+欢迎使用 ShipSaaS，**一个用于构建 SaaS 应用程序的完整样板**。这个项目旨在通过强大、模块化和可扩展的基础来加速您的开发。您可以按原样使用它，也可以根据自己的需求进行扩展。
 
-- **现代化 UI**: 使用 Fumadocs UI 构建的美观、响应式设计
-- **MDX 支持**: 在 Markdown 中使用 React 组件
-- **代码高亮**: 支持多种编程语言的语法高亮
-- **搜索功能**: 内置搜索功能
-- **深色模式**: 自动深色/浅色模式支持
-- **类型安全**: 完整的 TypeScript 支持
-- **国际化**: 支持多语言切换
+人们使用 ShipSaaS 构建 SaaS 应用程序的原因有很多：
 
-### 📁 项目结构
+- 🚀 **快速且现代** - 基于 Next.js 15 App Router 和 React 19 构建
+- 🎨 **精美 UI** - 由 TailwindCSS v4 和 shadcn/ui 组件驱动
+- 📱 **响应式** - 在所有设备上都能完美运行
+- 🔍 **SEO 优化** - 内置 SEO 功能和元数据管理
+- 💳 **支付就绪** - 集成 Stripe，支持多种支付方式
+- 🌍 **全球化就绪** - 完整的国际化支持
+- 🔐 **默认安全** - 企业级身份验证和安全性
 
-```
-├── content/docs/          # 文档内容
-│   ├── index.en.mdx      # 英文首页
-│   ├── index.zh.mdx      # 中文首页
-│   └── ...
-├── src/
-│   ├── app/[locale]/docs/ # 国际化文档路由
-│   ├── lib/source.ts     # 文档源配置
-│   └── mdx-components.tsx # MDX 组件配置
-├── source.config.ts      # Fumadocs 配置
-└── .source/              # 自动生成的类型文件
-```
+无论您是初学者还是经验丰富的开发者，本文档都将指导您完成 SaaS 应用程序的设置、配置和部署。
 
-### 🛠 如何启动
+本指南假设您对 Next.js 和 Prisma ORM 有一定的了解。如果您对这些不熟悉，请参考[官方文档](#官方文档)，因为我们不会在本指南中涵盖基础知识。
 
-1. **安装依赖**:
-   ```bash
-   pnpm install
-   ```
+让我们开始吧！
 
-2. **生成文档类型**:
-   ```bash
-   pnpm fumadocs-mdx
-   ```
+## 技术栈
 
-3. **启动开发服务器**:
-   ```bash
-   pnpm dev
-   ```
+### Next.js 15
+使用 React 19 构建全栈 Web 应用程序的 React 框架。
 
-4. **访问文档**: 
-   - 英文版: [http://localhost:3001/en/docs](http://localhost:3001/en/docs)
-   - 中文版: [http://localhost:3001/zh/docs](http://localhost:3001/zh/docs)
+### Prisma ORM
+下一代 ORM，帮助您以类型安全的方式访问数据库。
 
-### 🌐 语言支持
+### TailwindCSS v4
+实用优先的 CSS 框架，包含可组合构建任何设计的实用类。
 
-本文档系统支持多种语言：
+### Shadcn/ui / Magic UI / Animate UI / TailArk
+预构建组件和块的集合，您可以使用它们来构建 SaaS 应用程序。
 
-- **English** (en) - 默认语言
-- **中文** (zh) - 中文语言
+### NextAuth.js
+Next.js 应用程序的完整身份验证解决方案，支持多个提供商。
 
-您可以使用导航栏中的语言选择器在不同语言之间切换。
+### Resend
+现代邮件服务，允许您从应用程序发送邮件。
 
-### 📝 添加新文档
+### Fumadocs
+为开发者设计的美观文档框架，灵活且高性能。
 
-1. 创建带有语言后缀的新 `.mdx` 文件 (例如: `page.en.mdx`, `page.zh.mdx`)
-2. 添加 frontmatter:
-   ```yaml
-   ---
-   title: 页面标题
-   description: 页面描述
-   ---
-   ```
-3. 编写内容
-4. 更新对应的 `meta.json` 文件以包含新页面
-5. 运行 `pnpm fumadocs-mdx` 重新生成类型
+### Stripe
+SaaS 应用程序最受欢迎和最安全的支付处理器。
 
-### 🔧 配置说明
+### Vercel AI SDK
+构建 AI 应用程序的工具集合，开源且免费。
 
-- **source.config.ts**: 主要配置文件，定义文档集合和 MDX 选项
-- **mdx-components.tsx**: 自定义 MDX 组件
-- **src/lib/source.ts**: 支持国际化的文档源加载器配置
-- **src/lib/i18n.ts**: 国际化配置
+### Next-Intl
+Next.js 的国际化库，支持路由、消息和本地化。
 
-### 📚 快速导航
+### Neon PostgreSQL
+自动扩展并提供出色性能的无服务器 PostgreSQL 数据库。
 
-- [开始使用](/zh/docs/getting-started) - 详细的入门指南
-- [组件库](/zh/docs/components) - 可用的 UI 组件
-- [配置指南](/zh/docs/configuration) - 系统配置说明
+### Umami Analytics
+注重隐私的网络分析，在不损害用户隐私的情况下提供洞察。
+
+## 文档范围
+
+本文档将指导您配置、运行和部署样板，并在必要时提供底层技术官方文档的链接。要充分掌握样板的功能，了解这些技术至关重要，因此请务必探索它们的文档。
+
+对于与 [ShipSaaS 样板](https://shipsaas.net/) 严格相关的任何内容，本文档都为您提供了全面的覆盖！
+
+### 官方文档
+
+要深入了解底层技术，请参考它们的官方文档：
+
+- Next.js: [Next.js 文档](https://nextjs.org/docs)
+- Prisma: [Prisma 文档](https://www.prisma.io/docs)
+- TailwindCSS: [TailwindCSS 文档](https://tailwindcss.com/docs)
+- Shadcn/ui: [Shadcn/ui 文档](https://ui.shadcn.com/docs)
+- Magic UI: [Magic UI 文档](https://magicui.design/docs)
+- TailArk: [TailArk 文档](https://tailark.com/)
+- NextAuth.js: [NextAuth.js 文档](https://next-auth.js.org/getting-started/introduction)
+- Resend: [Resend 文档](https://resend.com/docs)
+- Fumadocs: [Fumadocs 文档](https://fumadocs.vercel.app/docs)
+- Stripe: [Stripe 文档](https://stripe.com/docs)
+- Vercel AI SDK: [Vercel AI SDK 文档](https://sdk.vercel.ai/docs)
+- Next-Intl: [Next-Intl 文档](https://next-intl.dev/)
+- Neon: [Neon 文档](https://neon.tech/docs)
+- Umami: [Umami 文档](https://umami.is/docs)
+
+了解这些技术对于构建成功的 SaaS 应用程序至关重要。
+
+## 获取帮助
+
+如果您遇到困难，以下是获取帮助的一些方法：
+
+- 查看 [ShipSaaS 文档](/docs)
+- 在 [X (Twitter)](https://twitter.com/shipsaas) 上关注我们
+- 加入我们的社区讨论
+- 在 [GitHub Issues](https://github.com/ShipSaaSCo/nextjs-template-202507/issues) 上提出问题
+- 通过 [support@shipsaas.net](mailto:support@shipsaas.net) 联系我们的支持团队
+
+## 下一步
+
+现在您已经运行了 ShipSaaS，以下是一些后续步骤：
+
+### 快速开始
+了解如何设置和运行您的 ShipSaaS 应用程序
+
+### 环境设置
+配置环境变量和外部服务
+
+### 数据库设置
+设置和配置您的数据库连接
+
+### 身份验证
+配置 OAuth 提供商和身份验证设置
+
+### 支付集成
+设置 Stripe 支付和 webhooks
+
+### 部署
+将您的应用程序部署到生产环境
+
+准备开始构建了吗？前往[快速开始](/docs/getting-started)指南，设置您的开发环境并创建您的第一个 SaaS 应用程序。

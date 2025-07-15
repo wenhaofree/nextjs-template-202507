@@ -1,1 +1,10 @@
-{"title": "Documentation", "pages": ["index", "getting-started"]}
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "getting-started",
+    "environment-setup",
+    "configuration",
+    "deployment"
+  ]
+}

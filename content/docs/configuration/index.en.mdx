@@ -1,0 +1,209 @@
+---
+title: Configuration Overview
+description: Comprehensive guide to configuring your ShipSaaS application
+icon: FileText
+---
+
+# Configuration Overview
+
+This section covers all aspects of configuring your ShipSaaS application, from basic settings to advanced customizations.
+
+## Configuration Categories
+
+### 🔐 [Authentication](/docs/configuration/authentication)
+Configure OAuth providers, session management, and security settings.
+
+- Google OAuth setup
+- NextAuth.js configuration
+- Session management
+- Security best practices
+
+### 💳 [Payments](/docs/configuration/payments)
+Set up Stripe payments, webhooks, and multi-currency support.
+
+- Stripe integration
+- Payment methods (Alipay, WeChat Pay)
+- Webhook configuration
+- Currency settings
+
+### 🌍 [Internationalization](/docs/configuration/internationalization)
+Configure multi-language support and localization.
+
+- Language setup
+- Message translations
+- Locale routing
+- Currency formatting
+
+### 🎨 [Theming](/docs/configuration/theming)
+Customize the appearance and branding of your application.
+
+- Theme configuration
+- Color schemes
+- Component styling
+- Brand customization
+
+### 🗄️ [Database](/docs/configuration/database)
+Configure database connections, schemas, and migrations.
+
+- Neon PostgreSQL setup
+- Prisma configuration
+- Schema management
+- Data migrations
+
+## Quick Configuration Checklist
+
+Before deploying your application, ensure you have configured:
+
+- [ ] **Database connection** - Neon PostgreSQL URL
+- [ ] **Authentication** - OAuth providers and NextAuth secret
+- [ ] **Payment processing** - Stripe keys and webhooks
+- [ ] **Email service** - Resend API configuration
+- [ ] **Internationalization** - Language files and locale settings
+- [ ] **Analytics** - Umami tracking setup
+- [ ] **Environment variables** - All required variables set
+
+## Configuration Files
+
+### Environment Variables
+
+```bash
+# .env.local
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="..."
+NEXTAUTH_URL="https://yourdomain.com"
+STRIPE_SECRET_KEY="sk_..."
+STRIPE_PUBLISHABLE_KEY="pk_..."
+RESEND_API_KEY="re_..."
+```
+
+### Next.js Configuration
+
+```javascript
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+};
+
+module.exports = nextConfig;
+```
+
+### Tailwind Configuration
+
+```javascript
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        },
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+## Development vs Production
+
+### Development Configuration
+
+```bash
+# Development settings
+NODE_ENV=development
+NEXTAUTH_URL=http://localhost:3000
+STRIPE_SECRET_KEY=sk_test_...
+```
+
+### Production Configuration
+
+```bash
+# Production settings
+NODE_ENV=production
+NEXTAUTH_URL=https://yourdomain.com
+STRIPE_SECRET_KEY=sk_live_...
+```
+
+## Configuration Validation
+
+The application includes built-in validation for configuration:
+
+```typescript
+// src/lib/config.ts
+import { z } from 'zod';
+
+const configSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  NEXTAUTH_SECRET: z.string().min(32),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
+  // ... other validations
+});
+
+export const config = configSchema.parse(process.env);
+```
+
+## Best Practices
+
+### Security
+
+1. **Never commit secrets** - Use `.env.local` for sensitive data
+2. **Use strong secrets** - Generate cryptographically secure keys
+3. **Rotate keys regularly** - Update API keys and secrets periodically
+4. **Validate inputs** - Always validate configuration values
+
+### Performance
+
+1. **Cache configuration** - Cache expensive configuration lookups
+2. **Lazy loading** - Load configuration only when needed
+3. **Environment-specific** - Use different configs for dev/prod
+4. **Minimize dependencies** - Keep configuration lightweight
+
+### Maintenance
+
+1. **Document changes** - Keep configuration documentation updated
+2. **Version control** - Track configuration changes
+3. **Backup settings** - Maintain backups of critical configurations
+4. **Monitor health** - Set up alerts for configuration issues
+
+## Troubleshooting
+
+### Common Configuration Issues
+
+**Environment variables not loading:**
+- Check file naming (`.env.local` not `.env`)
+- Restart development server after changes
+- Verify variable names match exactly
+
+**Database connection errors:**
+- Validate DATABASE_URL format
+- Check network connectivity
+- Verify SSL settings
+
+**Authentication failures:**
+- Confirm OAuth redirect URIs
+- Check client ID/secret pairs
+- Verify NEXTAUTH_URL setting
+
+Need specific configuration help? Check the individual configuration pages for detailed instructions.

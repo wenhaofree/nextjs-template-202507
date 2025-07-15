@@ -1,0 +1,209 @@
+---
+title: 配置概述
+description: 配置 ShipSaaS 应用程序的综合指南
+icon: FileText
+---
+
+# 配置概述
+
+本节涵盖配置 ShipSaaS 应用程序的所有方面，从基本设置到高级自定义。
+
+## 配置类别
+
+### 🔐 [身份验证](/docs/configuration/authentication)
+配置 OAuth 提供商、会话管理和安全设置。
+
+- Google OAuth 设置
+- NextAuth.js 配置
+- 会话管理
+- 安全最佳实践
+
+### 💳 [支付](/docs/configuration/payments)
+设置 Stripe 支付、webhooks 和多货币支持。
+
+- Stripe 集成
+- 支付方式（支付宝、微信支付）
+- Webhook 配置
+- 货币设置
+
+### 🌍 [国际化](/docs/configuration/internationalization)
+配置多语言支持和本地化。
+
+- 语言设置
+- 消息翻译
+- 语言路由
+- 货币格式化
+
+### 🎨 [主题](/docs/configuration/theming)
+自定义应用程序的外观和品牌。
+
+- 主题配置
+- 配色方案
+- 组件样式
+- 品牌自定义
+
+### 🗄️ [数据库](/docs/configuration/database)
+配置数据库连接、架构和迁移。
+
+- Neon PostgreSQL 设置
+- Prisma 配置
+- 架构管理
+- 数据迁移
+
+## 快速配置检查清单
+
+在部署应用程序之前，确保您已配置：
+
+- [ ] **数据库连接** - Neon PostgreSQL URL
+- [ ] **身份验证** - OAuth 提供商和 NextAuth 密钥
+- [ ] **支付处理** - Stripe 密钥和 webhooks
+- [ ] **邮件服务** - Resend API 配置
+- [ ] **国际化** - 语言文件和语言设置
+- [ ] **分析** - Umami 跟踪设置
+- [ ] **环境变量** - 设置所有必需变量
+
+## 配置文件
+
+### 环境变量
+
+```bash
+# .env.local
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="..."
+NEXTAUTH_URL="https://yourdomain.com"
+STRIPE_SECRET_KEY="sk_..."
+STRIPE_PUBLISHABLE_KEY="pk_..."
+RESEND_API_KEY="re_..."
+```
+
+### Next.js 配置
+
+```javascript
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+};
+
+module.exports = nextConfig;
+```
+
+### Tailwind 配置
+
+```javascript
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        },
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+## 开发环境 vs 生产环境
+
+### 开发环境配置
+
+```bash
+# 开发环境设置
+NODE_ENV=development
+NEXTAUTH_URL=http://localhost:3000
+STRIPE_SECRET_KEY=sk_test_...
+```
+
+### 生产环境配置
+
+```bash
+# 生产环境设置
+NODE_ENV=production
+NEXTAUTH_URL=https://yourdomain.com
+STRIPE_SECRET_KEY=sk_live_...
+```
+
+## 配置验证
+
+应用程序包含内置的配置验证：
+
+```typescript
+// src/lib/config.ts
+import { z } from 'zod';
+
+const configSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  NEXTAUTH_SECRET: z.string().min(32),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
+  // ... 其他验证
+});
+
+export const config = configSchema.parse(process.env);
+```
+
+## 最佳实践
+
+### 安全性
+
+1. **永不提交密钥** - 使用 `.env.local` 存储敏感数据
+2. **使用强密钥** - 生成加密安全的密钥
+3. **定期轮换密钥** - 定期更新 API 密钥和密钥
+4. **验证输入** - 始终验证配置值
+
+### 性能
+
+1. **缓存配置** - 缓存昂贵的配置查找
+2. **延迟加载** - 仅在需要时加载配置
+3. **环境特定** - 为开发/生产使用不同配置
+4. **最小化依赖** - 保持配置轻量级
+
+### 维护
+
+1. **记录更改** - 保持配置文档更新
+2. **版本控制** - 跟踪配置更改
+3. **备份设置** - 维护关键配置的备份
+4. **监控健康** - 为配置问题设置警报
+
+## 故障排除
+
+### 常见配置问题
+
+**环境变量未加载：**
+- 检查文件命名（`.env.local` 而不是 `.env`）
+- 更改后重启开发服务器
+- 验证变量名完全匹配
+
+**数据库连接错误：**
+- 验证 DATABASE_URL 格式
+- 检查网络连接
+- 验证 SSL 设置
+
+**身份验证失败：**
+- 确认 OAuth 重定向 URI
+- 检查客户端 ID/密钥对
+- 验证 NEXTAUTH_URL 设置
+
+需要特定配置帮助？查看各个配置页面获取详细说明。

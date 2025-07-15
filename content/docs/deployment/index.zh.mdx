@@ -1,0 +1,282 @@
+---
+title: 部署概述
+description: 将 ShipSaaS 应用程序部署到各种平台的指南
+icon: FileText
+---
+
+# 部署概述
+
+本节涵盖将 ShipSaaS 应用程序部署到生产环境。选择最适合您需求的部署方法。
+
+## 部署选项
+
+### 🚀 [Vercel](/docs/deployment/vercel)（推荐）
+部署到 Vercel，获得最佳的 Next.js 体验，零配置。
+
+- 一键部署
+- 自动 HTTPS
+- 全球 CDN
+- 无服务器函数
+- 内置分析
+
+### 🌐 [Netlify](/docs/deployment/netlify)
+部署到 Netlify，强大的 JAMstack 托管解决方案。
+
+- 基于 Git 的部署
+- 表单处理
+- 边缘函数
+- 分割测试
+- 身份管理
+
+### 🐳 [Docker](/docs/deployment/docker)
+容器化您的应用程序，在各种环境中实现一致的部署。
+
+- 容器编排
+- 可扩展基础设施
+- 环境一致性
+- 多阶段构建
+- 生产优化
+
+### 🖥️ [自定义服务器](/docs/deployment/custom-server)
+部署到您自己的基础设施，完全控制。
+
+- VPS 部署
+- 云提供商（AWS、GCP、Azure）
+- 负载均衡
+- 自定义配置
+- 高级监控
+
+## 部署前检查清单
+
+在部署到生产环境之前，确保您已：
+
+### 环境配置
+- [ ] 设置生产环境变量
+- [ ] 配置数据库连接
+- [ ] 为生产 URL 配置 OAuth 提供商
+- [ ] 使用生产端点更新 Stripe webhooks
+- [ ] 配置并验证邮件服务
+
+### 安全性
+- [ ] 生成并设置 NEXTAUTH_SECRET
+- [ ] 启用 HTTPS
+- [ ] 配置安全头
+- [ ] 实施速率限制
+- [ ] 输入验证到位
+
+### 性能
+- [ ] 优化图像
+- [ ] 分析包大小
+- [ ] 实施缓存策略
+- [ ] 优化数据库查询
+- [ ] 配置 CDN
+
+### 监控
+- [ ] 设置错误跟踪（Sentry 等）
+- [ ] 配置分析（Umami）
+- [ ] 启用正常运行时间监控
+- [ ] 性能监控到位
+- [ ] 配置日志聚合
+
+## 生产环境变量
+
+为生产环境更新您的环境变量：
+
+```bash
+# 生产环境变量
+NODE_ENV=production
+NEXTAUTH_URL=https://yourdomain.com
+DATABASE_URL=postgresql://prod_user:prod_pass@prod_host/prod_db
+
+# Stripe 生产密钥
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# OAuth 生产设置
+GOOGLE_CLIENT_ID=your-prod-google-client-id
+GOOGLE_CLIENT_SECRET=your-prod-google-client-secret
+
+# 邮件生产设置
+RESEND_API_KEY=re_...
+```
+
+## 数据库迁移
+
+确保您的生产数据库正确设置：
+
+```bash
+# 生成 Prisma 客户端
+npx prisma generate
+
+# 将架构推送到生产数据库
+npx prisma db push
+
+# 或运行迁移
+npx prisma migrate deploy
+```
+
+## 构建优化
+
+为生产环境优化您的构建：
+
+```bash
+# 构建应用程序
+npm run build
+
+# 分析包大小
+npm run analyze
+
+# 本地启动生产服务器（用于测试）
+npm start
+```
+
+## 域名配置
+
+### DNS 设置
+
+配置您的域名 DNS：
+
+```
+类型    名称    值
+A       @       your-server-ip
+CNAME   www     yourdomain.com
+```
+
+### SSL 证书
+
+确保启用 HTTPS：
+- 大多数平台（Vercel、Netlify）提供自动 SSL
+- 对于自定义服务器，使用 Let's Encrypt 或购买 SSL 证书
+
+## 性能优化
+
+### Next.js 配置
+
+```javascript
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // 启用压缩
+  compress: true,
+  
+  // 优化图像
+  images: {
+    domains: ['yourdomain.com'],
+    formats: ['image/webp', 'image/avif'],
+  },
+  
+  // 启用实验性功能
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
+  },
+  
+  // 安全头
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
+  },
+};
+
+module.exports = nextConfig;
+```
+
+### 缓存策略
+
+实施适当的缓存：
+
+```typescript
+// API 路由缓存示例
+export async function GET() {
+  const data = await fetchData();
+  
+  return Response.json(data, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+    },
+  });
+}
+```
+
+## 监控和维护
+
+### 健康检查
+
+实施健康检查端点：
+
+```typescript
+// app/api/health/route.ts
+export async function GET() {
+  try {
+    // 检查数据库连接
+    await prisma.$queryRaw`SELECT 1`;
+    
+    return Response.json({ status: 'healthy' });
+  } catch (error) {
+    return Response.json(
+      { status: 'unhealthy', error: error.message },
+      { status: 500 }
+    );
+  }
+}
+```
+
+### 错误跟踪
+
+使用 Sentry 设置错误跟踪：
+
+```typescript
+// sentry.client.config.ts
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+});
+```
+
+## 回滚策略
+
+为回滚做准备：
+
+1. **数据库迁移** - 使用可逆迁移
+2. **功能标志** - 实施功能切换
+3. **蓝绿部署** - 维护并行环境
+4. **备份策略** - 定期数据库和文件备份
+
+## 常见部署问题
+
+### 构建失败
+- 检查 Node.js 版本兼容性
+- 验证所有依赖项已安装
+- 查看构建日志以了解具体错误
+
+### 运行时错误
+- 验证环境变量
+- 检查数据库连接
+- 查看服务器日志
+
+### 性能问题
+- 分析包大小
+- 检查数据库查询性能
+- 监控服务器资源
+
+从上述选项中选择您首选的部署平台，获取详细的部署说明。

@@ -1,81 +1,140 @@
 ---
 title: Getting Started
-description: Learn how to get started with our documentation system
+description: Quick start guide to set up your ShipSaaS development environment
+icon: Rocket
 ---
 
-## Welcome to Our Documentation
+## Prerequisites
 
-This is a comprehensive guide to help you get started with our Next.js template and documentation system powered by Fumadocs.
+Before you begin, make sure you have the following installed on your system:
 
-### Features
+- **Node.js** (version 18.0 or higher)
+- **npm**, **yarn**, or **pnpm** package manager
+- **Git** for version control
+- A code editor (we recommend **VS Code**)
 
-Our documentation system includes:
+## Quick Setup
 
-- **Modern UI**: Built with Fumadocs UI for a beautiful, responsive design
-- **MDX Support**: Write content in MDX with React components
-- **Code Highlighting**: Syntax highlighting for multiple languages
-- **Search**: Built-in search functionality
-- **Dark Mode**: Automatic dark/light mode support
-- **Internationalization**: Multi-language support with language switcher
-
-### Installation
-
-To get started, install the dependencies:
+### 1. Clone the Repository
 
 ```bash
-pnpm install
-# or
+git clone https://github.com/ShipSaaSCo/nextjs-template-202507.git
+cd nextjs-template-202507
+```
+
+### 2. Install Dependencies
+
+Choose your preferred package manager:
+
+```bash
+# Using npm
 npm install
-# or
+
+# Using yarn
 yarn install
+
+# Using pnpm
+pnpm install
 ```
 
-### Development
+### 3. Environment Configuration
 
-Start the development server:
+Copy the example environment file and configure your settings:
 
 ```bash
-pnpm dev
-# or
-npm run dev
-# or
-yarn dev
+cp .env.example .env.local
 ```
 
-### Code Examples
+Edit `.env.local` with your configuration:
 
-Here's a simple React component example:
+```bash
+# Database
+DATABASE_URL="your-neon-database-url"
 
-```tsx
-import React from 'react';
+# Authentication
+NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_URL="http://localhost:3000"
 
-const HelloWorld = () => {
-  return (
-    <div className="p-4 bg-blue-100 rounded-lg">
-      <h1 className="text-2xl font-bold text-blue-800">
-        Hello, World!
-      </h1>
-      <p className="text-blue-600">
-        Welcome to our documentation system.
-      </p>
-    </div>
-  );
-};
+# OAuth Providers
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
 
-export default HelloWorld;
+# Stripe
+STRIPE_SECRET_KEY="your-stripe-secret-key"
+STRIPE_PUBLISHABLE_KEY="your-stripe-publishable-key"
+STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
+
+# Email
+RESEND_API_KEY="your-resend-api-key"
 ```
 
-### Internationalization
+### 4. Database Setup
 
-This documentation system supports multiple languages:
+Set up your database schema:
 
-- Access English documentation: `/en/docs`
-- Access Chinese documentation: `/zh/docs`
+```bash
+npx prisma generate
+npx prisma db push
+```
 
-The language switcher in the navigation allows users to switch between languages seamlessly.
+### 5. Start Development Server
 
-### Next Steps
+Run the development server with Turbopack for optimal performance:
 
-- Explore the [Components](/en/docs/components) section
-- Learn about [Configuration](/en/docs/configuration)
-- Check out [Examples](/en/docs/examples)
+```bash
+npm run dev --turbo
+# or
+yarn dev --turbo
+# or
+pnpm dev --turbo
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see your application running.
+
+## What's Next?
+
+Now that you have ShipSaaS running locally, you can:
+
+1. **Explore the Features** - Navigate through the application to see all available features
+2. **Customize the Design** - Modify components and styling to match your brand
+3. **Configure Services** - Set up your external services (Stripe, OAuth, etc.)
+4. **Deploy Your App** - Follow our deployment guide to go live
+
+## Project Structure
+
+Here's an overview of the key directories in your ShipSaaS project:
+
+```
+nextjs-template-202507/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   ├── components/          # Reusable UI components
+│   ├── lib/                 # Utility functions and configurations
+│   └── styles/              # Global styles and Tailwind config
+├── content/
+│   └── docs/                # Documentation content
+├── messages/                # Internationalization messages
+├── prisma/                  # Database schema and migrations
+└── public/                  # Static assets
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Port already in use:**
+```bash
+# Kill the process using port 3000
+lsof -ti:3000 | xargs kill -9
+```
+
+**Database connection issues:**
+- Verify your `DATABASE_URL` in `.env.local`
+- Ensure your Neon database is accessible
+- Run `npx prisma db push` to sync the schema
+
+**Build errors:**
+- Clear Next.js cache: `rm -rf .next`
+- Reinstall dependencies: `rm -rf node_modules && npm install`
+
+Need more help? Check out our [Environment Setup](/docs/environment-setup) guide for detailed configuration instructions.

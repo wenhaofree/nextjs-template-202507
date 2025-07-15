@@ -1,81 +1,140 @@
 ---
-title: 开始使用
-description: 学习如何开始使用我们的文档系统
+title: 快速开始
+description: 设置 ShipSaaS 开发环境的快速入门指南
+icon: Rocket
 ---
 
-## 欢迎使用我们的文档
+## 前置要求
 
-这是一个全面的指南，帮助您开始使用我们基于 Fumadocs 的 Next.js 模板和文档系统。
+开始之前，请确保您的系统已安装以下软件：
 
-### 功能特性
+- **Node.js**（版本 18.0 或更高）
+- **npm**、**yarn** 或 **pnpm** 包管理器
+- **Git** 版本控制工具
+- 代码编辑器（推荐使用 **VS Code**）
 
-我们的文档系统包括：
+## 快速设置
 
-- **现代化 UI**: 使用 Fumadocs UI 构建的美观、响应式设计
-- **MDX 支持**: 在 MDX 中编写内容并使用 React 组件
-- **代码高亮**: 支持多种语言的语法高亮
-- **搜索**: 内置搜索功能
-- **深色模式**: 自动深色/浅色模式支持
-- **国际化**: 支持多语言切换
-
-### 安装
-
-开始使用前，请安装依赖：
+### 1. 克隆仓库
 
 ```bash
-pnpm install
-# 或者
+git clone https://github.com/ShipSaaSCo/nextjs-template-202507.git
+cd nextjs-template-202507
+```
+
+### 2. 安装依赖
+
+选择您喜欢的包管理器：
+
+```bash
+# 使用 npm
 npm install
-# 或者
+
+# 使用 yarn
 yarn install
+
+# 使用 pnpm
+pnpm install
 ```
 
-### 开发
+### 3. 环境配置
 
-启动开发服务器：
+复制示例环境文件并配置您的设置：
 
 ```bash
-pnpm dev
-# 或者
-npm run dev
-# 或者
-yarn dev
+cp .env.example .env.local
 ```
 
-### 代码示例
+编辑 `.env.local` 文件，配置您的设置：
 
-这是一个简单的 React 组件示例：
+```bash
+# 数据库
+DATABASE_URL="your-neon-database-url"
 
-```tsx
-import React from 'react';
+# 身份验证
+NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_URL="http://localhost:3000"
 
-const HelloWorld = () => {
-  return (
-    <div className="p-4 bg-blue-100 rounded-lg">
-      <h1 className="text-2xl font-bold text-blue-800">
-        你好，世界！
-      </h1>
-      <p className="text-blue-600">
-        欢迎使用我们的文档系统。
-      </p>
-    </div>
-  );
-};
+# OAuth 提供商
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
 
-export default HelloWorld;
+# Stripe
+STRIPE_SECRET_KEY="your-stripe-secret-key"
+STRIPE_PUBLISHABLE_KEY="your-stripe-publishable-key"
+STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
+
+# 邮件
+RESEND_API_KEY="your-resend-api-key"
 ```
 
-### 国际化
+### 4. 数据库设置
 
-本文档系统支持多种语言：
+设置您的数据库架构：
 
-- 访问英文文档: `/en/docs`
-- 访问中文文档: `/zh/docs`
+```bash
+npx prisma generate
+npx prisma db push
+```
 
-导航栏中的语言切换器允许用户无缝切换语言。
+### 5. 启动开发服务器
 
-### 下一步
+使用 Turbopack 运行开发服务器以获得最佳性能：
 
-- 探索 [组件库](/zh/docs/components) 部分
-- 了解 [配置](/zh/docs/configuration)
-- 查看 [示例](/zh/docs/examples)
+```bash
+npm run dev --turbo
+# 或
+yarn dev --turbo
+# 或
+pnpm dev --turbo
+```
+
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看您的应用程序运行情况。
+
+## 下一步
+
+现在您已经在本地运行了 ShipSaaS，您可以：
+
+1. **探索功能** - 浏览应用程序以查看所有可用功能
+2. **自定义设计** - 修改组件和样式以匹配您的品牌
+3. **配置服务** - 设置您的外部服务（Stripe、OAuth 等）
+4. **部署应用** - 按照我们的部署指南上线
+
+## 项目结构
+
+以下是 ShipSaaS 项目中关键目录的概述：
+
+```
+nextjs-template-202507/
+├── src/
+│   ├── app/                 # Next.js App Router 页面
+│   ├── components/          # 可重用的 UI 组件
+│   ├── lib/                 # 工具函数和配置
+│   └── styles/              # 全局样式和 Tailwind 配置
+├── content/
+│   └── docs/                # 文档内容
+├── messages/                # 国际化消息
+├── prisma/                  # 数据库架构和迁移
+└── public/                  # 静态资源
+```
+
+## 故障排除
+
+### 常见问题
+
+**端口已被占用：**
+```bash
+# 终止使用端口 3000 的进程
+lsof -ti:3000 | xargs kill -9
+```
+
+**数据库连接问题：**
+- 验证 `.env.local` 中的 `DATABASE_URL`
+- 确保您的 Neon 数据库可访问
+- 运行 `npx prisma db push` 同步架构
+
+**构建错误：**
+- 清除 Next.js 缓存：`rm -rf .next`
+- 重新安装依赖：`rm -rf node_modules && npm install`
+
+需要更多帮助？查看我们的[环境设置](/docs/environment-setup)指南，获取详细的配置说明。

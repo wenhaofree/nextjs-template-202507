@@ -1,0 +1,264 @@
+---
+title: 环境设置
+description: 设置开发环境和外部服务的详细指南
+icon: Settings
+---
+
+
+本综合指南涵盖了为您的 ShipSaaS 应用程序设置所有外部服务和配置所需的内容。
+
+## 数据库设置（Neon PostgreSQL）
+
+### 1. 创建 Neon 账户
+
+1. 访问 [Neon Console](https://console.neon.tech)
+2. 注册免费账户
+3. 创建新项目
+
+### 2. 获取数据库 URL
+
+1. 在 Neon 仪表板中，转到**连接详情**
+2. 复制连接字符串
+3. 添加到您的 `.env.local`：
+
+```bash
+DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
+```
+
+### 3. 初始化数据库
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+## 身份验证设置
+
+### Google OAuth
+
+1. 前往 [Google Cloud Console](https://console.cloud.google.com)
+2. 创建新项目或选择现有项目
+3. 启用 Google+ API
+4. 创建 OAuth 2.0 凭据
+5. 添加授权重定向 URI：
+   - `http://localhost:3000/api/auth/callback/google`（开发环境）
+   - `https://yourdomain.com/api/auth/callback/google`（生产环境）
+
+```bash
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
+
+### NextAuth 配置
+
+```bash
+NEXTAUTH_SECRET="your-random-secret-key"
+NEXTAUTH_URL="http://localhost:3000"  # 生产环境需要更改
+```
+
+生成安全密钥：
+```bash
+openssl rand -base64 32
+```
+
+## Stripe 支付设置
+
+### 1. 创建 Stripe 账户
+
+1. 访问 [Stripe Dashboard](https://dashboard.stripe.com)
+2. 创建账户
+3. 完成账户验证
+
+### 2. 获取 API 密钥
+
+1. 转到**开发者** → **API 密钥**
+2. 复制您的密钥：
+
+```bash
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_PUBLISHABLE_KEY="pk_test_..."
+```
+
+### 3. 配置 Webhooks
+
+1. 转到**开发者** → **Webhooks**
+2. 添加端点：`https://yourdomain.com/api/webhooks/stripe`
+3. 选择事件：
+   - `checkout.session.completed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.payment_succeeded`
+   - `invoice.payment_failed`
+
+```bash
+STRIPE_WEBHOOK_SECRET="whsec_..."
+```
+
+### 4. 启用支付方式
+
+为中国用户启用支付宝和微信支付：
+
+1. 转到**设置** → **支付方式**
+2. 启用**支付宝**和**微信支付**
+3. 配置人民币货币设置
+
+## 邮件设置（Resend）
+
+### 1. 创建 Resend 账户
+
+1. 访问 [Resend](https://resend.com)
+2. 注册账户
+3. 验证您的域名
+
+### 2. 获取 API 密钥
+
+1. 转到 **API Keys**
+2. 创建新的 API 密钥
+3. 添加到环境变量：
+
+```bash
+RESEND_API_KEY="re_..."
+```
+
+### 3. 配置域名
+
+1. 在 Resend 仪表板中添加您的域名
+2. 按照说明配置 DNS 记录
+3. 验证域名所有权
+
+## 分析设置（Umami）
+
+### 1. 自托管 Umami
+
+如果使用自托管 Umami：
+
+```bash
+UMAMI_WEBSITE_ID="your-website-id"
+UMAMI_URL="https://your-umami-domain.com"
+```
+
+### 2. Umami Cloud
+
+对于 Umami Cloud 服务：
+
+1. 在 [Umami Cloud](https://cloud.umami.is) 注册
+2. 添加您的网站
+3. 获取跟踪代码
+
+## 国际化
+
+### 支持的语言
+
+在 `src/lib/i18n.ts` 中配置支持的语言：
+
+```typescript
+export const locales = ['en', 'zh'] as const;
+export const defaultLocale = 'en' as const;
+```
+
+### 消息文件
+
+在 `messages/` 目录中添加翻译：
+- `messages/en.json` - 英文翻译
+- `messages/zh.json` - 中文翻译
+
+## 开发工具
+
+### 推荐的 VS Code 扩展
+
+```json
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-next",
+    "prisma.prisma",
+    "unifiedjs.vscode-mdx"
+  ]
+}
+```
+
+### 环境变量验证
+
+应用程序在启动时验证环境变量。确保设置所有必需的变量：
+
+```bash
+# 开发环境必需
+DATABASE_URL=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+
+# 生产环境必需
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+RESEND_API_KEY=
+```
+
+## 安全考虑
+
+### 生产环境
+
+1. **使用强密钥** - 生成加密安全的密钥
+2. **启用 HTTPS** - 生产环境始终使用 HTTPS
+3. **安全头** - 在 `next.config.js` 中配置安全头
+4. **环境隔离** - 保持开发和生产环境分离
+
+### API 速率限制
+
+为 API 端点配置速率限制以防止滥用：
+
+```typescript
+// 速率限制配置示例
+export const rateLimit = {
+  windowMs: 15 * 60 * 1000, // 15 分钟
+  max: 100 // 每个 IP 在 windowMs 内限制 100 个请求
+};
+```
+
+## 测试配置
+
+### 测试数据库
+
+为测试设置单独的数据库：
+
+```bash
+# .env.test
+DATABASE_URL="postgresql://test_user:test_pass@localhost/test_db"
+```
+
+### 测试环境
+
+```bash
+# 运行测试
+npm run test
+
+# 监视模式运行测试
+npm run test:watch
+```
+
+## 故障排除
+
+### 常见问题
+
+**数据库连接失败：**
+- 检查您的 DATABASE_URL 格式
+- 确保 Neon 数据库可访问
+- 验证 SSL 模式设置正确
+
+**OAuth 不工作：**
+- 验证重定向 URI 正确
+- 检查客户端 ID 和密钥
+- 确保 OAuth 同意屏幕已配置
+
+**Stripe Webhooks 失败：**
+- 验证 webhook 端点 URL
+- 检查 webhook 密钥
+- 确保生产环境使用 HTTPS
+
+**邮件发送失败：**
+- 验证 Resend API 密钥
+- 检查域名验证状态
+- 查看邮件模板
+
+需要更多帮助？查看我们的[配置](/docs/configuration)部分了解高级设置。

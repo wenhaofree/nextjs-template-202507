@@ -1,0 +1,264 @@
+---
+title: Environment Setup
+description: Detailed guide for setting up your development environment and external services
+icon: Settings
+---
+
+
+This comprehensive guide covers setting up all the external services and configurations needed for your ShipSaaS application.
+
+## Database Setup (Neon PostgreSQL)
+
+### 1. Create a Neon Account
+
+1. Visit [Neon Console](https://console.neon.tech)
+2. Sign up for a free account
+3. Create a new project
+
+### 2. Get Database URL
+
+1. In your Neon dashboard, go to **Connection Details**
+2. Copy the connection string
+3. Add it to your `.env.local`:
+
+```bash
+DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
+```
+
+### 3. Initialize Database
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+## Authentication Setup
+
+### Google OAuth
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project or select existing one
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URIs:
+   - `http://localhost:3000/api/auth/callback/google` (development)
+   - `https://yourdomain.com/api/auth/callback/google` (production)
+
+```bash
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
+
+### NextAuth Configuration
+
+```bash
+NEXTAUTH_SECRET="your-random-secret-key"
+NEXTAUTH_URL="http://localhost:3000"  # Change for production
+```
+
+Generate a secure secret:
+```bash
+openssl rand -base64 32
+```
+
+## Stripe Payment Setup
+
+### 1. Create Stripe Account
+
+1. Visit [Stripe Dashboard](https://dashboard.stripe.com)
+2. Create an account
+3. Complete account verification
+
+### 2. Get API Keys
+
+1. Go to **Developers** → **API keys**
+2. Copy your keys:
+
+```bash
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_PUBLISHABLE_KEY="pk_test_..."
+```
+
+### 3. Configure Webhooks
+
+1. Go to **Developers** → **Webhooks**
+2. Add endpoint: `https://yourdomain.com/api/webhooks/stripe`
+3. Select events:
+   - `checkout.session.completed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.payment_succeeded`
+   - `invoice.payment_failed`
+
+```bash
+STRIPE_WEBHOOK_SECRET="whsec_..."
+```
+
+### 4. Enable Payment Methods
+
+For Chinese users, enable Alipay and WeChat Pay:
+
+1. Go to **Settings** → **Payment methods**
+2. Enable **Alipay** and **WeChat Pay**
+3. Configure currency settings for CNY
+
+## Email Setup (Resend)
+
+### 1. Create Resend Account
+
+1. Visit [Resend](https://resend.com)
+2. Sign up for an account
+3. Verify your domain
+
+### 2. Get API Key
+
+1. Go to **API Keys**
+2. Create a new API key
+3. Add to environment:
+
+```bash
+RESEND_API_KEY="re_..."
+```
+
+### 3. Configure Domain
+
+1. Add your domain in Resend dashboard
+2. Configure DNS records as instructed
+3. Verify domain ownership
+
+## Analytics Setup (Umami)
+
+### 1. Self-hosted Umami
+
+If using self-hosted Umami:
+
+```bash
+UMAMI_WEBSITE_ID="your-website-id"
+UMAMI_URL="https://your-umami-domain.com"
+```
+
+### 2. Umami Cloud
+
+For Umami Cloud service:
+
+1. Sign up at [Umami Cloud](https://cloud.umami.is)
+2. Add your website
+3. Get tracking code
+
+## Internationalization
+
+### Supported Locales
+
+Configure supported languages in `src/lib/i18n.ts`:
+
+```typescript
+export const locales = ['en', 'zh'] as const;
+export const defaultLocale = 'en' as const;
+```
+
+### Message Files
+
+Add translations in `messages/` directory:
+- `messages/en.json` - English translations
+- `messages/zh.json` - Chinese translations
+
+## Development Tools
+
+### Recommended VS Code Extensions
+
+```json
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-next",
+    "prisma.prisma",
+    "unifiedjs.vscode-mdx"
+  ]
+}
+```
+
+### Environment Variables Validation
+
+The application validates environment variables on startup. Ensure all required variables are set:
+
+```bash
+# Required for development
+DATABASE_URL=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+
+# Required for production
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+RESEND_API_KEY=
+```
+
+## Security Considerations
+
+### Production Environment
+
+1. **Use strong secrets** - Generate cryptographically secure secrets
+2. **Enable HTTPS** - Always use HTTPS in production
+3. **Secure headers** - Configure security headers in `next.config.js`
+4. **Environment isolation** - Keep development and production environments separate
+
+### API Rate Limiting
+
+Configure rate limiting for API endpoints to prevent abuse:
+
+```typescript
+// Example rate limiting configuration
+export const rateLimit = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+};
+```
+
+## Testing Configuration
+
+### Test Database
+
+Set up a separate database for testing:
+
+```bash
+# .env.test
+DATABASE_URL="postgresql://test_user:test_pass@localhost/test_db"
+```
+
+### Test Environment
+
+```bash
+# Run tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Database Connection Failed:**
+- Check your DATABASE_URL format
+- Ensure Neon database is accessible
+- Verify SSL mode is set correctly
+
+**OAuth Not Working:**
+- Verify redirect URIs are correct
+- Check client ID and secret
+- Ensure OAuth consent screen is configured
+
+**Stripe Webhooks Failing:**
+- Verify webhook endpoint URL
+- Check webhook secret
+- Ensure HTTPS is used in production
+
+**Email Not Sending:**
+- Verify Resend API key
+- Check domain verification status
+- Review email templates
+
+Need more help? Check our [Configuration](/docs/configuration) section for advanced settings.
