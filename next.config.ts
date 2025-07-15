@@ -26,21 +26,23 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
 
-  // Turbopack 配置
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
+  // Turbopack 配置 - 仅在开发模式下使用
+  ...(process.env.NODE_ENV === 'development' && {
+    turbopack: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
       },
+      // 改善HMR稳定性
+      resolveAlias: {
+        'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
+        'react/jsx-runtime': 'react/jsx-runtime',
+      },
+      resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
     },
-    // 改善HMR稳定性
-    resolveAlias: {
-      'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
-      'react/jsx-runtime': 'react/jsx-runtime',
-    },
-    resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-  },
+  }),
 
   // 压缩配置
   compress: true,

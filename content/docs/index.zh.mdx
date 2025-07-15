@@ -4,6 +4,9 @@ description: 欢迎使用 ShipSaaS - 构建现代 SaaS 应用程序的完整 Nex
 icon: Home
 ---
 
+# 介绍
+
+介绍 ShipSaaS，一个用于构建现代 SaaS 应用程序的完整 Next.js 样板。
 
 ## 什么是 ShipSaaS？
 
@@ -11,7 +14,7 @@ icon: Home
 
 人们使用 ShipSaaS 构建 SaaS 应用程序的原因有很多：
 
-- 🚀 **快速且现代** - 基于 Next.js 15 App Router 和 React 19 构建
+- 🚀 **快速且现代** - 基于 Next.js 15.3.5 App Router 和 React 19 构建
 - 🎨 **精美 UI** - 由 TailwindCSS v4 和 shadcn/ui 组件驱动
 - 📱 **响应式** - 在所有设备上都能完美运行
 - 🔍 **SEO 优化** - 内置 SEO 功能和元数据管理
@@ -27,41 +30,193 @@ icon: Home
 
 ## 技术栈
 
-### Next.js 15
-使用 React 19 构建全栈 Web 应用程序的 React 框架。
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
 
-### Prisma ORM
-下一代 ORM，帮助您以类型安全的方式访问数据库。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">N</span>
+    </div>
+    <h3 className="font-semibold text-lg">Next.js 15.3.5</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    使用 React 19.0.0 构建全栈 Web 应用程序的 React 框架。
+  </p>
+  <a href="https://nextjs.org/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### TailwindCSS v4
-实用优先的 CSS 框架，包含可组合构建任何设计的实用类。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">P</span>
+    </div>
+    <h3 className="font-semibold text-lg">Prisma ORM 6.11.1</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    下一代 ORM，帮助您以类型安全的方式访问数据库。
+  </p>
+  <a href="https://www.prisma.io/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Shadcn/ui / Magic UI / Animate UI / TailArk
-预构建组件和块的集合，您可以使用它们来构建 SaaS 应用程序。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">T</span>
+    </div>
+    <h3 className="font-semibold text-lg">TailwindCSS v4</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    实用优先的 CSS 框架，包含可组合构建任何设计的实用类。
+  </p>
+  <a href="https://tailwindcss.com/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### NextAuth.js
-Next.js 应用程序的完整身份验证解决方案，支持多个提供商。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-purple-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">UI</span>
+    </div>
+    <h3 className="font-semibold text-lg">Shadcn/ui + Magic UI + TailArk</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    预构建组件和块的集合，您可以使用它们来构建 SaaS 应用程序。
+  </p>
+  <div className="flex gap-2 text-xs">
+    <a href="https://ui.shadcn.com/docs" className="text-blue-600 hover:text-blue-800 font-medium">Shadcn/ui</a>
+    <span className="text-muted-foreground">•</span>
+    <a href="https://magicui.design/docs" className="text-blue-600 hover:text-blue-800 font-medium">Magic UI</a>
+    <span className="text-muted-foreground">•</span>
+    <a href="https://tailark.com/" className="text-blue-600 hover:text-blue-800 font-medium">TailArk</a>
+  </div>
+</div>
 
-### Resend
-现代邮件服务，允许您从应用程序发送邮件。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">A</span>
+    </div>
+    <h3 className="font-semibold text-lg">NextAuth.js 4.24.11</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    Next.js 应用程序的完整身份验证解决方案，支持多个提供商。
+  </p>
+  <a href="https://next-auth.js.org/getting-started/introduction" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Fumadocs
-为开发者设计的美观文档框架，灵活且高性能。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">R</span>
+    </div>
+    <h3 className="font-semibold text-lg">Resend 4.6.0</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    现代邮件服务，允许您从应用程序发送邮件。
+  </p>
+  <a href="https://resend.com/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Stripe
-SaaS 应用程序最受欢迎和最安全的支付处理器。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-indigo-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">F</span>
+    </div>
+    <h3 className="font-semibold text-lg">Fumadocs 15.6.3</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    为开发者设计的美观文档框架，灵活且高性能。
+  </p>
+  <a href="https://fumadocs.vercel.app/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Vercel AI SDK
-构建 AI 应用程序的工具集合，开源且免费。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">S</span>
+    </div>
+    <h3 className="font-semibold text-lg">Stripe 18.3.0</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    SaaS 应用程序最受欢迎和最安全的支付处理器。
+  </p>
+  <a href="https://stripe.com/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Next-Intl
-Next.js 的国际化库，支持路由、消息和本地化。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">AI</span>
+    </div>
+    <h3 className="font-semibold text-lg">Vercel AI SDK 4.0.0</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    构建 AI 应用程序的工具集合，开源且免费。
+  </p>
+  <a href="https://sdk.vercel.ai/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Neon PostgreSQL
-自动扩展并提供出色性能的无服务器 PostgreSQL 数据库。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-teal-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">i18n</span>
+    </div>
+    <h3 className="font-semibold text-lg">Next-Intl 4.3.4</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    Next.js 的国际化库，支持路由、消息和本地化。
+  </p>
+  <a href="https://next-intl.dev/" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
 
-### Umami Analytics
-注重隐私的网络分析，在不损害用户隐私的情况下提供洞察。
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-violet-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">DB</span>
+    </div>
+    <h3 className="font-semibold text-lg">Neon PostgreSQL</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    自动扩展并提供出色性能的无服务器 PostgreSQL 数据库。
+  </p>
+  <a href="https://neon.tech/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
+
+<div className="border rounded-lg p-4 bg-card">
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center">
+      <span className="text-white text-sm font-bold">📊</span>
+    </div>
+    <h3 className="font-semibold text-lg">Umami Analytics</h3>
+  </div>
+  <p className="text-muted-foreground text-sm mb-3">
+    注重隐私的网络分析，在不损害用户隐私的情况下提供洞察。
+  </p>
+  <a href="https://umami.is/docs" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+    官方文档 →
+  </a>
+</div>
+
+</div>
 
 ## 文档范围
 
@@ -69,24 +224,27 @@ Next.js 的国际化库，支持路由、消息和本地化。
 
 对于与 [ShipSaaS 样板](https://shipsaas.net/) 严格相关的任何内容，本文档都为您提供了全面的覆盖！
 
-### 官方文档
+### 其他技术
 
-要深入了解底层技术，请参考它们的官方文档：
+#### React 19.0.0
+用于构建 Web 和原生用户界面的库。
+- **官方文档**: [React 文档](https://react.dev/)
+- **版本**: 19.0.0
 
-- Next.js: [Next.js 文档](https://nextjs.org/docs)
-- Prisma: [Prisma 文档](https://www.prisma.io/docs)
-- TailwindCSS: [TailwindCSS 文档](https://tailwindcss.com/docs)
-- Shadcn/ui: [Shadcn/ui 文档](https://ui.shadcn.com/docs)
-- Magic UI: [Magic UI 文档](https://magicui.design/docs)
-- TailArk: [TailArk 文档](https://tailark.com/)
-- NextAuth.js: [NextAuth.js 文档](https://next-auth.js.org/getting-started/introduction)
-- Resend: [Resend 文档](https://resend.com/docs)
-- Fumadocs: [Fumadocs 文档](https://fumadocs.vercel.app/docs)
-- Stripe: [Stripe 文档](https://stripe.com/docs)
-- Vercel AI SDK: [Vercel AI SDK 文档](https://sdk.vercel.ai/docs)
-- Next-Intl: [Next-Intl 文档](https://next-intl.dev/)
-- Neon: [Neon 文档](https://neon.tech/docs)
-- Umami: [Umami 文档](https://umami.is/docs)
+#### TypeScript 5.x
+带有类型语法的 JavaScript。
+- **官方文档**: [TypeScript 文档](https://www.typescriptlang.org/docs/)
+- **版本**: 5.x
+
+#### Framer Motion 12.23.0
+用于 React 的生产就绪动画库。
+- **官方文档**: [Framer Motion 文档](https://www.framer.com/motion/)
+- **版本**: 12.23.0
+
+#### Zod 3.23.8
+TypeScript 优先的模式验证，具有静态类型推断。
+- **官方文档**: [Zod 文档](https://zod.dev/)
+- **版本**: 3.23.8
 
 了解这些技术对于构建成功的 SaaS 应用程序至关重要。
 
@@ -102,24 +260,26 @@ Next.js 的国际化库，支持路由、消息和本地化。
 
 ## 下一步
 
-现在您已经运行了 ShipSaaS，以下是一些后续步骤：
+现在您已经运行了 ShipSaaS，以下是一些推荐的后续步骤：
 
-### 快速开始
-了解如何设置和运行您的 ShipSaaS 应用程序
+### 🚀 [快速开始](/docs/getting-started)
+了解如何在本地设置和运行您的 ShipSaaS 应用程序
 
-### 环境设置
+### ⚙️ [环境设置](/docs/environment-setup)
 配置环境变量和外部服务
 
-### 数据库设置
+### 🗄️ [数据库设置](/docs/configuration/database)
 设置和配置您的数据库连接
 
-### 身份验证
+### 🔐 [身份验证](/docs/configuration/authentication)
 配置 OAuth 提供商和身份验证设置
 
-### 支付集成
+### 💳 [支付集成](/docs/configuration/payments)
 设置 Stripe 支付和 webhooks
 
-### 部署
+### 🚀 [部署](/docs/deployment)
 将您的应用程序部署到生产环境
 
-准备开始构建了吗？前往[快速开始](/docs/getting-started)指南，设置您的开发环境并创建您的第一个 SaaS 应用程序。
+---
+
+**准备开始构建了吗？** 前往[快速开始](/docs/getting-started)指南，设置您的开发环境并创建您的第一个 SaaS 应用程序。
