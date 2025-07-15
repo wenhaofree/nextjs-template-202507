@@ -13,21 +13,26 @@ import { FeatureChose } from "@/components/sections/feature-chose"
 import FAQsFour from "@/components/sections/faqs"
 import { Testimonials } from "@/components/sections/Testimonials";
 import CallToAction from "@/components/sections/call-to-action";
+import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
+import GoogleOneTapWrapper from "@/components/GoogleOneTapWrapper";
 
 export default function LocaleHomePage() {
   const t = useTranslations('HomePage');
+
+  // 使用平滑滚动 hook
+  useSmoothScroll();
+
   return (
     <>
+      {/* Google One Tap 登录组件 */}
+      <GoogleOneTapWrapper />
 
-    <SiteHeader />
-    
-
-    <HeroSection
+      <HeroSection
       badge={{
         text: t('badge.text'),
         action: {
           text: t('badge.action'),
-          href: "/docs",
+          href: "/pricing",
         },
       }}
       title={t('title')}
@@ -38,12 +43,18 @@ export default function LocaleHomePage() {
           href: "/docs/getting-started",
           variant: "default",
         },
-        {
-          text: t('actions.github'),
-          href: "https://github.com/your-repo",
-          variant: "link",
-          icon: <Icons.gitHub className="h-5 w-5" />,
-        },
+        // {
+        //   text: t('actions.readDocs'),
+        //   href: "/docs",
+        //   variant: "outline",
+        //   icon: <Icons.book className="h-5 w-5" />,
+        // },
+        // {
+        //   text: t('actions.seeDemo'),
+        //   href: "https://demo.shipsaas.net",
+        //   variant: "link",
+        //   icon: <Icons.play className="h-5 w-5" />,
+        // },
       ]}
       image={{
         light: "/app-light.png",
@@ -52,14 +63,23 @@ export default function LocaleHomePage() {
       }}
     />
 
-    <TechStack />
-    <FeatureInstruction />
-    <FeatureChose />
-    <Prices />
-    <Testimonials />
-    <FAQsFour />
+    <section id="tech-stack">
+      <TechStack />
+    </section>
+    <section id="features">
+      <FeatureInstruction />
+      <FeatureChose />
+    </section>
+    <section id="pricing">
+      <Prices />
+    </section>
+    <section id="testimonials">
+      <Testimonials />
+    </section>
+    <section id="faq">
+      <FAQsFour />
+    </section>
     <CallToAction />
-    <Footer />
     </>
   )
 }
