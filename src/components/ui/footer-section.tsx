@@ -105,13 +105,13 @@ const Footersection = () => {
             <h3 className="text-lg font-semibold mb-3">Connect</h3>
             <address className="not-italic">
               <a
-                href="mailto:hello@shipsaas.net"
+                href="mailto:hi@shipsaas.net"
                 className="flex items-center text-sm transition-colors hover:text-primary mb-3 group"
               >
                 <Mail className="h-4 w-4 mr-2 text-primary/70 group-hover:text-primary transition-colors" />
                 <span className="relative overflow-hidden">
                   <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    hello@shipsaas.net
+                    hi@shipsaas.net
                   </span>
                 </span>
               </a>

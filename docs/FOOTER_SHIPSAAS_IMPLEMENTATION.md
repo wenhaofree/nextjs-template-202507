@@ -44,7 +44,7 @@
 3. **联系信息 (Contact Us)**：
    - 地址：123 Innovation Street, Tech City
    - 电话：(123) 456-7890
-   - 邮箱：hello@shipsaas.net
+   - 邮箱：hi@shipsaas.net
 
 4. **社交媒体 (Follow Us)**：
    - 使用现代图标替代已弃用的社交媒体图标
@@ -125,7 +125,7 @@ src/components/ui/
 
 ## 📝 注意事项
 
-1. **邮箱地址**: 使用了 ShipSaaS 品牌邮箱 `hello@shipsaas.net`
+1. **邮箱地址**: 使用了 ShipSaaS 品牌邮箱 `hi@shipsaas.net`
 2. **图标选择**: 使用了现代化的 Lucide React 图标替代已弃用的社交媒体图标
 3. **链接路径**: 所有链接都指向相应的页面，需要确保这些页面存在
 4. **主题切换**: 保留了原有的主题切换功能
