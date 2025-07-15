@@ -13,18 +13,22 @@ import {
 } from "@/components/ui/tooltip"
 import { Moon, Send, Sun, Globe, MessageCircle, Camera, Briefcase } from "lucide-react"
 import { useTranslations } from 'next-intl'
+import { useTheme } from 'next-themes'
 
 const Footersection = () => {
   const t = useTranslations('Footer')
-  const [isDarkMode, setIsDarkMode] = React.useState(true)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
 
+  // 等待组件挂载后再显示主题切换器，避免水合不匹配
   React.useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [isDarkMode])
+    setMounted(true)
+  }, [])
+
+  // 处理主题切换
+  const handleThemeToggle = (checked: boolean) => {
+    setTheme(checked ? 'dark' : 'light')
+  }
 
   return (
     <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
@@ -142,11 +146,19 @@ const Footersection = () => {
             </div>
             <div className="flex items-center space-x-2">
               <Sun className="h-4 w-4" />
-              <Switch
-                id="dark-mode"
-                checked={isDarkMode}
-                onCheckedChange={setIsDarkMode}
-              />
+              {mounted ? (
+                <Switch
+                  id="dark-mode"
+                  checked={theme === 'dark'}
+                  onCheckedChange={handleThemeToggle}
+                />
+              ) : (
+                <Switch
+                  id="dark-mode"
+                  checked={false}
+                  disabled
+                />
+              )}
               <Moon className="h-4 w-4" />
               <Label htmlFor="dark-mode" className="sr-only">
                 {t('theme.toggle')}

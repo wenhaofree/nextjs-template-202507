@@ -20,14 +20,14 @@ const FeatureInstruction = () => {
       icon: Settings,
       title: t('items.scalableArchitecture.title'),
       description: t('items.scalableArchitecture.description'),
-      image: "/feature/02.png",
+      image: "/feature/07.png",
     },
     {
       id: 3,
       icon: Zap,
       title: t('items.productionReady.title'),
       description: t('items.productionReady.description'),
-      image: "/feature/03.png",
+      image: "/feature/08.png",
     },
   ];
 
