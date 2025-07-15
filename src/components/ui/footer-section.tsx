@@ -3,182 +3,175 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Moon, Send, Sun, Globe, MessageCircle, Camera, Briefcase } from "lucide-react"
+import {
+  Send,
+  Globe,
+  MessageCircle,
+  Users,
+  Mail,
+  Brain
+} from "lucide-react"
 import { useTranslations } from 'next-intl'
-import { useTheme } from 'next-themes'
 
 const Footersection = () => {
   const t = useTranslations('Footer')
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-
-  // 等待组件挂载后再显示主题切换器，避免水合不匹配
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  // 处理主题切换
-  const handleThemeToggle = (checked: boolean) => {
-    setTheme(checked ? 'dark' : 'light')
-  }
 
   return (
     <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
-      <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      {/* Decorative gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-background/5 opacity-50 pointer-events-none" />
+
+      <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8 relative z-10">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Company branding section */}
           <div className="relative">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight">{t('newsletter.title')}</h2>
-            <p className="mb-6 text-muted-foreground">
-              {t('newsletter.description')}
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white shadow-lg mr-3 group-hover:scale-105 transition-transform duration-300">
+                <Brain className="h-5 w-5" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight">ShipSaaS</h2>
+            </div>
+            <p className="mb-6 text-muted-foreground max-w-sm">
+              ShipSaaS is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.
             </p>
-            <form className="relative">
-              <Input
-                type="email"
-                placeholder={t('newsletter.placeholder')}
-                className="pr-12 backdrop-blur-sm"
-              />
-              <Button
-                type="submit"
-                size="icon"
-                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
-              >
-                <Send className="h-4 w-4" />
-                <span className="sr-only">{t('newsletter.subscribe')}</span>
-              </Button>
-            </form>
+
+            {/* Newsletter subscription form with improved styling */}
+            <div className="relative max-w-md">
+              <h3 className="text-sm font-medium mb-2">{t('newsletter.title') || 'Subscribe to our newsletter'}</h3>
+              <div className="relative">
+                <Input
+                  type="email"
+                  placeholder={t('newsletter.placeholder') || 'Enter your email'}
+                  className="pr-12 backdrop-blur-sm border-primary/20 focus:border-primary"
+                />
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
+                >
+                  <Send className="h-4 w-4" />
+                  <span className="sr-only">{t('newsletter.subscribe') || 'Subscribe'}</span>
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </div>
+
+            {/* Decorative element */}
             <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
           </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('quickLinks.title')}</h3>
-            <nav className="space-y-2 text-sm">
-              <a href="/" className="block transition-colors hover:text-primary">
-                {t('quickLinks.home')}
+          {/* About section with improved styling */}
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold mb-3">About</h3>
+            <nav className="space-y-2">
+              <a href="/#features" className="flex items-center text-sm group transition-colors hover:text-primary">
+                <span className="relative overflow-hidden">
+                  <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">Features</span>
+                </span>
               </a>
-              <a href="/about" className="block transition-colors hover:text-primary">
-                {t('quickLinks.about')}
-              </a>
-              <a href="/pricing" className="block transition-colors hover:text-primary">
-                {t('quickLinks.pricing')}
-              </a>
-              <a href="/blog" className="block transition-colors hover:text-primary">
-                {t('quickLinks.blog')}
-              </a>
-              <a href="/docs" className="block transition-colors hover:text-primary">
-                {t('quickLinks.documentation')}
-              </a>
-              <a href="/contact" className="block transition-colors hover:text-primary">
-                {t('quickLinks.contact')}
+              <a href="/#pricing" className="flex items-center text-sm group transition-colors hover:text-primary">
+                <span className="relative overflow-hidden">
+                  <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">Pricing</span>
+                </span>
               </a>
             </nav>
           </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('contact.title')}</h3>
-            <address className="space-y-2 text-sm not-italic">
-              <p>{t('contact.address')}</p>
-              <p>{t('contact.city')}</p>
-              <p>{t('contact.phone')}</p>
-              <p>{t('contact.email')}</p>
-            </address>
+
+          {/* Resources section with improved styling */}
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold mb-3">Resources</h3>
+            <nav className="space-y-2">
+              <a href="/docs" className="flex items-center text-sm group transition-colors hover:text-primary">
+                <span className="relative overflow-hidden">
+                  <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">Documents</span>
+                </span>
+              </a>
+              <a href="/blog" className="flex items-center text-sm group transition-colors hover:text-primary">
+                <span className="relative overflow-hidden">
+                  <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">Blog</span>
+                </span>
+              </a>
+            </nav>
           </div>
-          <div className="relative">
-            <h3 className="mb-4 text-lg font-semibold">{t('social.title')}</h3>
-            <div className="mb-6 flex space-x-4">
+          {/* Contact section with improved styling */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold mb-3">Connect</h3>
+            <address className="not-italic">
+              <a
+                href="mailto:hello@shipsaas.net"
+                className="flex items-center text-sm transition-colors hover:text-primary mb-3 group"
+              >
+                <Mail className="h-4 w-4 mr-2 text-primary/70 group-hover:text-primary transition-colors" />
+                <span className="relative overflow-hidden">
+                  <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    hello@shipsaas.net
+                  </span>
+                </span>
+              </a>
+            </address>
+
+            <div className="flex space-x-3">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                      <Globe className="h-4 w-4" />
-                      <span className="sr-only">Facebook</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t('social.facebook')}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full">
+                    <Button variant="outline" size="icon" className="rounded-full h-9 w-9 border-primary/20 hover:bg-primary/10 hover:text-primary">
                       <MessageCircle className="h-4 w-4" />
                       <span className="sr-only">Twitter</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t('social.twitter')}</p>
+                    <p>Follow us on Twitter</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                      <Camera className="h-4 w-4" />
-                      <span className="sr-only">Instagram</span>
+                    <Button variant="outline" size="icon" className="rounded-full h-9 w-9 border-primary/20 hover:bg-primary/10 hover:text-primary">
+                      <Globe className="h-4 w-4" />
+                      <span className="sr-only">GitHub</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t('social.instagram')}</p>
+                    <p>Star us on GitHub</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                      <Briefcase className="h-4 w-4" />
+                    <Button variant="outline" size="icon" className="rounded-full h-9 w-9 border-primary/20 hover:bg-primary/10 hover:text-primary">
+                      <Users className="h-4 w-4" />
                       <span className="sr-only">LinkedIn</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t('social.linkedin')}</p>
+                    <p>Connect on LinkedIn</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="flex items-center space-x-2">
-              <Sun className="h-4 w-4" />
-              {mounted ? (
-                <Switch
-                  id="dark-mode"
-                  checked={theme === 'dark'}
-                  onCheckedChange={handleThemeToggle}
-                />
-              ) : (
-                <Switch
-                  id="dark-mode"
-                  checked={false}
-                  disabled
-                />
-              )}
-              <Moon className="h-4 w-4" />
-              <Label htmlFor="dark-mode" className="sr-only">
-                {t('theme.toggle')}
-              </Label>
-            </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
+
+        {/* Copyright and legal links with improved styling */}
+        <div className="mt-8 pt-6 border-t border-border/40 flex flex-col items-center justify-between gap-3 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            {t('copyright')}
+            © 2025 • ShipSaaS All rights reserved.
           </p>
-          <nav className="flex gap-4 text-sm">
-            <a href="/privacy" className="transition-colors hover:text-primary">
-              {t('legal.privacy')}
+          <nav className="flex gap-6 text-sm">
+            <a href="/privacy" className="text-muted-foreground transition-colors hover:text-primary">
+              Privacy Policy
             </a>
-            <a href="/terms" className="transition-colors hover:text-primary">
-              {t('legal.terms')}
-            </a>
-            <a href="/cookies" className="transition-colors hover:text-primary">
-              {t('legal.cookies')}
+            <a href="/terms" className="text-muted-foreground transition-colors hover:text-primary">
+              Terms of Service
             </a>
           </nav>
         </div>

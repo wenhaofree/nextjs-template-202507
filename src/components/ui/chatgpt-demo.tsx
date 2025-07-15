@@ -46,25 +46,25 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
       category: 'Creative Writing',
       prompt: 'Write a short story about a robot learning to paint',
       icon: Sparkles,
-      color: 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300'
+      color: 'bg-primary/10 text-primary'
     },
     {
       category: 'Problem Solving',
       prompt: 'Help me plan a productive morning routine',
       icon: Brain,
-      color: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+      color: 'bg-primary/10 text-primary'
     },
     {
       category: 'Math & Calculation',
       prompt: 'Calculate the compound interest on $1000 at 5% for 10 years',
       icon: Zap,
-      color: 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
+      color: 'bg-primary/10 text-primary'
     },
     {
       category: 'Information Search',
       prompt: 'What are the latest trends in artificial intelligence?',
       icon: MessageSquare,
-      color: 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300'
+      color: 'bg-primary/10 text-primary'
     }
   ];
 
@@ -88,7 +88,7 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
       .split('\n')
       .map((line, index) => {
         if (line.startsWith('```')) {
-          return <div key={index} className="font-mono text-sm bg-gray-100 dark:bg-gray-800 p-2 rounded mt-2 mb-2">{line.replace(/```/g, '')}</div>;
+          return <div key={index} className="font-mono text-sm bg-muted p-2 rounded mt-2 mb-2">{line.replace(/```/g, '')}</div>;
         }
         if (line.startsWith('- ')) {
           return <div key={index} className="ml-4">• {line.substring(2)}</div>;
@@ -104,7 +104,7 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
     <Card className={`h-[600px] flex flex-col ${className}`}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2">
-          <Bot className="h-5 w-5 text-green-600" />
+          <Bot className="h-5 w-5 text-primary" />
           ChatGPT Demo
           <Badge variant="outline" className="ml-auto">
             <Sparkles className="h-3 w-3 mr-1" />
@@ -160,8 +160,8 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
               >
                 {message.role === 'assistant' && (
                   <div className="flex-shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
-                      <Bot className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-primary" />
                     </div>
                   </div>
                 )}
@@ -169,8 +169,8 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
                 <div
                   className={`max-w-[80%] rounded-lg px-3 py-2 ${
                     message.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-foreground'
                   }`}
                 >
                   <div className="text-sm">
@@ -186,8 +186,8 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
 
                 {message.role === 'user' && (
                   <div className="flex-shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
-                      <User className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                      <User className="h-4 w-4 text-secondary-foreground" />
                     </div>
                   </div>
                 )}
@@ -197,12 +197,12 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
             {isLoading && (
               <div className="flex gap-3 justify-start">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
-                    <Loader2 className="h-4 w-4 text-green-600 dark:text-green-400 animate-spin" />
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Loader2 className="h-4 w-4 text-primary animate-spin" />
                   </div>
                 </div>
-                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <div className="bg-muted rounded-lg px-3 py-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Loader2 className="h-3 w-3 animate-spin" />
                     ChatGPT is thinking...
                   </div>
@@ -231,7 +231,7 @@ export function ChatGPTDemo({ className }: ChatGPTDemoProps) {
         </form>
 
         {error && (
-          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-2 rounded">
+          <div className="text-sm text-destructive bg-destructive/10 p-2 rounded">
             Error: {error.message}
           </div>
         )}

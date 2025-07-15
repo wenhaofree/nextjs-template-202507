@@ -93,18 +93,18 @@ const ChatGPTFeaturesSection = () => {
   ];
 
   return (
-    <div className="py-12 px-4 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="py-12 px-4 bg-gradient-to-br from-background via-muted/30 to-background dark:from-background dark:via-muted/20 dark:to-background">
       <div className="max-w-7xl mx-auto">
         {/* Header - More compact */}
         <div className="text-center mb-10">
-          <Badge variant="outline" className="text-green-600 border-green-600 mb-3">
+          <Badge variant="outline" className="text-primary border-primary mb-3">
             <Star className="h-3 w-3 mr-1" />
             {t('header.badge')}
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t('header.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             {t('header.subtitle')}
           </p>
         </div>
@@ -113,7 +113,7 @@ const ChatGPTFeaturesSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Side - Interactive Demo */}
           <div className="lg:col-span-5 lg:row-span-2">
-            <Card className="h-full overflow-hidden border-none shadow-lg">
+            <Card className="h-full overflow-hidden border shadow-lg bg-card">
               <CardContent className="p-0">
                 <ChatGPTDemo />
               </CardContent>
@@ -133,10 +133,10 @@ const ChatGPTFeaturesSection = () => {
                           <div className={`p-2 rounded-lg ${feature.bgColor} ${feature.color} mb-2`}>
                             <IconComponent className="h-5 w-5" />
                           </div>
-                          <h4 className="font-semibold text-black dark:text-white">
+                          <h4 className="font-semibold text-foreground">
                             {feature.title}
                           </h4>
-                          <p className="text-xs text-gray-600 dark:text-gray-300">
+                          <p className="text-xs text-muted-foreground">
                             {feature.description}
                           </p>
                         </div>
@@ -161,10 +161,10 @@ const ChatGPTFeaturesSection = () => {
                           <div className={`p-2 rounded-lg ${feature.bgColor} ${feature.color} mb-2`}>
                             <IconComponent className="h-5 w-5" />
                           </div>
-                          <h4 className="font-semibold text-black dark:text-white">
+                          <h4 className="font-semibold text-foreground">
                             {feature.title}
                           </h4>
-                          <p className="text-xs text-gray-600 dark:text-gray-300">
+                          <p className="text-xs text-muted-foreground">
                             {feature.description}
                           </p>
                         </div>
@@ -178,7 +178,7 @@ const ChatGPTFeaturesSection = () => {
 
           {/* Capabilities Section - Horizontal Cards */}
           <div className="lg:col-span-12 mt-4">
-            <h3 className="text-xl font-bold text-black dark:text-white mb-4">
+            <h3 className="text-xl font-bold text-foreground mb-4">
               {t('sections.capabilities')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -192,8 +192,8 @@ const ChatGPTFeaturesSection = () => {
                       <div className="space-y-2">
                         {capability.items.map((item, itemIndex) => (
                           <div key={itemIndex} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">
+                            <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                            <span className="text-sm text-muted-foreground">
                               {item}
                             </span>
                           </div>
@@ -208,18 +208,18 @@ const ChatGPTFeaturesSection = () => {
 
           {/* Integration Info - Full Width Banner */}
           <div className="lg:col-span-12 mt-2">
-            <Card className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 border-blue-200 dark:border-blue-800 overflow-hidden">
+            <Card className="bg-gradient-to-r from-muted/30 to-muted/50 dark:from-muted/10 dark:to-muted/20 border-border overflow-hidden">
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400">
+                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
                       <Zap className="h-6 w-6" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-black dark:text-white text-xl mb-2">
+                      <h4 className="font-semibold text-foreground text-xl mb-2">
                         {t('integration.title')}
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-3 max-w-xl">
+                      <p className="text-muted-foreground mb-3 max-w-xl">
                         {t('integration.description')}
                       </p>
                       <div className="flex flex-wrap gap-2">

@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         as: '*.js',
       },
     },
+    // 改善HMR稳定性
+    resolveAlias: {
+      'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
+      'react/jsx-runtime': 'react/jsx-runtime',
+    },
+    resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
   },
 
   // 压缩配置
