@@ -493,13 +493,12 @@
         "popular": true,
         "features": [
           "Everything in Basic",
+          "User Dashboard Console",
           "Documentation System",
           "Blog Functionality",
           "MagicUI Components",
           "TailArk UI Library",
           "Animate-UI Animations",
-          "Vercel AI SDK",
-          "ChatGPT Integration",
           "Advanced UI Components"
         ]
       },
@@ -511,9 +510,10 @@
         "description": "For large teams and enterprise applications",
         "features": [
           "Everything in Standard",
-          "User Dashboard Console",
           "Admin Management System",
           "Points/Credits Management",
+          "Vercel AI SDK",
+          "ChatGPT Integration",
           "AI Tool Integration",
           "Multi-Modal AI Support",
           "AI Agent Development",
@@ -523,6 +523,14 @@
           "1-on-1 Consultation"
         ]
       }
+    }
+  },
+  "CallToAction": {
+    "title": "Kickstart Your SaaS Journey",
+    "description": "Build, manage, and scale your SaaS product faster with ShipSaaS. Focus on innovation and growth—leave the setup to us.",
+    "buttons": {
+      "getStarted": "Get ShipSaaS Now",
+      "readDocs": "Read the Docs"
     }
   },
   "FAQs": {
