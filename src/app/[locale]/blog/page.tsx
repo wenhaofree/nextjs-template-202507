@@ -13,26 +13,27 @@ interface BlogPageProps {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  
+
   // Get posts for the current locale
   const posts = blog.getPages(locale);
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <>
       {/* Header */}
       <SiteHeader />
-      
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
-          {locale === 'zh' ? 'ShipSaaS 博客' : 'ShipSaaS Blog'}
-        </h1>
-        <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto">
-          {locale === 'zh' 
-            ? '探索 SaaS 开发的最新趋势、技巧和最佳实践。学习如何使用现代技术构建成功的 SaaS 应用程序。'
-            : 'Explore the latest trends, tips, and best practices in SaaS development. Learn how to build successful SaaS applications with modern technologies.'
-          }
-        </p>
-      </div>
+
+      <div className="container mx-auto px-4 py-16 max-w-6xl">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+            {locale === 'zh' ? 'ShipSaaS 博客' : 'ShipSaaS Blog'}
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto">
+            {locale === 'zh'
+              ? '探索 SaaS 开发的最新趋势、技巧和最佳实践。学习如何使用现代技术构建成功的 SaaS 应用程序。'
+              : 'Explore the latest trends, tips, and best practices in SaaS development. Learn how to build successful SaaS applications with modern technologies.'
+            }
+          </p>
+        </div>
 
       {/* Blog Posts Grid */}
       {posts.length > 0 ? (
@@ -40,7 +41,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
           {posts.map((post) => (
             <article
               key={post.url}
-              className="group relative flex flex-col overflow-hidden rounded-lg border bg-card shadow-sm transition-all hover:shadow-md"
+              className="group relative flex flex-col overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]"
             >
               {/* Image */}
               {post.data.image && (
@@ -113,7 +114,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       )}
 
       {/* Newsletter Signup */}
-      <div className="mt-16 rounded-lg bg-muted/50 p-8 text-center">
+      <div className="mt-16 rounded-lg bg-muted/50 p-8 text-center border shadow-sm">
         <h3 className="text-2xl font-semibold text-foreground mb-4">
           {locale === 'zh' ? '订阅我们的新闻通讯' : 'Subscribe to our newsletter'}
         </h3>
@@ -129,12 +130,13 @@ export default async function BlogPage({ params }: BlogPageProps) {
             placeholder={locale === 'zh' ? '输入您的邮箱' : 'Enter your email'}
             className="flex-1 px-4 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
-          <button className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+          <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 hover:shadow-md hover:scale-105">
             {locale === 'zh' ? '订阅' : 'Subscribe'}
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
