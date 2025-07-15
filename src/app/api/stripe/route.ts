@@ -146,9 +146,14 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
     // 获取支持的支付方式
     const supportedPaymentMethods = getStripePaymentMethodTypes(currency, region);
 
-    // 如果是中国地区且使用人民币，确保支付宝可用
-    if (region === 'cn' && currency === 'cny' && !supportedPaymentMethods.includes('alipay')) {
-      supportedPaymentMethods.push('alipay');
+    // 如果是中国地区且使用人民币，确保支付宝和微信支付可用
+    if (region === 'cn' && currency === 'cny') {
+      if (!supportedPaymentMethods.includes('alipay')) {
+        supportedPaymentMethods.push('alipay');
+      }
+      if (!supportedPaymentMethods.includes('wechat_pay')) {
+        supportedPaymentMethods.push('wechat_pay');
+      }
     }
 
     // Find user in database with optimized query / 使用优化查询在数据库中查找用户
@@ -182,11 +187,23 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
 
     console.log('Stripe API: 创建 Stripe 结账会话');
 
-    // 使用性能监控创建 Stripe 会话（支持多种支付方式包括支付宝）
+    // 配置支付方式选项
+    const paymentMethodOptions: any = {};
+
+    // 如果包含微信支付，需要设置 client 为 web
+    if (supportedPaymentMethods.includes('wechat_pay')) {
+      paymentMethodOptions.wechat_pay = {
+        client: 'web'
+      };
+    }
+
+    // 使用性能监控创建 Stripe 会话（支持多种支付方式包括支付宝和微信支付）
     const stripeSession = await measureStripeCall('createCheckoutSession', () =>
       stripe.checkout.sessions.create({
-        // 动态支持多种支付方式：信用卡、支付宝等
+        // 动态支持多种支付方式：信用卡、支付宝、微信支付等
         payment_method_types: supportedPaymentMethods as Stripe.Checkout.SessionCreateParams.PaymentMethodType[],
+        // 配置支付方式特定选项
+        payment_method_options: Object.keys(paymentMethodOptions).length > 0 ? paymentMethodOptions : undefined,
         line_items: [
           {
             price_data: {

@@ -146,10 +146,12 @@ function PaymentMethodCard({ method, locale, compact, index }: PaymentMethodCard
         </div>
       </div>
 
-      {/* 特殊标识 - 仅在中文地区显示支付宝热门标识 */}
-      {method.id === 'alipay' && locale === 'zh' && (
+      {/* 特殊标识 - 仅在中文地区显示支付宝和微信支付热门标识 */}
+      {(method.id === 'alipay' || method.id === 'wechat_pay') && locale === 'zh' && (
         <div className="absolute -top-1 -right-1">
-          <div className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">
+          <div className={`text-white text-xs px-2 py-0.5 rounded-full ${
+            method.id === 'alipay' ? 'bg-blue-500' : 'bg-green-500'
+          }`}>
             热门
           </div>
         </div>

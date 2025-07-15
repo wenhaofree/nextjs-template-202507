@@ -42,6 +42,17 @@ export const PAYMENT_METHODS: PaymentMethodConfig[] = [
     supportedCurrencies: ['usd', 'eur', 'gbp', 'cny', 'hkd', 'sgd'],
     regions: ['cn', 'hk', 'sg', 'my', 'global'],
   },
+  {
+    id: 'wechat_pay',
+    name: 'WeChat Pay',
+    nameZh: '微信支付',
+    icon: '💬',
+    description: 'Pay with WeChat Pay - Popular in China',
+    descriptionZh: '使用微信支付 - 中国地区流行',
+    enabled: true,
+    supportedCurrencies: ['usd', 'cny'],
+    regions: ['cn'],
+  },
 ];
 
 /**
@@ -124,7 +135,7 @@ export function isPaymentMethodSupported(
  */
 export const REGIONAL_DEFAULTS = {
   global: ['card'],
-  cn: ['card', 'alipay'],
+  cn: ['card', 'alipay', 'wechat_pay'],
   hk: ['card', 'alipay'],
   sg: ['card', 'alipay'],
   my: ['card', 'alipay'],
