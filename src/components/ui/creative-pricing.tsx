@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { BorderBeam, NumberTicker } from "@/components/magicui";
 import { motion } from "framer-motion";
 import { useTranslations } from 'next-intl';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { getStripePaymentMethodTypes } from '@/lib/stripe-config';
 import { InlinePaymentMethods } from '@/components/ui/payment-methods-display';
 import { convertCurrency, formatCurrency, getCurrencySymbol } from '@/lib/currency-utils';
@@ -47,21 +47,20 @@ function CreativePricing({
 
     // 获取支持的支付方式（根据地区和语言）
     const region = locale === 'zh' ? 'cn' : 'global';
-    const currency = region === 'cn' ? 'cny' : 'usd';
-    const supportedPaymentMethods = getStripePaymentMethodTypes(currency, region);
+    const paymentCurrency = region === 'cn' ? 'cny' : 'usd'; // 支付时使用的货币
+    const supportedPaymentMethods = getStripePaymentMethodTypes(paymentCurrency, region);
 
-    // 货币转换状态
-    const [displayCurrency, setDisplayCurrency] = useState(currency);
-    const [convertedPrices, setConvertedPrices] = useState<Record<string, number>>({});
+    // 显示货币始终为美元
+    const displayCurrency = 'usd';
 
-    // 转换价格到目标货币
-    useEffect(() => {
-        const converted: Record<string, number> = {};
+    // 价格显示不需要转换，直接使用原始美元价格
+    const displayPrices = useMemo(() => {
+        const prices: Record<string, number> = {};
         tiers.forEach((tier: PricingTier) => {
-            converted[tier.name] = convertCurrency(tier.price, displayCurrency);
+            prices[tier.name] = tier.price; // 直接使用美元价格
         });
-        setConvertedPrices(converted);
-    }, [displayCurrency, tiers]);
+        return prices;
+    }, [tiers]);
 
     // 使用 useCallback 优化性能并添加防抖
     const handlePayment = useCallback(async (tier: PricingTier) => {
@@ -93,12 +92,12 @@ function CreativePricing({
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    price: convertedPrices[tier.name] || tier.price,
+                    price: tier.price, // 美元价格，API会根据currency进行转换
                     email: session.user?.email,
                     productName: `${tier.name} - Creative Plan`,
-                    successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${convertedPrices[tier.name] || tier.price}`,
+                    successUrl: `${window.location.origin}/${locale}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}&amount=${tier.price}`,
                     cancelUrl: `${window.location.origin}/${locale}/#pricing`,
-                    currency: displayCurrency,
+                    currency: paymentCurrency, // 支付货币，API会进行汇率转换
                     region: region,
                 }),
             });
@@ -276,11 +275,11 @@ function CreativePricing({
                                     transition={{ delay: index * 0.1 + 0.2, duration: 0.4 }}
                                 >
                                     <span className="text-4xl font-bold text-zinc-900 dark:text-white">
-                                        {getCurrencySymbol(displayCurrency)}<NumberTicker value={convertedPrices[tier.name] || tier.price} />
+                                        {getCurrencySymbol(displayCurrency)}<NumberTicker value={displayPrices[tier.name] || tier.price} />
                                     </span>
-                                    <span className="text-zinc-600 dark:text-zinc-400 text-lg">
+                                    {/* <span className="text-zinc-600 dark:text-zinc-400 text-lg">
                                         /{t('labels.month')}
-                                    </span>
+                                    </span> */}
                                 </motion.div>
                                 {tier.originalPrice && tier.discount && (
                                     <motion.div
@@ -316,7 +315,7 @@ function CreativePricing({
                             {/* 支付方式显示 */}
                             <div className="mb-4">
                                 <InlinePaymentMethods
-                                    currency="usd"
+                                    currency={paymentCurrency}
                                     className="justify-center"
                                 />
                             </div>

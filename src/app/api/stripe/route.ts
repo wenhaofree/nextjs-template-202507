@@ -22,7 +22,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { measureDatabaseQuery, measureStripeCall, performanceMonitor } from '@/lib/performance';
 import { getStripePaymentMethodTypes } from '@/lib/stripe-config';
-import { toStripeAmount, isCurrencySupported } from '@/lib/currency-utils';
+import { toStripeAmount, isCurrencySupported, convertCurrency } from '@/lib/currency-utils';
 
 /**
  * Request body interface for Stripe payment creation
@@ -182,8 +182,18 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
     // Generate order number / 生成订单号
     const orderNo = `ORDER-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 
-    // Convert price to Stripe amount (smallest currency unit) / 将价格转换为 Stripe 金额（最小货币单位）
-    const amountInCents = toStripeAmount(price, currency);
+    // 处理货币转换逻辑
+    // price 始终是美元价格，但支付时可能需要转换为其他货币
+    let paymentPrice = price; // 支付时使用的价格
+
+    // 如果支付货币不是美元，需要进行汇率转换
+    if (currency !== 'usd') {
+      // 将美元价格转换为目标货币价格
+      paymentPrice = convertCurrency(price, currency); // 从美元转换到目标货币
+    }
+
+    // Convert payment price to Stripe amount (smallest currency unit) / 将支付价格转换为 Stripe 金额（最小货币单位）
+    const amountInCents = toStripeAmount(paymentPrice, currency);
 
     console.log('Stripe API: 创建 Stripe 结账会话');
 
@@ -232,14 +242,17 @@ export async function POST(request: Request): Promise<NextResponse<StripePayment
 
 
     // 创建订单记录（使用性能监控）
+    // 订单始终以美元价格存储，但支付时可能使用其他货币
+    const usdAmountInCents = Math.round(price * 100); // 美元价格（分）
+
     await measureDatabaseQuery('createOrder', () =>
       prisma.order.create({
         data: {
           orderNo,
           userUuid: user.uuid,
           userEmail: email,
-          amount: amountInCents, // Store in cents / 以分为单位存储
-          currency: 'usd',
+          amount: usdAmountInCents, // 始终存储美元金额（分）
+          currency: 'usd', // 订单记录始终使用美元
           status: 'pending',
           stripeSessionId: stripeSession.id,
           credits: 0, // Default credits / 默认积分

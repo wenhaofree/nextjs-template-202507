@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 import { format } from "date-fns"
 import { GitHubInviteModal } from "@/components/ui/github-invite-modal"
+import { formatCurrency } from '@/lib/currency-utils'
 
 interface Order {
   id: number
@@ -392,7 +393,7 @@ function BillingContent() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <p className="font-medium">${order.amount} {order.currency.toUpperCase()}</p>
+                        <p className="font-medium">${order.amount.toFixed(2)}</p>
                         {getStatusBadge(order.status)}
                       </div>
                       {(order.status === 'paid' || order.status === 'activated') && (
