@@ -26,20 +26,12 @@ const SiteHeader = () => {
         url: "/",
       },
       {
-        title: t('menu.aiTools'),
-        url: "#",
-        items: [
-          {
-            title: t('menu.aiChat'),
-            description: t('menuDescriptions.aiChat'),
-            url: "/chat",
-          },
-          {
-            title: t('menu.imageGeneration'),
-            description: t('menuDescriptions.imageGeneration'),
-            url: "/image-generation",
-          },
-        ],
+        title: t('menu.features'),
+        url: "/#features",
+      },
+      {
+        title: t('menu.pricing'),
+        url: "/#pricing",
       },
       {
         title: t('menu.products'),
@@ -94,17 +86,13 @@ const SiteHeader = () => {
         ],
       },
       {
-        title: t('menu.pricing'),
-        url: "/pricing",
-      },
-      {
         title: t('menu.blog'),
         url: "/blog",
       },
-      {
-        title: t('menu.dashboard'),
-        url: "/dashboard",
-      },
+      // {
+      //   title: t('menu.dashboard'),
+      //   url: "/dashboard",
+      // },
     ],
     mobileExtraLinks: [
       { name: t('mobileExtraLinks.press'), url: "/press" },

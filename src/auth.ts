@@ -4,9 +4,82 @@ import { getServerSession } from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { prisma, findUserWithPassword } from '@/lib/prisma'
+// 动态导入 Prisma，避免构建时初始化
+const getPrisma = async () => {
+  const { prisma } = await import('@/lib/prisma')
+  return prisma
+}
+
+const getFindUserWithPassword = async () => {
+  const { findUserWithPassword } = await import('@/lib/prisma')
+  return findUserWithPassword
+}
 import { compare } from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
+import { jwtDecode } from "jwt-decode"
+
+// 添加Google One Tap凭据提供者
+const googleOneTapProvider = CredentialsProvider({
+  id: "google-one-tap",
+  name: "Google One Tap",
+  credentials: {
+    credential: { type: "text" }
+  },
+  async authorize(credentials) {
+    try {
+      if (!credentials?.credential) return null;
+
+      // 解码Google提供的JWT令牌
+      const decoded: any = jwtDecode(credentials.credential);
+
+      // 处理用户信息
+      const userData = {
+        uuid: decoded.sub,
+        email: decoded.email,
+        nickname: decoded.name,
+        avatarUrl: decoded.picture,
+        signinType: 'oauth',
+        signinIp: '127.0.0.1', // 可以使用相同的IP获取逻辑
+        signinProvider: 'google-one-tap',
+        signinOpenid: decoded.sub,
+        createdAt: new Date(),
+      };
+
+      // 查找或创建用户
+      const prisma = await getPrisma()
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          email: decoded.email,
+          signinProvider: 'google-one-tap',
+        },
+      });
+
+      if (existingUser) {
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: {
+            nickname: userData.nickname,
+            avatarUrl: userData.avatarUrl,
+          },
+        });
+      } else {
+        await prisma.user.create({ data: userData });
+      }
+
+      // 返回符合User接口的对象
+      return {
+        id: decoded.sub,
+        email: decoded.email,
+        name: decoded.name,
+        image: decoded.picture,
+        uuid: decoded.sub // 添加uuid字段以符合User接口要求
+      };
+    } catch (error) {
+      console.error("Google One Tap验证错误:", error);
+      return null;
+    }
+  }
+});
 
 const authOptions: AuthOptions = {
   providers: [
@@ -28,6 +101,10 @@ const authOptions: AuthOptions = {
           }),
         ]
       : []),
+    // 配置Google One Tap登录
+    ...(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ONE_TAP_ENABLED === "true"
+      ? [googleOneTapProvider]
+      : []),
     // 邮箱密码登录
     CredentialsProvider({
       name: 'credentials',
@@ -41,6 +118,7 @@ const authOptions: AuthOptions = {
         }
 
         // 使用辅助函数查找用户，包含password字段
+        const findUserWithPassword = await getFindUserWithPassword()
         const user = await findUserWithPassword(credentials.email, 'credentials');
 
         if (!user || !user.password) {
@@ -92,6 +170,7 @@ const authOptions: AuthOptions = {
       // 如果是OAuth登录，处理用户信息
       if (user && account && account.provider !== 'credentials') {
         try {
+          const prisma = await getPrisma()
           // 查找或创建用户
           let dbUser = await prisma.user.findFirst({
             where: {
