@@ -46,6 +46,7 @@ const googleOneTapProvider = CredentialsProvider({
       };
 
       // 查找或创建用户
+      const prisma = await getPrisma()
       const existingUser = await prisma.user.findFirst({
         where: {
           email: decoded.email,
