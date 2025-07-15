@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
-import { BorderBeam, NumberTicker } from "@/components/magicui";
 
 interface PricingTier {
     name: string;
@@ -120,9 +119,6 @@ function CreativePricing({
                                 "group-hover:translate-y-[-4px]"
                             )}
                         >
-                            {tier.popular && (
-                                <BorderBeam size={250} duration={12} delay={9} />
-                            )}
                         </div>
 
                         <div className="relative p-6">
@@ -157,7 +153,7 @@ function CreativePricing({
                             {/* Price */}
                             <div className="mb-6 font-handwritten">
                                 <span className="text-4xl font-bold text-zinc-900 dark:text-white">
-                                    $<NumberTicker value={tier.price} />
+                                    ${tier.price}
                                 </span>
                                 {/* <span className="text-zinc-600 dark:text-zinc-400">
                                     /month

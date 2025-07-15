@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRightIcon } from "lucide-react";
 import { Mockup, MockupFrame } from "@/components/ui/mockup";
 import { Glow } from "@/components/ui/glow";
-import { BorderBeam } from "@/components/magicui";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -152,7 +151,6 @@ export function HeroSection({
                     className="rounded-lg"
                   />
                 </Mockup>
-                <BorderBeam size={250} duration={12} delay={9} />
               </MockupFrame>
               <Glow
                 variant="top"

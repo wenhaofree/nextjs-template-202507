@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
-import { Marquee } from "@/components/magicui";
 import {
   Zap,
   Shield,
@@ -30,7 +29,6 @@ const iconMap = {
   stripe: CreditCard,
   shadcn: Palette,
   tailwind: Paintbrush,
-  magicui: Sparkles,
   tailark: Building,
   resend: Mail,
   vercel: Bot,
@@ -123,16 +121,7 @@ const techStackData = [
     bgColor: "bg-slate-700",
     url: "https://ui.shadcn.com"
   },
-  {
-    name: "MagicUI",
-    description: "150+ free open source animated components and effects.",
-    icon: "magicui" as keyof typeof iconMap,
-    category: "Animation",
-    color: "from-pink-500 to-rose-600",
-    textColor: "text-white",
-    bgColor: "bg-pink-500",
-    url: "https://magicui.design"
-  },
+
   {
     name: "Tailark",
     description: "Responsive, pre-built Shadcn/UI and Tailwindcss blocks.",
@@ -209,18 +198,18 @@ export function TechStack() {
           </p>
         </motion.div>
 
-        {/* Tech Stack Marquee */}
+        {/* Tech Stack Preview */}
         <div className="mb-16">
-          <Marquee pauseOnHover className="[--duration:30s]">
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
             {techStackData.slice(0, 6).map((tech) => (
               <TechBadge key={tech.name} tech={tech} />
             ))}
-          </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:25s] mt-4">
-            {techStackData.slice(6).map((tech) => (
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            {techStackData.slice(6, 12).map((tech) => (
               <TechBadge key={tech.name} tech={tech} />
             ))}
-          </Marquee>
+          </div>
         </div>
 
         {/* Tech Stack Grid */}

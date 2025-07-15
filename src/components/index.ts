@@ -19,17 +19,6 @@ export * from "./ui/alert"
 export * from "./ui/checkbox"
 export * from "./ui/sheet"
 
-// Magic UI Components
-export * from "./magicui"
-
-// Animate UI Components
-export * from "./animate-ui"
-
-// Tailark Components
-export * from "./tailark"
-
-// Dashboard Components
-export * from "./dashboard"
 
 // Auth Components
 export { default as AuthCheck } from "./auth/auth-check"
