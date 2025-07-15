@@ -35,7 +35,6 @@ const iconMap = {
   resend: Mail,
   vercel: Bot,
   chatgpt: MessageSquare,
-  fumadocs: BookOpen,
   nextinit: Settings,
   prisma: Database,
   neon: Cloud,
@@ -173,16 +172,6 @@ const techStackData = [
     textColor: "text-white",
     bgColor: "bg-emerald-600",
     url: "https://openai.com/chatgpt"
-  },
-  {
-    name: "Fumadocs",
-    description: "The best documentation framework for Next.js.",
-    icon: "fumadocs" as keyof typeof iconMap,
-    category: "Documentation",
-    color: "from-violet-600 to-purple-700",
-    textColor: "text-white",
-    bgColor: "bg-violet-600",
-    url: "https://fumadocs.vercel.app"
   }
 ];
 
