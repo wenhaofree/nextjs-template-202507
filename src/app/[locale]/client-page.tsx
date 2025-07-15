@@ -68,9 +68,9 @@ export function ClientHomePage() {
     </section>
     <section id="features">
       <FeatureInstruction />
+      <FeatureChose />
       <AIFeaturesSection />
-    <ChatGPTFeaturesSection />
-    <FeatureChose />
+      <ChatGPTFeaturesSection />
     </section>
     <section id="pricing">
       <Prices />
