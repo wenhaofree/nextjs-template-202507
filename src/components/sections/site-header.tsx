@@ -30,6 +30,10 @@ const SiteHeader = () => {
         url: "/#features",
       },
       {
+        title: t('menu.techStack'),
+        url: "/tech-stack",
+      },
+      {
         title: t('menu.pricing'),
         url: "/#pricing",
       },

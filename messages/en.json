@@ -45,6 +45,7 @@
       "resources": "Resources",
       "pricing": "Pricing",
       "blog": "Blog",
+      "techStack": "Tech Stack",
       "dashboard": "Dashboard",
       "company": "Company",
       "careers": "Careers",
@@ -632,6 +633,106 @@
       "title": "Enjoyed this article?",
       "description": "Subscribe to our newsletter for more SaaS development tips and tutorials.",
       "cta": "Read More Articles"
+    }
+  },
+  "TechStackPage": {
+    "hero": {
+      "badge": "Latest Technology Stack",
+      "title": {
+        "part1": "Built with",
+        "part2": "Cutting-Edge Technology"
+      },
+      "description": "ShipSaaS leverages the latest versions of industry-leading technologies to deliver unmatched performance, developer experience, and future-proof architecture.",
+      "cta": {
+        "primary": "Get ShipSaaS",
+        "secondary": "View on GitHub"
+      }
+    },
+    "grid": {
+      "title": "Complete Technology Stack",
+      "description": "Every component in ShipSaaS uses the latest stable versions, ensuring optimal performance and long-term maintainability.",
+      "latest": "Latest",
+      "categories": {
+        "frontend": {
+          "title": "Frontend Framework",
+          "description": "Modern React ecosystem with Next.js App Router"
+        },
+        "ui": {
+          "title": "UI & Design System",
+          "description": "Beautiful, accessible components and animations"
+        },
+        "backend": {
+          "title": "Backend & Database",
+          "description": "Robust server-side solutions and data management"
+        },
+        "ai": {
+          "title": "AI Integration",
+          "description": "Cutting-edge AI capabilities and tools"
+        },
+        "development": {
+          "title": "Development Tools",
+          "description": "Enhanced developer experience and productivity"
+        },
+        "internationalization": {
+          "title": "Internationalization",
+          "description": "Global-ready localization and utilities"
+        }
+      }
+    },
+    "comparison": {
+      "title": "Why Latest Versions Matter",
+      "description": "See how ShipSaaS's commitment to latest technology versions gives you significant advantages over other solutions.",
+      "others": "Others",
+      "advantages": "Key Advantages",
+      "performance": {
+        "title": "Performance Improvements",
+        "description": "Measurable performance gains with latest technology stack"
+      },
+      "metrics": {
+        "buildTime": "Faster Build Time",
+        "bundleSize": "Smaller Bundle Size",
+        "loadTime": "Faster Load Time",
+        "devExperience": "Better Dev Experience"
+      }
+    },
+    "benefits": {
+      "title": "Benefits of Modern Tech Stack",
+      "description": "Experience the advantages of building with the latest, most advanced technologies available today.",
+      "items": {
+        "performance": {
+          "title": "Superior Performance",
+          "description": "Optimized for speed and efficiency"
+        },
+        "reliability": {
+          "title": "Enterprise Reliability",
+          "description": "Battle-tested stability and security"
+        },
+        "developer": {
+          "title": "Developer Experience",
+          "description": "Enhanced productivity and debugging"
+        },
+        "scalability": {
+          "title": "Infinite Scalability",
+          "description": "Grows with your business needs"
+        },
+        "modern": {
+          "title": "Modern Standards",
+          "description": "Follows latest web standards and best practices"
+        },
+        "community": {
+          "title": "Community Support",
+          "description": "Backed by active open-source communities"
+        }
+      },
+      "futureProof": {
+        "title": "Future-Proof Architecture",
+        "description": "Built with tomorrow's standards in mind, ensuring your SaaS application stays current and competitive for years to come.",
+        "metrics": {
+          "compatibility": "Forward Compatibility",
+          "updates": "Continuous Updates",
+          "support": "Long-term Support"
+        }
+      }
     }
   }
 }

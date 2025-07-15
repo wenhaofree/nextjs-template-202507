@@ -45,6 +45,7 @@
       "resources": "资源",
       "pricing": "定价",
       "blog": "博客",
+      "techStack": "技术栈",
       "dashboard": "仪表板",
       "company": "公司",
       "careers": "招聘",
@@ -632,6 +633,106 @@
       "title": "喜欢这篇文章吗？",
       "description": "订阅我们的新闻通讯，获取更多 SaaS 开发技巧和教程。",
       "cta": "查看更多文章"
+    }
+  },
+  "TechStackPage": {
+    "hero": {
+      "badge": "最新技术栈",
+      "title": {
+        "part1": "采用",
+        "part2": "前沿技术构建"
+      },
+      "description": "ShipSaaS 采用业界领先技术的最新版本，提供无与伦比的性能、开发体验和面向未来的架构。",
+      "cta": {
+        "primary": "获取 ShipSaaS",
+        "secondary": "查看 GitHub"
+      }
+    },
+    "grid": {
+      "title": "完整技术栈",
+      "description": "ShipSaaS 中的每个组件都使用最新稳定版本，确保最佳性能和长期可维护性。",
+      "latest": "最新版",
+      "categories": {
+        "frontend": {
+          "title": "前端框架",
+          "description": "现代 React 生态系统与 Next.js App Router"
+        },
+        "ui": {
+          "title": "UI 与设计系统",
+          "description": "美观、无障碍的组件和动画"
+        },
+        "backend": {
+          "title": "后端与数据库",
+          "description": "强大的服务端解决方案和数据管理"
+        },
+        "ai": {
+          "title": "AI 集成",
+          "description": "前沿的 AI 功能和工具"
+        },
+        "development": {
+          "title": "开发工具",
+          "description": "增强的开发体验和生产力"
+        },
+        "internationalization": {
+          "title": "国际化",
+          "description": "全球化本地化和实用工具"
+        }
+      }
+    },
+    "comparison": {
+      "title": "为什么最新版本很重要",
+      "description": "了解 ShipSaaS 对最新技术版本的承诺如何为您提供相比其他解决方案的显著优势。",
+      "others": "其他方案",
+      "advantages": "主要优势",
+      "performance": {
+        "title": "性能提升",
+        "description": "最新技术栈带来的可衡量性能提升"
+      },
+      "metrics": {
+        "buildTime": "更快构建时间",
+        "bundleSize": "更小包体积",
+        "loadTime": "更快加载时间",
+        "devExperience": "更好开发体验"
+      }
+    },
+    "benefits": {
+      "title": "现代技术栈的优势",
+      "description": "体验使用当今最新、最先进技术构建的优势。",
+      "items": {
+        "performance": {
+          "title": "卓越性能",
+          "description": "针对速度和效率进行优化"
+        },
+        "reliability": {
+          "title": "企业级可靠性",
+          "description": "经过实战测试的稳定性和安全性"
+        },
+        "developer": {
+          "title": "开发体验",
+          "description": "增强的生产力和调试能力"
+        },
+        "scalability": {
+          "title": "无限扩展性",
+          "description": "随着您的业务需求增长"
+        },
+        "modern": {
+          "title": "现代标准",
+          "description": "遵循最新的 Web 标准和最佳实践"
+        },
+        "community": {
+          "title": "社区支持",
+          "description": "由活跃的开源社区支持"
+        }
+      },
+      "futureProof": {
+        "title": "面向未来的架构",
+        "description": "以明天的标准构建，确保您的 SaaS 应用在未来几年保持最新和竞争力。",
+        "metrics": {
+          "compatibility": "向前兼容性",
+          "updates": "持续更新",
+          "support": "长期支持"
+        }
+      }
     }
   }
 }
