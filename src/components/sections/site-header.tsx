@@ -26,6 +26,14 @@ const SiteHeader = () => {
         url: "/",
       },
       {
+        title: t('menu.features'),
+        url: "/#features",
+      },
+      {
+        title: t('menu.pricing'),
+        url: "/#pricing",
+      },
+      {
         title: t('menu.products'),
         url: "#",
         items: [
@@ -78,17 +86,13 @@ const SiteHeader = () => {
         ],
       },
       {
-        title: t('menu.pricing'),
-        url: "/pricing",
-      },
-      {
         title: t('menu.blog'),
         url: "/blog",
       },
-      {
-        title: t('menu.dashboard'),
-        url: "/dashboard",
-      },
+      // {
+      //   title: t('menu.dashboard'),
+      //   url: "/dashboard",
+      // },
     ],
     mobileExtraLinks: [
       { name: t('mobileExtraLinks.press'), url: "/press" },

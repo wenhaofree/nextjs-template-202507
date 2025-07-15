@@ -112,7 +112,7 @@ export function HeroSection({
           </div>
 
           {/* User Testimonials */}
-          <div className="relative z-10 flex animate-appear-normal flex-col items-center gap-4 pt-8 [animation-fill-mode:both]" style={{ animationDelay: '400ms' }}>
+          {/* <div className="relative z-10 flex animate-appear-normal flex-col items-center gap-4 pt-8 [animation-fill-mode:both]" style={{ animationDelay: '400ms' }}>
             <div className="flex -space-x-2">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div
@@ -132,7 +132,7 @@ export function HeroSection({
             <p className="text-sm text-muted-foreground font-medium">
               90+ makers ship faster with ShipSaaS
             </p>
-          </div>
+          </div> */}
 
           {/* Image with Glow */}
           <div className="relative pt-16">

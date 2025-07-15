@@ -35,6 +35,7 @@
     },
     "menu": {
       "home": "Home",
+      "features": "Features",
       "products": "Products",
       "resources": "Resources",
       "pricing": "Pricing",
