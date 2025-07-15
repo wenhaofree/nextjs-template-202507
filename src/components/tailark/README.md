@@ -109,7 +109,7 @@ import { PricingSection } from "@/components/tailark"
         { name: "Up to 3 projects", included: true },
         { name: "5GB storage", included: true }
       ],
-      cta: { text: "Get Started", href: "/signup" }
+      cta: { text: "Get ShipSaaS", href: "/signup" }
     }
   ]}
 />

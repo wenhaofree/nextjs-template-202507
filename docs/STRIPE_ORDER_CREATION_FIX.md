@@ -136,7 +136,7 @@ npm run dev
 ### 2. 测试支付流程
 1. 访问 http://localhost:3001
 2. 滚动到 CreativePricing 区域
-3. 点击任意价格计划的 "Get Started" 按钮
+3. 点击任意价格计划的 "Get ShipSaaS" 按钮
 4. 验证：
    - 登录检查正常
    - Stripe 会话创建成功

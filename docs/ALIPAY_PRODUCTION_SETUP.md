@@ -17,7 +17,7 @@
 - **EUR, GBP, HKD, SGD** - 其他支持货币
 
 ### 3. 支付流程
-- 用户在中文定价页面点击 "Get Started"
+- 用户在中文定价页面点击 "Get ShipSaaS"
 - 自动跳转到 Stripe 支付页面
 - 显示信用卡、支付宝和微信支付三种支付选项
 - 支付成功后跳转到账单页面
@@ -108,7 +108,7 @@ pnpm run build
 
 ### 3. 验证部署
 1. 访问 `https://yourdomain.com/zh/pricing`
-2. 点击任意 "Get Started" 按钮
+2. 点击任意 "Get ShipSaaS" 按钮
 3. 验证 Stripe 支付页面显示支付宝和微信支付选项
 4. 测试完整支付流程
 

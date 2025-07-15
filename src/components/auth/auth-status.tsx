@@ -19,8 +19,13 @@ export function AuthStatus() {
   }
 
   return (
-    <Button asChild variant="default" size="sm">
-      <Link href="/auth/signin">Sign In</Link>
-    </Button>
+    <div className="flex items-center gap-2">
+      <Button asChild variant="ghost" size="sm" className="h-9 px-3 text-sm font-medium rounded-lg hover:bg-muted transition-all duration-200">
+        <Link href="/auth/signin">Log in</Link>
+      </Button>
+      <Button asChild variant="default" size="sm" className="h-9 px-4 text-sm font-medium rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
+        <Link href="/auth/signin">Get ShipSaaS</Link>
+      </Button>
+    </div>
   )
 }

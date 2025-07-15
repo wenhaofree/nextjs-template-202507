@@ -14,7 +14,7 @@ export default function CallToAction() {
                             asChild
                             size="lg">
                             <Link href="/" target='_blank'>
-                                <span>Get Started Now</span>
+                                <span>Get ShipSaaS Now</span>
                             </Link>
                         </Button>
 

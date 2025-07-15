@@ -36,7 +36,7 @@ export function Pricing({ pricing }: PricingProps) {
     } : undefined,
     description: plan.description,
     features: plan.features,
-    cta: "Get Started ⚡",
+    cta: "Get ShipSaaS ⚡",
     popular: index === 1, // Make middle plan popular
     highlighted: index === pricing.plans.length - 1, // Make last plan highlighted
   }));

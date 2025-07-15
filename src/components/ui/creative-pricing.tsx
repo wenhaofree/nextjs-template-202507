@@ -357,7 +357,7 @@ function CreativePricing({
                                 ) : !session ? (
                                     locale === "zh" ? "登录购买" : "Sign in to Purchase"
                                 ) : (
-                                    locale === "zh" ? "立即开始" : "Get Started"
+                                    locale === "zh" ? "立即开始" : "Get ShipSaaS"
                                 )}
                             </Button>
                         </div>

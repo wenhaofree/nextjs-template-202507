@@ -93,7 +93,7 @@ export default function TailarkDemoPage() {
               { name: "Advanced analytics", included: false },
               { name: "Priority support", included: false }
             ],
-            cta: { text: "Get Started", href: "/signup", variant: "outline" }
+            cta: { text: "Get ShipSaaS", href: "/signup", variant: "outline" }
           },
           {
             name: "Pro",

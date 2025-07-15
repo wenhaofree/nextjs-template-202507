@@ -87,7 +87,7 @@ import {
 <HeroSection
   title="Your Title"
   description="Your description"
-  primaryCta={{ text: "Get Started", href: "/signup" }}
+  primaryCta={{ text: "Get ShipSaaS", href: "/signup" }}
 />
 ```
 

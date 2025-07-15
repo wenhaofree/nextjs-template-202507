@@ -63,12 +63,12 @@ npm run db:push
 ### 4. 测试支付流程
 1. 访问 http://localhost:3001
 2. 滚动到CreativePricing区域
-3. 点击任意价格计划的"Get Started"按钮
+3. 点击任意价格计划的"Get ShipSaaS"按钮
 4. **验证登录检查**：
    - 如果未登录，应该显示"Sign in to Purchase"
    - 点击后跳转到登录页面
 5. **登录后测试支付**：
-   - 登录后按钮变为"Get Started"
+   - 登录后按钮变为"Get ShipSaaS"
    - 点击后应该跳转到Stripe Checkout
 
 ## 🎯 关键实现细节
@@ -113,7 +113,7 @@ const handlePayment = async (tier: PricingTier) => {
 ### 按钮状态管理：
 ```typescript
 <Button onClick={() => handlePayment(tier)}>
-    {!session ? "Sign in to Purchase" : "Get Started"}
+    {!session ? "Sign in to Purchase" : "Get ShipSaaS"}
 </Button>
 ```
 
