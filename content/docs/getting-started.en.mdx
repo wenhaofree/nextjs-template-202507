@@ -9,31 +9,29 @@ icon: Rocket
 Before you begin, make sure you have the following installed on your system:
 
 - **Node.js** (version 18.0 or higher)
-- **npm**, **yarn**, or **pnpm** package manager
+- **PNPM** package manager (recommended for this project)
 - **Git** for version control
 - A code editor (we recommend **VS Code**)
+- **PostgreSQL** database (we recommend **Neon** for cloud hosting)
 
 ## Quick Setup
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/ShipSaaSCo/nextjs-template-202507.git
-cd nextjs-template-202507
+git clone <your-shipsaas-repository-url>
+cd nextjs-demo
 ```
 
 ### 2. Install Dependencies
 
-Choose your preferred package manager:
+This project uses **PNPM** as the package manager for optimal performance:
 
 ```bash
-# Using npm
-npm install
+# Install PNPM if you haven't already
+npm install -g pnpm
 
-# Using yarn
-yarn install
-
-# Using pnpm
+# Install project dependencies
 pnpm install
 ```
 
@@ -45,36 +43,64 @@ Copy the example environment file and configure your settings:
 cp .env.example .env.local
 ```
 
-Edit `.env.local` with your configuration:
+Edit `.env.local` with your configuration. Here are the essential settings:
 
 ```bash
-# Database
-DATABASE_URL="your-neon-database-url"
+# -----------------------------------------------------------------------------
+# Basic Configuration (Required)
+# -----------------------------------------------------------------------------
+NEXT_PUBLIC_WEB_URL=http://localhost:3000
+NEXT_PUBLIC_PROJECT_NAME=ShipSaaS
 
-# Authentication
-NEXTAUTH_SECRET="your-nextauth-secret"
-NEXTAUTH_URL="http://localhost:3000"
+# -----------------------------------------------------------------------------
+# Authentication (Required)
+# Generate AUTH_SECRET with: openssl rand -base64 32
+# -----------------------------------------------------------------------------
+AUTH_SECRET=your-generated-auth-secret
 
-# OAuth Providers
-GOOGLE_CLIENT_ID="your-google-client-id"
-GOOGLE_CLIENT_SECRET="your-google-client-secret"
+# Google OAuth (Optional)
+AUTH_GOOGLE_ID=your-google-client-id
+AUTH_GOOGLE_SECRET=your-google-client-secret
+NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=true
+NEXT_PUBLIC_AUTH_GOOGLE_ONE_TAP_ENABLED=false
 
-# Stripe
-STRIPE_SECRET_KEY="your-stripe-secret-key"
-STRIPE_PUBLISHABLE_KEY="your-stripe-publishable-key"
-STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
+# GitHub OAuth (Optional)
+AUTH_GITHUB_ID=your-github-client-id
+AUTH_GITHUB_SECRET=your-github-client-secret
+NEXT_PUBLIC_AUTH_GITHUB_ENABLED=true
 
-# Email
-RESEND_API_KEY="your-resend-api-key"
+# -----------------------------------------------------------------------------
+# Database (Required)
+# -----------------------------------------------------------------------------
+DATABASE_URL=your-postgresql-database-url
+
+# -----------------------------------------------------------------------------
+# Stripe Payment (Required for payments)
+# -----------------------------------------------------------------------------
+STRIPE_PUBLIC_KEY=your-stripe-publishable-key
+STRIPE_PRIVATE_KEY=your-stripe-secret-key
+STRIPE_WEBHOOK_SECRET=your-stripe-webhook-secret
+
+# -----------------------------------------------------------------------------
+# Email Service (Optional)
+# -----------------------------------------------------------------------------
+RESEND_API_KEY=your-resend-api-key
+NEXT_PUBLIC_FROM_EMAIL=noreply@yourdomain.com
 ```
 
 ### 4. Database Setup
 
-Set up your database schema:
+Set up your database schema using Prisma:
 
 ```bash
-npx prisma generate
-npx prisma db push
+# Generate Prisma client
+pnpm db:generate
+
+# Push schema to database
+pnpm db:push
+
+# Optional: Seed database with initial data
+pnpm db:seed
 ```
 
 ### 5. Start Development Server
@@ -82,41 +108,115 @@ npx prisma db push
 Run the development server with Turbopack for optimal performance:
 
 ```bash
-npm run dev --turbo
-# or
-yarn dev --turbo
-# or
-pnpm dev --turbo
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see your application running.
+The server will start on [http://localhost:3000](http://localhost:3000). Turbopack is automatically enabled for development mode.
 
 ## What's Next?
 
 Now that you have ShipSaaS running locally, you can:
 
 1. **Explore the Features** - Navigate through the application to see all available features
+   - AI Chat interface powered by ChatGPT
+   - AI Image Generation capabilities
+   - User authentication and dashboard
+   - Stripe payment integration
+   - Multi-language support (English/Chinese)
+
 2. **Customize the Design** - Modify components and styling to match your brand
-3. **Configure Services** - Set up your external services (Stripe, OAuth, etc.)
+   - Update theme colors in `src/app/globals.css`
+   - Customize components in `src/components/ui/`
+   - Modify landing page sections in `src/components/sections/`
+
+3. **Configure Services** - Set up your external services
+   - Configure OAuth providers (Google, GitHub)
+   - Set up Stripe for payments and subscriptions
+   - Configure email service with Resend
+   - Set up AI services (OpenAI API)
+
 4. **Deploy Your App** - Follow our deployment guide to go live
+   - Deploy to Vercel for optimal Next.js performance
+   - Configure production environment variables
+   - Set up domain and SSL certificates
 
 ## Project Structure
 
 Here's an overview of the key directories in your ShipSaaS project:
 
 ```
-nextjs-template-202507/
+nextjs-demo/
+├── .kiro/                   # Kiro AI assistant configuration
 ├── src/
-│   ├── app/                 # Next.js App Router pages
+│   ├── app/                 # Next.js App Router
+│   │   ├── [locale]/        # Internationalized routes (en, zh)
+│   │   ├── api/             # API routes and server functions
+│   │   └── auth/            # Authentication pages
 │   ├── components/          # Reusable UI components
+│   │   ├── ui/              # Shadcn/ui components
+│   │   ├── sections/        # Landing page sections
+│   │   ├── auth/            # Authentication components
+│   │   ├── dashboard/       # Dashboard components
+│   │   └── magicui/         # Enhanced UI components
 │   ├── lib/                 # Utility functions and configurations
-│   └── styles/              # Global styles and Tailwind config
+│   ├── hooks/               # Custom React hooks
+│   ├── i18n/                # Internationalization setup
+│   └── types/               # TypeScript type definitions
 ├── content/
-│   └── docs/                # Documentation content
-├── messages/                # Internationalization messages
+│   ├── docs/                # Documentation content (MDX)
+│   └── blog/                # Blog content (MDX)
+├── messages/                # i18n translation files
 ├── prisma/                  # Database schema and migrations
-└── public/                  # Static assets
+├── public/                  # Static assets
+└── docs/                    # Project documentation
 ```
+
+## Available Commands
+
+### Development Commands
+```bash
+pnpm dev          # Start development server with Turbopack
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+```
+
+### Database Commands
+```bash
+pnpm db:generate  # Generate Prisma client
+pnpm db:push      # Push schema changes to database
+pnpm db:migrate   # Run database migrations
+pnpm db:studio    # Open Prisma Studio
+pnpm db:seed      # Seed database with initial data
+```
+
+## Key Features Overview
+
+### 🤖 AI Integration
+- **ChatGPT Integration**: Real-time AI chat with streaming responses
+- **Image Generation**: AI-powered image creation from text prompts
+- **Vercel AI SDK**: Modern AI integration framework
+
+### 🔐 Authentication
+- **NextAuth.js**: Secure authentication framework
+- **Multiple Providers**: Google, GitHub, and email/password
+- **Google One Tap**: Enhanced login experience
+
+### 💳 Payment Processing
+- **Stripe Integration**: Complete payment and subscription system
+- **Multiple Plans**: Basic, Standard, and Premium tiers
+- **Webhook Handling**: Secure payment event processing
+
+### 🌍 Internationalization
+- **Multi-language**: English and Chinese support
+- **next-intl**: Modern i18n framework
+- **Localized Routes**: Language-specific URLs
+
+### 🎨 Modern UI
+- **Shadcn/ui**: High-quality React components
+- **Tailwind CSS v4**: Latest utility-first CSS framework
+- **Dark/Light Mode**: Theme switching support
+- **Responsive Design**: Mobile-first approach
 
 ## Troubleshooting
 
@@ -124,17 +224,32 @@ nextjs-template-202507/
 
 **Port already in use:**
 ```bash
-# Kill the process using port 3000
+# Kill the process using port 3000 (macOS/Linux)
 lsof -ti:3000 | xargs kill -9
+
+# Or use a different port
+pnpm dev -- --port 3001
 ```
 
 **Database connection issues:**
 - Verify your `DATABASE_URL` in `.env.local`
-- Ensure your Neon database is accessible
-- Run `npx prisma db push` to sync the schema
+- Ensure your PostgreSQL/Neon database is accessible
+- Run `pnpm db:push` to sync the schema
+- Check database credentials and network connectivity
 
 **Build errors:**
 - Clear Next.js cache: `rm -rf .next`
-- Reinstall dependencies: `rm -rf node_modules && npm install`
+- Reinstall dependencies: `rm -rf node_modules && pnpm install`
+- Check for TypeScript errors: `pnpm build`
 
-Need more help? Check out our [Environment Setup](/docs/environment-setup) guide for detailed configuration instructions.
+**PNPM issues:**
+- Update PNPM: `npm install -g pnpm@latest`
+- Clear PNPM cache: `pnpm store prune`
+- Verify Node.js version: `node --version` (should be 18+)
+
+**Environment variable issues:**
+- Ensure `.env.local` exists and has correct values
+- Restart development server after changing environment variables
+- Check for typos in variable names
+
+Need more help? Check out our comprehensive documentation or reach out to our support team.
