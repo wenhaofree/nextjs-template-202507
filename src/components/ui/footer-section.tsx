@@ -168,10 +168,10 @@ const Footersection = () => {
           </p>
           <nav className="flex gap-6 text-sm">
             <a href="/privacy" className="text-muted-foreground transition-colors hover:text-primary">
-              Privacy Policy
+              {t('legal.privacy')}
             </a>
             <a href="/terms" className="text-muted-foreground transition-colors hover:text-primary">
-              Terms of Service
+              {t('legal.terms')}
             </a>
           </nav>
         </div>

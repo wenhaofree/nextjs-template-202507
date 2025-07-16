@@ -749,5 +749,107 @@
         }
       }
     }
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "subtitle": "Please read these terms carefully before using our services",
+    "lastUpdated": "Last updated: January 2025",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "These Terms of Service (\"Terms\") govern your use of our website and services. By accessing or using our services, you agree to be bound by these Terms."
+      },
+      "useOfServices": {
+        "title": "Use of Services",
+        "content": "Our services are provided \"as is\" and \"as available\" without warranties of any kind, either express or implied. We do not guarantee that our services will be uninterrupted, secure, or error-free."
+      },
+      "userAccounts": {
+        "title": "User Accounts",
+        "content": "When you create an account with us, you must provide accurate and complete information. You are responsible for safeguarding your account and for all activities that occur under your account."
+      },
+      "teamAccounts": {
+        "title": "Team Accounts and Management",
+        "content": "Team accounts allow multiple users to collaborate within a shared workspace. Team administrators have the authority to manage team settings, invite or remove members, and control access permissions. All team members must comply with these Terms and any additional team policies established by the team administrator."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "content": "Our website and its original content, features, and functionality are owned by us and are protected by international copyright, trademark, and other intellectual property laws."
+      },
+      "userContent": {
+        "title": "User Content",
+        "content": "You retain all rights to any content you submit, post, or display on or through our services. By submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, and distribute your content."
+      },
+      "teamCollaboration": {
+        "title": "Team Collaboration and Data",
+        "content": "In team environments, content and data may be shared among team members according to the permissions set by team administrators. Team members acknowledge that shared content may be visible to other authorized team members. Data ownership within teams is governed by the team's organizational policies and applicable laws."
+      },
+      "teamBilling": {
+        "title": "Team Billing and Subscriptions",
+        "content": "Team subscriptions are managed by designated team administrators or billing contacts. All team members benefit from the team subscription features, but billing responsibility lies with the designated account holder. Changes to team subscriptions, including upgrades, downgrades, or cancellations, can only be made by authorized team administrators."
+      },
+      "prohibitedActivities": {
+        "title": "Prohibited Activities",
+        "content": "You agree not to: use our services in any way that violates any applicable law or regulation; engage in any conduct that restricts or inhibits anyone's use or enjoyment of our services; attempt to gain unauthorized access to our servers or networks; use our services to distribute malware or other harmful code."
+      },
+      "teamResponsibilities": {
+        "title": "Team Member Responsibilities",
+        "content": "Team members are expected to maintain professional conduct, protect confidential information, comply with security policies, and respect the intellectual property rights of others. Team members must not share access credentials, misuse shared resources, or engage in activities that could compromise team security or violate these Terms."
+      },
+      "termination": {
+        "title": "Termination",
+        "content": "We may terminate or suspend your account and access to our services immediately, without prior notice or liability, for any reason. Team administrators may remove team members at their discretion. Upon termination, your right to use our services will cease immediately."
+      },
+      "limitationOfLiability": {
+        "title": "Limitation of Liability",
+        "content": "In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services."
+      },
+      "changesToTerms": {
+        "title": "Changes to Terms",
+        "content": "We reserve the right to modify these Terms at any time. If we make changes, we will provide notice by posting the updated Terms on this page. Your continued use of our services after such modifications constitutes acceptance of the updated Terms."
+      },
+      "contactUs": {
+        "title": "Contact Us",
+        "content": "If you have any questions about these Terms, please contact us at hi@shipsaas.net."
+      }
+    }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "How we collect, use, and protect your information",
+    "lastUpdated": "Last updated: January 2025",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "This Privacy Policy describes how we collect, use, and handle your information when you use our services."
+      },
+      "informationCollection": {
+        "title": "Information We Collect",
+        "content": "We collect information you provide directly to us, information we collect automatically when you use our services, and information from third-party sources."
+      },
+      "useOfInformation": {
+        "title": "How We Use Your Information",
+        "content": "We use the information we collect to provide, maintain, and improve our services, process transactions, send communications, and comply with legal obligations."
+      },
+      "teamData": {
+        "title": "Team Data and Sharing",
+        "content": "In team environments, certain information may be shared among team members as necessary for collaboration. Team administrators have access to team usage data and member activity within the team workspace."
+      },
+      "dataSecurity": {
+        "title": "Data Security",
+        "content": "We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+      },
+      "dataRetention": {
+        "title": "Data Retention",
+        "content": "We retain your information for as long as necessary to provide our services, comply with legal obligations, resolve disputes, and enforce our agreements."
+      },
+      "yourRights": {
+        "title": "Your Rights",
+        "content": "You have the right to access, update, or delete your personal information. You may also have additional rights depending on your location."
+      },
+      "contactUs": {
+        "title": "Contact Us",
+        "content": "If you have any questions about this Privacy Policy, please contact us at hi@shipsaas.net."
+      }
+    }
   }
 }
