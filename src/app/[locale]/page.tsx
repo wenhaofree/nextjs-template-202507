@@ -1,6 +1,6 @@
 import { generateMetadata as generateSEOMetadata, generateStructuredData } from "@/lib/seo";
 import { ClientHomePage } from "@/app/[locale]/client-page";
-
+import GoogleOneTapWrapper from "@/components/GoogleOneTapWrapper";
 interface HomePageProps {
   params: Promise<{ locale: string }>;
 }
@@ -54,6 +54,7 @@ export default async function LocaleHomePage({ params }: HomePageProps) {
           __html: JSON.stringify(structuredData),
         }}
       />
+      <GoogleOneTapWrapper />
       <ClientHomePage />
     </>
   );
