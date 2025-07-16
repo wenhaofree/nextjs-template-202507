@@ -34,6 +34,13 @@ export default function RootLayout({
           <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
         )}
 
+        {/* Google One Tap Script */}
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        />
+
         {/* Umami Analytics */}
         <script
           defer
