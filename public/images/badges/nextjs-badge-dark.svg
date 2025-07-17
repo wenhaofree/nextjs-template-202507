@@ -1,0 +1,29 @@
+<svg width="200" height="54" viewBox="0 0 200 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nextjsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="200" height="54" rx="8" fill="url(#nextjsBg)"/>
+  <rect x="1" y="1" width="198" height="52" rx="7" stroke="#666" stroke-width="1" opacity="0.3"/>
+
+  <!-- Next.js Logo -->
+  <circle cx="22" cy="27" r="10" fill="#333" opacity="0.3"/>
+  <circle cx="22" cy="27" r="8" fill="white"/>
+  <path d="M18 32L26 19H28V35H26V23L20 32H18Z" fill="black"/>
+  <path d="M30 19H32V35H30V19Z" fill="black"/>
+
+  <!-- Text -->
+  <text x="42" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="500" fill="#999">
+    BUILT WITH
+  </text>
+  <text x="42" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="white">
+    Next.js
+  </text>
+
+  <!-- Decorative triangles -->
+  <path d="M170 15L175 20L165 20Z" fill="white" opacity="0.2"/>
+  <path d="M175 35L180 40L170 40Z" fill="white" opacity="0.1"/>
+</svg>
