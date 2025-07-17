@@ -79,12 +79,105 @@ export async function POST(req: Request) {
           }),
           execute: async ({ expression }) => {
             try {
-              // Enhanced calculator for demo - in production, use a proper math parser like mathjs
-              let cleanExpression = expression
-                .replace(/[^0-9+\-*/().sqrt\s]/g, '')
-                .replace(/sqrt\(/g, 'Math.sqrt(');
+              // Safe calculator implementation without eval()
+              const safeCalculate = (expr: string): number => {
+                // Remove whitespace
+                const cleanExpr = expr.replace(/\s/g, '');
 
-              const result = eval(cleanExpression);
+                // Only allow numbers, basic operators, parentheses, and sqrt
+                if (!/^[0-9+\-*/().sqrt]+$/.test(cleanExpr)) {
+                  throw new Error('Invalid characters in expression');
+                }
+
+                // Simple recursive descent parser for basic arithmetic
+                let pos = 0;
+
+                const parseNumber = (): number => {
+                  let num = '';
+                  while (pos < cleanExpr.length && /[0-9.]/.test(cleanExpr[pos])) {
+                    num += cleanExpr[pos++];
+                  }
+                  return parseFloat(num);
+                };
+
+                const parseFactor = (): number => {
+                  if (cleanExpr.substring(pos, pos + 4) === 'sqrt') {
+                    pos += 4; // skip 'sqrt'
+                    if (cleanExpr[pos] !== '(') throw new Error('Expected ( after sqrt');
+                    pos++; // skip '('
+                    const result = parseExpression();
+                    if (cleanExpr[pos] !== ')') throw new Error('Expected ) after sqrt argument');
+                    pos++; // skip ')'
+                    return Math.sqrt(result);
+                  }
+
+                  if (cleanExpr[pos] === '(') {
+                    pos++; // skip '('
+                    const result = parseExpression();
+                    if (cleanExpr[pos] !== ')') throw new Error('Expected )');
+                    pos++; // skip ')'
+                    return result;
+                  }
+
+                  if (cleanExpr[pos] === '-') {
+                    pos++; // skip '-'
+                    return -parseFactor();
+                  }
+
+                  if (cleanExpr[pos] === '+') {
+                    pos++; // skip '+'
+                    return parseFactor();
+                  }
+
+                  return parseNumber();
+                };
+
+                const parseTerm = (): number => {
+                  let result = parseFactor();
+
+                  while (pos < cleanExpr.length && (cleanExpr[pos] === '*' || cleanExpr[pos] === '/')) {
+                    const op = cleanExpr[pos++];
+                    const right = parseFactor();
+                    if (op === '*') {
+                      result *= right;
+                    } else {
+                      if (right === 0) throw new Error('Division by zero');
+                      result /= right;
+                    }
+                  }
+
+                  return result;
+                };
+
+                const parseExpression = (): number => {
+                  let result = parseTerm();
+
+                  while (pos < cleanExpr.length && (cleanExpr[pos] === '+' || cleanExpr[pos] === '-')) {
+                    const op = cleanExpr[pos++];
+                    const right = parseTerm();
+                    if (op === '+') {
+                      result += right;
+                    } else {
+                      result -= right;
+                    }
+                  }
+
+                  return result;
+                };
+
+                const result = parseExpression();
+                if (pos < cleanExpr.length) {
+                  throw new Error('Unexpected character: ' + cleanExpr[pos]);
+                }
+                return result;
+              };
+
+              const result = safeCalculate(expression);
+
+              if (!isFinite(result)) {
+                throw new Error('Result is not a finite number');
+              }
+
               return {
                 expression,
                 result: result.toString(),

@@ -44,6 +44,15 @@ const nextConfig: NextConfig = {
     },
   }),
 
+  // Webpack 配置 - 避免 eval 在开发环境中使用
+  webpack: (config, { dev, isServer }) => {
+    // 在开发环境中使用更安全的 source map
+    if (dev && !isServer) {
+      config.devtool = 'cheap-module-source-map';
+    }
+    return config;
+  },
+
   // 压缩配置
   compress: true,
 
@@ -82,7 +91,9 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://umami.wenhaofree.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+            value: process.env.NODE_ENV === 'development'
+              ? "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://umami.wenhaofree.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: ws: wss:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+              : "default-src 'self'; script-src 'self' 'unsafe-inline' https://umami.wenhaofree.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
           },
         ],
       },
