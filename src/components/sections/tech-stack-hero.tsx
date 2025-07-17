@@ -64,9 +64,9 @@ export function TechStackHero() {
             className="mb-10 flex flex-wrap justify-center gap-4"
           >
             {[
-              { name: 'Next.js', version: '15.3.5', color: 'bg-black dark:bg-white text-white dark:text-black' },
+              { name: 'Next.js', version: '15.4.1', color: 'bg-black dark:bg-white text-white dark:text-black' },
               { name: 'TailwindCSS', version: 'v4', color: 'bg-cyan-500 text-white' },
-              { name: 'React', version: '19.0', color: 'bg-blue-500 text-white' },
+              { name: 'React', version: '19.1.0', color: 'bg-blue-500 text-white' },
               { name: 'TypeScript', version: '5.x', color: 'bg-blue-600 text-white' },
             ].map((tech, index) => (
               <Badge

@@ -25,6 +25,7 @@ import {
 // Icon mapping for tech stack
 const iconMap = {
   nextjs: Zap,
+  react: Sparkles,
   betterauth: Shield,
   drizzle: Database,
   stripe: CreditCard,
@@ -45,14 +46,24 @@ const iconMap = {
 // Tech stack data based on the image and project requirements
 const techStackData = [
   {
-    name: "Next.js",
-    description: "The most popular full stack React framework for production.",
+    name: "Next.js 15.4.1",
+    description: "The most popular full stack React framework for production with latest features.",
     icon: "nextjs" as keyof typeof iconMap,
     category: "Framework",
     color: "from-gray-900 to-black",
     textColor: "text-white",
     bgColor: "bg-black",
     url: "https://nextjs.org"
+  },
+  {
+    name: "React 19.1.0",
+    description: "The library for web and native user interfaces with latest concurrent features.",
+    icon: "react" as keyof typeof iconMap,
+    category: "Library",
+    color: "from-blue-500 to-blue-700",
+    textColor: "text-white",
+    bgColor: "bg-blue-500",
+    url: "https://react.dev"
   },
   {
     name: "Tailwind CSS",

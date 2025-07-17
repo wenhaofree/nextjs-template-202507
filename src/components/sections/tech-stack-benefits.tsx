@@ -11,7 +11,7 @@ const benefitsData = [
     title: 'performance',
     features: [
       'Turbopack for lightning-fast builds',
-      'React 19 concurrent features',
+      'React 19.1.0 concurrent features',
       'Optimized bundle splitting',
       'Advanced caching strategies'
     ]

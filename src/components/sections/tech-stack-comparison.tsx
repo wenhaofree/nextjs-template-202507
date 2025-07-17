@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const comparisonData = [
   {
     technology: 'Next.js',
-    shipsaas: '15.3.5',
+    shipsaas: '15.4.1',
     others: '13.x - 14.x',
     advantages: [
       'App Router with full stability',
@@ -31,7 +31,7 @@ const comparisonData = [
   },
   {
     technology: 'React',
-    shipsaas: '19.0.0',
+    shipsaas: '19.1.0',
     others: '17.x - 18.x',
     advantages: [
       'Concurrent features',

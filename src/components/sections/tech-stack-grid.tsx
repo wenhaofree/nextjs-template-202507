@@ -11,8 +11,8 @@ const techStackData = [
     category: 'frontend',
     icon: Icons.layout,
     items: [
-      { name: 'Next.js', version: '15.3.5', description: 'React framework with App Router', isLatest: true },
-      { name: 'React', version: '19.0.0', description: 'Latest React with concurrent features', isLatest: true },
+      { name: 'Next.js', version: '15.4.1', description: 'React framework with App Router', isLatest: true },
+      { name: 'React', version: '19.1.0', description: 'Latest React with concurrent features', isLatest: true },
       { name: 'TypeScript', version: '5.x', description: 'Type-safe JavaScript', isLatest: true },
       { name: 'TailwindCSS', version: 'v4', description: 'Utility-first CSS framework', isLatest: true },
     ]
@@ -54,7 +54,7 @@ const techStackData = [
       { name: 'Turbopack', version: 'Built-in', description: 'Next.js native bundler', isLatest: true },
       { name: 'ESLint', version: 'Latest', description: 'Code linting and formatting', isLatest: true },
       { name: 'Fumadocs', version: '15.6.3', description: 'Documentation framework', isLatest: true },
-      { name: 'PNPM', version: '10.12.4', description: 'Fast, disk space efficient package manager', isLatest: true },
+      { name: 'PNPM', version: '10.13.1', description: 'Fast, disk space efficient package manager', isLatest: true },
     ]
   },
   {

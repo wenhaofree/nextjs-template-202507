@@ -9,8 +9,8 @@
 ## ✨ Why Choose ShipSaaS?
 
 ### 🚀 Latest Technology Stack
-- **Next.js 15.3.5** - Latest React framework with App Router and Server Components
-- **React 19** - Latest React with concurrent features and improved performance
+- **Next.js 15.4.1** - Latest React framework with App Router and Server Components
+- **React 19.1.0** - Latest React with concurrent features and improved performance
 - **TypeScript 5** - Full type safety across the entire application
 - **Tailwind CSS v4** - Latest utility-first CSS framework with modern features
 - **Turbopack** - Ultra-fast bundler for lightning-speed development
@@ -323,9 +323,9 @@ AUTH_GITHUB_SECRET="your-github-client-secret"
 ## 📦 Complete Dependency List
 
 ### Core Framework
-- **next**: `15.3.5` - React framework with App Router
-- **react**: `19.0.0` - Latest React with concurrent features
-- **react-dom**: `19.0.0` - React DOM renderer
+- **next**: `15.4.1` - React framework with App Router
+- **react**: `19.1.0` - Latest React with concurrent features
+- **react-dom**: `19.1.0` - React DOM renderer
 - **typescript**: `5.x` - TypeScript language support
 
 ### Authentication & Security
