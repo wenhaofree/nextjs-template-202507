@@ -19,7 +19,110 @@ const nextConfig: NextConfig = {
     // 禁用一些可能导致问题的实验性功能
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
-  /* config options here */
+
+  // Turbopack 配置 - 仅在开发模式下使用
+  ...(process.env.NODE_ENV === 'development' && {
+    turbopack: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+      // 改善HMR稳定性
+      resolveAlias: {
+        'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
+        'react/jsx-runtime': 'react/jsx-runtime',
+      },
+      resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+    },
+  }),
+
+  // Webpack 配置 - 避免 eval 在开发环境中使用
+  webpack: (config, { dev, isServer }) => {
+    // 在开发环境中使用更安全的 source map
+    if (dev && !isServer) {
+      config.devtool = 'cheap-module-source-map';
+    }
+    return config;
+  },
+
+  // 压缩配置
+  compress: true,
+
+  // 静态文件优化
+  assetPrefix: process.env.NODE_ENV === 'production' ? process.env.CDN_URL : undefined,
+
+  // 安全头部
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: process.env.NODE_ENV === 'development'
+              ? "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://umami.wenhaofree.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: ws: wss:; frame-src 'self' https://accounts.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+              : "default-src 'self'; script-src 'self' 'unsafe-inline' https://umami.wenhaofree.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://accounts.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+          },
+        ],
+      },
+      {
+        source: '/api/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
+
+  // 重定向配置
+  async redirects() {
+    return [
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
+      // 移除 /docs 和 /blog 重定向，让 next-intl 中间件处理
+    ];
+  },
 };
 
 export default withNextIntl(withMDX(nextConfig));
