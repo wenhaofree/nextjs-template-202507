@@ -21,6 +21,9 @@ export function Providers({ children }: ProvidersProps) {
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
+        // 强制客户端渲染，避免 hydration 不匹配
+        forcedTheme={undefined}
+        storageKey="theme"
       >
         {children}
       </ThemeProvider>

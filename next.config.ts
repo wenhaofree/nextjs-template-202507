@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
 
   // 性能优化
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+      optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
     // 禁用 Server Components HMR 缓存以避免模块工厂问题
     serverComponentsHmrCache: false,
   },
