@@ -99,22 +99,22 @@ const SiteHeader = () => {
       },
 
       // AI Tools
-      {
-        title: t('menu.aiTools'),
-        url: "#",
-        items: [
-          {
-            title: t('menu.aiChat'),
-            description: t('menuDescriptions.aiChat'),
-            url: "/chat",
-          },
-          {
-            title: t('menu.imageGeneration'),
-            description: t('menuDescriptions.imageGeneration'),
-            url: "/image-generation",
-          },
-        ],
-      },
+      // {
+      //   title: t('menu.aiTools'),
+      //   url: "#",
+      //   items: [
+      //     {
+      //       title: t('menu.aiChat'),
+      //       description: t('menuDescriptions.aiChat'),
+      //       url: "/chat",
+      //     },
+      //     {
+      //       title: t('menu.imageGeneration'),
+      //       description: t('menuDescriptions.imageGeneration'),
+      //       url: "/image-generation",
+      //     },
+      //   ],
+      // },
       // {
       //   title: t('menu.dashboard'),
       //   url: "/dashboard",
