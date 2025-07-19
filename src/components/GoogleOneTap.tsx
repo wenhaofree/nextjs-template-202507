@@ -4,9 +4,9 @@ import { useEffect, useCallback } from "react";
 import { useSession, signIn } from "next-auth/react";
 
 export default function GoogleOneTap() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
-  const handleCredentialResponse = useCallback(async (response: any) => {
+  const handleCredentialResponse = useCallback(async (response: GoogleCredentialResponse) => {
     console.log("🔐 Google One Tap credential received:", response);
 
     if (response.credential) {
@@ -52,12 +52,10 @@ export default function GoogleOneTap() {
                 callback: handleCredentialResponse,
                 auto_select: true,
                 cancel_on_tap_outside: true,
-                // 添加更多配置选项
-                use_fedcm_for_prompt: true,
               });
 
               console.log("📢 Calling Google One Tap prompt...");
-              window.google.accounts.id.prompt((notification: any) => {
+              window.google.accounts.id.prompt((notification: GoogleOneTapNotification) => {
                 console.log("📋 Prompt notification:", notification);
 
                 if (notification.isNotDisplayed()) {
@@ -86,11 +84,14 @@ export default function GoogleOneTap() {
 
         // 如果Google脚本已经加载，直接初始化
         if (window.google) {
+          console.log("✅ Google API already loaded");
           initializeGoogleOneTap();
         } else {
+          console.log("⏳ Waiting for Google API to load...");
           // 否则等待脚本加载
           const checkGoogleLoaded = setInterval(() => {
             if (window.google) {
+              console.log("✅ Google API loaded, initializing...");
               clearInterval(checkGoogleLoaded);
               initializeGoogleOneTap();
             }
@@ -98,9 +99,12 @@ export default function GoogleOneTap() {
 
           // 10秒后清除检查
           setTimeout(() => {
+            console.log("⏰ Timeout waiting for Google API");
             clearInterval(checkGoogleLoaded);
           }, 10000);
         }
+      } else {
+        console.log("🔒 Google One Tap already shown, skipping");
       }
     } else {
       console.log("🚫 Skipping Google One Tap:", {
