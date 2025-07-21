@@ -93,12 +93,12 @@ const SiteHeader = () => {
           {
             title: t('menu.aiChat'),
             description: t('menuDescriptions.aiChat'),
-            url: "/chat",
+            url: "/ai/chat",
           },
           {
             title: t('menu.imageGeneration'),
             description: t('menuDescriptions.imageGeneration'),
-            url: "/image-generation",
+            url: "/ai/image-generation",
           },
         ],
       },
