@@ -73,9 +73,9 @@ export default async function LocaleLayout({
             translations: { en, zh }[locale],
           }}
         >
-          <SiteHeader />
+          {/* <SiteHeader /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </RootProvider>
       </NextIntlClientProvider>
     </Providers>

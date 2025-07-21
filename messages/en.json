@@ -4,14 +4,15 @@
       "text": "🚀 Special Gift: 20% off",
       "action": "Get ShipSaaS"
     },
-    "title": "Make Your AI SaaS Product in a weekend",
-    "description": "The complete Next.js boilerplate for building profitable SaaS, packed with AI, auth, payments, i18n, newsletter, dashboard, blog, docs, blocks, themes, SEO and more.",
+    "title": "ShipSaaS - Build Your AI SaaS Product in a Weekend",
+    "description": "ShipSaaS is the complete Next.js SaaS boilerplate for building profitable SaaS applications. Packed with AI integration, authentication, Stripe payments, i18n, dashboard, blog, docs, and more. Start your SaaS journey with ShipSaaS today.",
     "actions": {
       "getStarted": "Get ShipSaaS",
-      "github": "See Demo"
+      "readDocs": "Read Documentation",
+      "seeDemo": "See Demo"
     },
     "image": {
-      "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform"
+      "alt": "ShipSaaS Dashboard Preview - Complete SaaS Development Platform with AI Integration"
     }
   },
   "Navigation": {
@@ -35,6 +36,7 @@
     },
     "menu": {
       "home": "Home",
+      "docs": "Documentation",
       "aiTools": "AI Tools",
       "aiChat": "AI Chat",
       "imageGeneration": "Image Generator",
@@ -43,6 +45,7 @@
       "resources": "Resources",
       "pricing": "Pricing",
       "blog": "Blog",
+      "techStack": "Tech Stack",
       "dashboard": "Dashboard",
       "company": "Company",
       "careers": "Careers",
@@ -53,6 +56,7 @@
       "termsOfService": "Terms of Service"
     },
     "menuDescriptions": {
+      "docs": "Complete guides and API references to help you get started with ShipSaaS",
       "aiChat": "Chat with AI assistant powered by ChatGPT for intelligent conversations",
       "imageGeneration": "Generate stunning images from text descriptions using AI technology",
       "blog": "The latest industry news, updates, and info",
@@ -476,29 +480,33 @@
       "professional": {
         "name": "Standard",
         "price": "169",
+        "originalPrice": "249",
+        "discount": "32",
         "description": "For growing teams and serious SaaS projects",
         "popular": true,
         "features": [
           "Everything in Basic",
+          "User Dashboard Console",
           "Documentation System",
           "Blog Functionality",
           "MagicUI Components",
           "TailArk UI Library",
           "Animate-UI Animations",
-          "Vercel AI SDK",
-          "ChatGPT Integration",
           "Advanced UI Components"
         ]
       },
       "enterprise": {
         "name": "Premium",
         "price": "299",
+        "originalPrice": "449",
+        "discount": "33",
         "description": "For large teams and enterprise applications",
         "features": [
           "Everything in Standard",
-          "User Dashboard Console",
           "Admin Management System",
           "Points/Credits Management",
+          "Vercel AI SDK",
+          "ChatGPT Integration",
           "AI Tool Integration",
           "Multi-Modal AI Support",
           "AI Agent Development",
@@ -508,6 +516,14 @@
           "1-on-1 Consultation"
         ]
       }
+    }
+  },
+  "CallToAction": {
+    "title": "Kickstart Your SaaS Journey",
+    "description": "Build, manage, and scale your SaaS product faster with ShipSaaS. Focus on innovation and growth—leave the setup to us.",
+    "buttons": {
+      "getStarted": "Get ShipSaaS Now",
+      "readDocs": "Read the Docs"
     }
   },
   "FAQs": {
@@ -552,6 +568,13 @@
       "linkText": "customer support team"
     }
   },
+  "PaymentMethods": {
+    "title": "Supported Payment Methods",
+    "description": "Choose your preferred payment method, secure and convenient",
+    "secureNote": "All payments are securely processed by Stripe",
+    "accepts": "Accepts:",
+    "popular": "Popular"
+  },
   "Footer": {
     "newsletter": {
       "title": "Stay Connected",
@@ -575,7 +598,7 @@
       "address": "123 Innovation Street",
       "city": "Tech City, TC 12345",
       "phone": "Phone: (123) 456-7890",
-      "email": "Email: hello@shipsaas.net"
+      "email": "Email: hi@shipsaas.net"
     },
     "social": {
       "title": "Follow Us",

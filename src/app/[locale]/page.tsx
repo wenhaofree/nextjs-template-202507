@@ -36,6 +36,8 @@ export default function LocaleHomePage() {
       {/* Google One Tap 登录组件 */}
       <GoogleOneTapWrapper />
 
+      <SiteHeader />
+
       <HeroSection
         badge="🚀 New Release"
         title="Modern Solutions for"
@@ -186,6 +188,7 @@ export default function LocaleHomePage() {
           showForm={true}
         />
       </section>
+      <Footer />
     </>
   )
 }

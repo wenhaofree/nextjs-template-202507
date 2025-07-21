@@ -35,6 +35,7 @@
     },
     "menu": {
       "home": "首页",
+      "docs": "文档",
       "aiTools": "AI 工具",
       "aiChat": "AI 对话",
       "imageGeneration": "图片生成",
@@ -53,6 +54,7 @@
       "termsOfService": "服务条款"
     },
     "menuDescriptions": {
+      "docs": "完整的指南和 API 参考，帮助您快速上手 ShipSaaS",
       "aiChat": "与 ChatGPT 驱动的 AI 助手进行智能对话",
       "imageGeneration": "使用 AI 技术从文本描述生成精美图片",
       "blog": "最新的行业新闻、更新和信息",
