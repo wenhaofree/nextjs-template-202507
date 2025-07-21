@@ -22,8 +22,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 根布局必须包含 html 和 body 标签
-  // 为了避免嵌套HTML标签，这里提供基础结构
   return (
     <html suppressHydrationWarning>
       <body
