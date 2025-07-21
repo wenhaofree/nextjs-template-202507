@@ -264,15 +264,9 @@ const Footersection = () => {
             </a>
 
             {/* Product Hunt Badge */}
-            {/* <div className="flex items-center bg-blue-500/10 rounded-lg px-3 py-2 border border-blue-500/20">
-              <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center mr-2">
-                <span className="text-white text-xs">#2</span>
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-blue-400">OPEN LAUNCH</div>
-                <div className="text-xs font-bold">#2 Project of the Day</div>
-              </div>
-            </div> */}
+            <div>
+              <a className="width: 250px; height: 54px;" href="https://www.producthunt.com/products/shipsaas?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-shipsaas" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=994071&theme=light&t=1753081925928" alt="ShipSaaS - AI&#0032;SaaS&#0032;in&#0032;hours—Next&#0046;js&#0032;15&#0046;4&#0044;&#0032;TailwindCSS&#0032;v4&#0044;&#0032;latest&#0032;AI&#0032;UI&#0046; | Product Hunt" width="250" height="54" /></a>
+            </div>
           </div>
 
           {/* Second Row of Badges */}
