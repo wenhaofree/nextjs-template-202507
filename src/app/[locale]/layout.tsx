@@ -4,6 +4,7 @@ import { RootProvider } from 'fumadocs-ui/provider';
 import type { Translations } from 'fumadocs-ui/i18n';
 import { Providers } from '@/components/providers';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
@@ -64,9 +65,11 @@ export default async function LocaleLayout({
   // Enable static rendering
   setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   return (
     <Providers>
-      <NextIntlClientProvider>
+      <NextIntlClientProvider messages={messages}>
         <RootProvider
           i18n={{
             locale,

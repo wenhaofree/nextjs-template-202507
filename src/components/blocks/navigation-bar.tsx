@@ -121,8 +121,9 @@ const NavigationBar = ({
               </div>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg hover:bg-muted transition-all duration-200">
+                  <Button aria-label="Open menu" variant="ghost" size="icon" className="h-9 w-9 rounded-lg hover:bg-muted transition-all duration-200">
                     <Menu className="size-4" />
+                    <span className="sr-only">Open menu</span>
                   </Button>
                 </SheetTrigger>
               <SheetContent className="overflow-y-auto">
@@ -149,7 +150,7 @@ const NavigationBar = ({
                       {mobileExtraLinks.map((link, idx) => (
                         <Link
                           key={idx}
-                          className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all duration-200 hover:bg-muted hover:text-accent-foreground"
+                          className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-foreground transition-all duration-200 hover:bg-muted hover:text-foreground"
                           href={link.url}
                         >
                           {link.name}
@@ -185,18 +186,15 @@ const renderMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
       <NavigationMenuItem key={item.title}>
-        <NavigationMenuTrigger className="h-9 px-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+        <NavigationMenuTrigger className="h-9 px-3 text-sm font-medium text-foreground transition-colors">
           {item.title}
         </NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul className="w-80 p-3">
-            <NavigationMenuLink>
-              {item.items.map((subItem) => (
-                <li key={subItem.title}>
-                  <Link
-                    className="flex select-none gap-4 rounded-lg p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-muted hover:text-accent-foreground hover:shadow-sm"
-                    href={subItem.url}
-                  >
+            {item.items.map((subItem) => (
+              <li key={subItem.title}>
+                <Link href={subItem.url} legacyBehavior passHref>
+                  <NavigationMenuLink className="flex select-none gap-4 rounded-lg p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-muted hover:text-accent-foreground hover:shadow-sm">
                     {subItem.icon}
                     <div>
                       <div className="text-sm font-semibold">
@@ -208,10 +206,10 @@ const renderMenuItem = (item: MenuItem) => {
                         </p>
                       )}
                     </div>
-                  </Link>
-                </li>
-              ))}
-            </NavigationMenuLink>
+                  </NavigationMenuLink>
+                </Link>
+              </li>
+            ))}
           </ul>
         </NavigationMenuContent>
       </NavigationMenuItem>
@@ -219,13 +217,13 @@ const renderMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <Link
-      key={item.title}
-      className="group inline-flex h-9 w-max items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-all duration-200 hover:bg-muted hover:text-foreground hover:shadow-sm"
-      href={item.url}
-    >
-      {item.title}
-    </Link>
+    <NavigationMenuItem key={item.title}>
+      <Link href={item.url} legacyBehavior passHref>
+        <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-all duration-200 hover:bg-muted hover:text-foreground hover:shadow-sm">
+          {item.title}
+        </NavigationMenuLink>
+      </Link>
+    </NavigationMenuItem>
   );
 };
 

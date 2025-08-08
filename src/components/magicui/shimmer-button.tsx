@@ -45,6 +45,7 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
           "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-[1px]",
           className,
         )}
+        aria-label={(props as any)["aria-label"] ?? (typeof children === 'string' ? (children as string) : undefined)}
         ref={ref}
         {...props}
       >

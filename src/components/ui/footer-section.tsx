@@ -45,9 +45,15 @@ const Footersection = () => {
                   type="email"
                   placeholder={t('newsletter.placeholder') || 'Enter your email'}
                   className="flex-1 h-9 text-sm bg-background/50 border-border/60 focus:border-primary/60"
+                  aria-label={t('newsletter.placeholder') || 'Enter your email'}
                 />
-                <Button size="sm" className="px-4 bg-primary hover:bg-primary/90 transition-colors">
-                  <Send className="h-3 w-3" />
+                <Button
+                  size="sm"
+                  aria-label={t('newsletter.cta') || 'Subscribe to newsletter'}
+                  className="px-4 bg-primary hover:bg-primary/90 transition-colors"
+               >
+                  <Send className="h-3 w-3" aria-hidden />
+                  <span className="sr-only">{t('newsletter.cta') || 'Subscribe'}</span>
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-1">

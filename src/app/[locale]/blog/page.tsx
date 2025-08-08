@@ -130,7 +130,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
             placeholder={locale === 'zh' ? '输入您的邮箱' : 'Enter your email'}
             className="flex-1 px-4 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
-          <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 hover:shadow-md hover:scale-105">
+          <button aria-label={locale === 'zh' ? '订阅' : 'Subscribe'} className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 hover:shadow-md hover:scale-105">
             {locale === 'zh' ? '订阅' : 'Subscribe'}
           </button>
         </div>

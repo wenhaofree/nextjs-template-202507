@@ -121,6 +121,7 @@ function RippleButton({
       whileTap={{ scale: 0.95 }}
       whileHover={{ scale: 1.05 }}
       className={cn(buttonVariants({ variant, size, className }))}
+      aria-label={(props as any)["aria-label"] ?? (typeof children === 'string' ? (children as string) : undefined)}
       {...props}
     >
       {children}

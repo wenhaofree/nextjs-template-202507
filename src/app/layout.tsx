@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { generateMetadata as generateSEOMetadata, defaultSEO } from "@/lib/seo";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,18 +35,11 @@ export default function RootLayout({
           <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
         )}
 
-        {/* Google One Tap Script */}
-        <script
-          src="https://accounts.google.com/gsi/client"
-          async
-          defer
-        />
-
         {/* Umami Analytics */}
-        <script
-          defer
+        <Script
           src="https://umami.wenhaofree.com/script.js"
           data-website-id="9bf16fcb-74c7-4fa1-bf5e-63694131abec"
+          strategy="afterInteractive"
         />
       </head>
       <body

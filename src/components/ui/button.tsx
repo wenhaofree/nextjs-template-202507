@@ -44,14 +44,29 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+
+    // Determine if the button renders without any visible text content
+    const childArray = React.Children.toArray(children)
+    const hasTextContent = childArray.some((c) => {
+      if (typeof c === "string" || typeof c === "number") return String(c).trim().length > 0
+      return false
+    })
+    const isIconOnly = childArray.length > 0 && !hasTextContent
+
+    const providedAriaLabel = (props as any)["aria-label"] as string | undefined
+    const fallbackLabel = (props as any).type === "submit" ? "Submit" : "Button"
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        aria-label={providedAriaLabel || (isIconOnly ? fallbackLabel : undefined)}
         {...props}
-      />
+      >
+        {children}
+      </Comp>
     )
   },
 )

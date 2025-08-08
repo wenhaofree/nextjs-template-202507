@@ -165,21 +165,8 @@ export function OptimizedImage({
 // 预加载关键资源
 export function PreloadResources() {
   useEffect(() => {
-    // 预加载关键字体
-    const fontPreloads = [
-      '/fonts/geist-sans.woff2',
-      '/fonts/geist-mono.woff2',
-    ]
-
-    fontPreloads.forEach((font) => {
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.href = font
-      link.as = 'font'
-      link.type = 'font/woff2'
-      link.crossOrigin = 'anonymous'
-      document.head.appendChild(link)
-    })
+    // 注意：已移除本地字体预加载，避免 404 和与 next/font 冲突
+    // Next.js next/font 会自动处理字体加载与预连接
 
     // 预加载关键图片
     const imagePreloads = [
