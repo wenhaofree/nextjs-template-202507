@@ -71,7 +71,6 @@ if (!process.env.STRIPE_PRIVATE_KEY) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY, {
-  apiVersion: '2025-06-30.basil',
   // 优化配置以提高性能
   timeout: 10000, // 10秒超时
   maxNetworkRetries: 2, // 最多重试2次

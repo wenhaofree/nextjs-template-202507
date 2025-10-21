@@ -7,9 +7,7 @@ if (!process.env.STRIPE_PRIVATE_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
   throw new Error('Missing Stripe environment variables');
 }
 
-const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY, {
-  apiVersion: '2025-06-30.basil',
-});
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 export async function POST(request: Request) {
   try {
