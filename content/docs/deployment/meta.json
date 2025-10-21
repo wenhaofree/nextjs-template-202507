@@ -2,9 +2,6 @@
   "title": "Deployment",
   "pages": [
     "index",
-    "vercel",
-    "netlify",
-    "docker",
-    "custom-server"
+    "vercel"
   ]
 }

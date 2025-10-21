@@ -587,7 +587,8 @@
       "title": "Stay Connected",
       "description": "Join our newsletter for the latest updates and exclusive offers.",
       "placeholder": "Enter your email",
-      "subscribe": "Subscribe"
+      "subscribe": "Subscribe",
+      "cta": "Subscribe to our newsletter"
     },
     "quickLinks": {
       "title": "Quick Links",
