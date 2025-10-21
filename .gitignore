@@ -41,6 +41,8 @@ pnpm-lock.yaml
 package-lock.json
 .idea/
 .kiro/
+.vscode
+
 # vercel
 .vercel
 
