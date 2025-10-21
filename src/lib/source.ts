@@ -6,10 +6,23 @@ import { i18n } from '@/lib/i18n';
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
 
+// Fumadocs returns a lazy loader; materialise the virtual file lists so the
+// downstream loader always receives an array (avoids runtime `.map` errors in builds).
+function materializeSource<S extends { files: any }>(source: S) {
+  const files = typeof source.files === 'function' ? source.files() : source.files;
+  return {
+    ...source,
+    files,
+  } as Omit<S, 'files'> & { files: typeof files };
+}
+
+const docsSource = materializeSource(createMDXSource(docs, meta));
+const blogSource = materializeSource(createMDXSource(blogPosts, []));
+
 // Documentation source
 export const source = loader({
   baseUrl: '/docs',
-  source: createMDXSource(docs, meta),
+  source: docsSource,
   i18n,
   icon(icon) {
     if (!icon) {
@@ -26,6 +39,6 @@ export const source = loader({
 // Blog source
 export const blog = loader({
   baseUrl: '/blog',
-  source: createMDXSource(blogPosts, []),
+  source: blogSource,
   i18n,
 });

@@ -66,12 +66,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   // 动态生成博客页面
-  const blogPages = blog.getPages().map((page) => ({
-    url: `${baseUrl}/${page.locale || 'en'}/blog/${page.slugs.join('/')}`,
-    lastModified: new Date(page.data.date || new Date()),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }))
+  const blogPages = blog.getPages().map((page) => {
+    const data = page.data as any;
+    return {
+      url: `${baseUrl}/${page.locale || 'en'}/blog/${page.slugs.join('/')}`,
+      lastModified: new Date(data?.date || new Date()),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    };
+  })
 
   return [...staticPages, ...docPages, ...blogPages]
 }

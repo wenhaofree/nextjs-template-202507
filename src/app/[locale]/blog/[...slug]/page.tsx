@@ -6,6 +6,7 @@ import { CalendarIcon, UserIcon, ArrowLeftIcon } from 'lucide-react';
 import { InlineTOC } from 'fumadocs-ui/components/inline-toc';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { setRequestLocale } from 'next-intl/server';
+import type { ComponentType } from 'react';
 
 interface BlogPostPageProps {
   params: Promise<{ locale: string; slug: string[] }>;
@@ -19,7 +20,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!page) notFound();
 
-  const MDX = page.data.body;
+  const data = page.data as any;
+  const MDX: ComponentType<any> = data.body;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -37,9 +39,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Article Header */}
       <header className="mb-12">
         {/* Tags */}
-        {page.data.tags && page.data.tags.length > 0 && (
+        {data.tags && data.tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
-            {page.data.tags.map((tag) => (
+            {data.tags.map((tag: string) => (
               <Badge key={tag} variant="secondary">
                 {tag}
               </Badge>
@@ -49,13 +51,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Title */}
         <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-6">
-          {page.data.title}
+          {data.title}
         </h1>
 
         {/* Description */}
-        {page.data.description && (
+        {data.description && (
           <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-            {page.data.description}
+            {data.description}
           </p>
         )}
 
@@ -63,12 +65,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground border-b border-border pb-6">
           <div className="flex items-center gap-2">
             <UserIcon className="h-4 w-4" />
-            <span className="font-medium">{page.data.author}</span>
+            <span className="font-medium">{data.author}</span>
           </div>
           <div className="flex items-center gap-2">
             <CalendarIcon className="h-4 w-4" />
-            <time dateTime={page.data.date}>
-              {new Date(page.data.date).toLocaleDateString(locale, {
+            <time dateTime={data.date}>
+              {new Date(data.date).toLocaleDateString(locale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -83,11 +85,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </header>
 
       {/* Hero Image */}
-      {page.data.image && (
+      {data.image && (
         <div className="mb-12 aspect-[16/9] overflow-hidden rounded-lg">
           <img
-            src={page.data.image}
-            alt={page.data.title}
+            src={data.image}
+            alt={data.title}
             className="h-full w-full object-cover"
           />
         </div>
@@ -96,12 +98,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Article Content */}
       <article className="prose prose-gray dark:prose-invert max-w-none">
         {/* Table of Contents */}
-        {page.data.toc && page.data.toc.length > 0 && (
+        {data.toc && data.toc.length > 0 && (
           <div className="mb-8 rounded-lg border bg-muted/50 p-6">
             <h2 className="text-lg font-semibold mb-4 text-foreground">
               {locale === 'zh' ? '目录' : 'Table of Contents'}
             </h2>
-            <InlineTOC items={page.data.toc} />
+            <InlineTOC items={data.toc} />
           </div>
         )}
 
@@ -117,14 +119,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mb-8 rounded-lg bg-muted/50 p-6">
           <div className="flex items-start gap-4">
             <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-lg">
-              {page.data.author.charAt(0)}
+              {data.author.charAt(0)}
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                {page.data.author}
+                {data.author}
               </h3>
               <p className="text-muted-foreground text-sm">
-                {locale === 'zh' 
+                {locale === 'zh'
                   ? 'ShipSaaS 团队成员，专注于现代 SaaS 开发和最佳实践分享。'
                   : 'ShipSaaS team member focused on modern SaaS development and sharing best practices.'
                 }
@@ -145,29 +147,32 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 (post.locale === locale || (!post.locale && locale === 'en'))
               )
               .slice(0, 2)
-              .map((relatedPost) => (
-                <Link
-                  key={relatedPost.url}
-                  href={relatedPost.url}
-                  className="group block rounded-lg border bg-card p-4 transition-all hover:shadow-md"
-                >
-                  <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
-                    {relatedPost.data.title}
-                  </h4>
-                  {relatedPost.data.excerpt && (
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {relatedPost.data.excerpt}
-                    </p>
-                  )}
-                  <div className="mt-3 text-xs text-muted-foreground">
-                    {new Date(relatedPost.data.date).toLocaleDateString(locale, {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </div>
-                </Link>
-              ))}
+              .map((relatedPost) => {
+                const relatedData = relatedPost.data as any;
+                return (
+                  <Link
+                    key={relatedPost.url}
+                    href={relatedPost.url}
+                    className="group block rounded-lg border bg-card p-4 transition-all hover:shadow-md"
+                  >
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                      {relatedData.title}
+                    </h4>
+                    {relatedData.excerpt && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {relatedData.excerpt}
+                      </p>
+                    )}
+                    <div className="mt-3 text-xs text-muted-foreground">
+                      {new Date(relatedData.date).toLocaleDateString(locale, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </div>
+                  </Link>
+                );
+              })}
           </div>
         </div>
 
@@ -207,22 +212,24 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 
   if (!page) notFound();
 
+  const data = page.data as any;
+
   return {
-    title: page.data.title,
-    description: page.data.description,
+    title: data.title,
+    description: data.description,
     openGraph: {
-      title: page.data.title,
-      description: page.data.description,
+      title: data.title,
+      description: data.description,
       type: 'article',
-      publishedTime: page.data.date,
-      authors: [page.data.author],
-      images: page.data.image ? [page.data.image] : undefined,
+      publishedTime: data.date,
+      authors: [data.author],
+      images: data.image ? [data.image] : undefined,
     },
     twitter: {
       card: 'summary_large_image',
-      title: page.data.title,
-      description: page.data.description,
-      images: page.data.image ? [page.data.image] : undefined,
+      title: data.title,
+      description: data.description,
+      images: data.image ? [data.image] : undefined,
     },
   };
 }

@@ -13,7 +13,7 @@ export default async function Layout({
   const { locale } = await params;
 
   // Get the page tree for the specific locale
-  const pageTree = source.pageTree[locale] || source.pageTree;
+  const pageTree = source.getPageTree(locale);
 
   return (
     <DocsLayout tree={pageTree} {...baseOptions(locale)}>

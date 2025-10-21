@@ -38,17 +38,19 @@ export default async function BlogPage({ params }: BlogPageProps) {
       {/* Blog Posts Grid */}
       {posts.length > 0 ? (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <article
-              key={post.url}
-              className="group relative flex flex-col overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]"
-            >
+          {posts.map((post) => {
+            const postData = post.data as any;
+            return (
+              <article
+                key={post.url}
+                className="group relative flex flex-col overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02]"
+              >
               {/* Image */}
-              {post.data.image && (
+              {postData.image && (
                 <div className="aspect-[16/9] overflow-hidden">
                   <img
-                    src={post.data.image}
-                    alt={post.data.title}
+                    src={postData.image}
+                    alt={postData.title}
                     className="h-full w-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
@@ -57,9 +59,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
               {/* Content */}
               <div className="flex flex-1 flex-col p-6">
                 {/* Tags */}
-                {post.data.tags && post.data.tags.length > 0 && (
+                {postData.tags && postData.tags.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
-                    {post.data.tags.slice(0, 2).map((tag) => (
+                    {postData.tags.slice(0, 2).map((tag: string) => (
                       <Badge key={tag} variant="secondary" className="text-xs">
                         {tag}
                       </Badge>
@@ -70,14 +72,14 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 {/* Title */}
                 <h2 className="mb-3 text-xl font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
                   <Link href={post.url} className="after:absolute after:inset-0">
-                    {post.data.title}
+                    {postData.title}
                   </Link>
                 </h2>
 
                 {/* Excerpt */}
-                {post.data.excerpt && (
+                {postData.excerpt && (
                   <p className="mb-4 text-sm text-muted-foreground line-clamp-3">
-                    {post.data.excerpt}
+                    {postData.excerpt}
                   </p>
                 )}
 
@@ -85,12 +87,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 <div className="mt-auto flex items-center gap-4 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <UserIcon className="h-3 w-3" />
-                    <span>{post.data.author}</span>
+                    <span>{postData.author}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <CalendarIcon className="h-3 w-3" />
-                    <time dateTime={post.data.date}>
-                      {new Date(post.data.date).toLocaleDateString(locale, {
+                    <time dateTime={postData.date}>
+                      {new Date(postData.date).toLocaleDateString(locale, {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
@@ -99,8 +101,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
                   </div>
                 </div>
               </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       ) : (
         <div className="text-center py-16">
