@@ -41,6 +41,13 @@ export default function RootLayout({
           data-website-id="9bf16fcb-74c7-4fa1-bf5e-63694131abec"
           strategy="afterInteractive"
         />
+        {/* Google AdSense */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5455845858903578"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
+
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
